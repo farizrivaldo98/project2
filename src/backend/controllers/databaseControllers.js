@@ -4,8 +4,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   fetchDataPareto: async (request, response) => {
-    let fatchquerry =
-      "SELECT Line, SUM(total) AS total FROM part GROUP BY Line";
+    let fatchquerry = "SELECT Line, SUM(total) AS y FROM part GROUP BY Line";
     db.query(fatchquerry, (err, result) => {
       return response.status(200).send(result);
     });

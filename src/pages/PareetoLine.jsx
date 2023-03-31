@@ -4,7 +4,7 @@ import ParetoChart from "pareto-chart";
 import axios from "axios";
 
 function ParetoLine() {
-  const [data, setData] = useState();
+  const [data1, setData] = useState();
   const [paretoData, paretoSetData] = useState();
   const [line1, setline1] = useState();
   const [line2, setline2] = useState();
@@ -21,22 +21,22 @@ function ParetoLine() {
     //   }
     // }
     // const dataParetoSaka = new sakaFarmaPlant(
-    //   data[0].total,
-    //   data[1].total,
-    //   data[2].total,
-    //   data[3].total
+    //   data1[0].total,
+    //   data1[1].total,
+    //   data1[2].total,
+    //   data1[3].total
     // );
     // console.log(dataParetoSaka);
+    // paretoSetData(dataParetoSaka);
 
     let response = await axios.get("http://localhost:8001/part/pareto");
+    console.log(response.data);
+    //setData(response.data);
 
-    setData(response.data);
-    console.log(data);
-
-    setline1(data[0].total);
-    setline2(data[1].total);
-    setline3(data[2].total);
-    setline4(data[3].total);
+    setline1(Number(response.data[0].y));
+    setline2(Number(response.data[1].y));
+    setline3(Number(response.data[2].y));
+    setline4(Number(response.data[3].y));
 
     console.log(line1, line2, line3, line4);
   };
@@ -53,14 +53,13 @@ function ParetoLine() {
         lineLabel="Cumulative percentage"
         data={{
           "Saka Farma Plant": {
-            "Line 1": 40,
-            "Line 2": 30,
-            "Line 3": 10,
-            "Line 4": 27,
+            "Line 1": line1,
+            "Line 2": line2,
+            "Line 3": line3,
+            "Line 4": line4,
           },
         }}
       />
-      {line1},{line2},{line3},{line4},
     </div>
   );
 }

@@ -7,7 +7,6 @@ import Instrument from "./pages/Instrument";
 import CreateNew from "./pages/CreateNew";
 import CreateEdit from "./pages/CreateEdit";
 import AppPareto from "./pages/building";
-import ParetoCoba from "./pages/ParetoCoba";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { CheckLogin } from "./features/part/userSlice";
@@ -46,7 +45,6 @@ function App() {
         <Route path="/createnew" element={<CreateNew />} />
         <Route path="/createedite/:id" element={<CreateEdit />} />
         <Route path="/building" element={<AppPareto />} />
-        <Route path="/paretocoba" element={<ParetoCoba />} />
       </Routes>
     </div>
   );
