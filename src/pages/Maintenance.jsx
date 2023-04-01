@@ -27,13 +27,11 @@ function Maintenance() {
   const dispatch = useDispatch();
 
   const partValue = useSelector((state) => state.part.partValue);
-
   useEffect(() => {
     dispatch(fetchPart());
   }, []);
 
   const navigate = useNavigate();
-
   const deleteData = (id) => {
     dispatch(deletePartListData(id));
   };

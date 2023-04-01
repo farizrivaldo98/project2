@@ -25,7 +25,8 @@ function Login() {
     };
 
     dispatch(loginData(tempData));
-    alert("data Login");
+
+    navigate(0);
   };
 
   return (

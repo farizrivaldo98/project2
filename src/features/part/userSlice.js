@@ -4,7 +4,6 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    users: [],
     user: {
       id_users: "",
       name: "",
@@ -35,23 +34,27 @@ export function registerData(data) {
 export function loginData(data) {
   return async (dispatch) => {
     let respons = await Axios.post("http://localhost:8001/part/login", data);
-    console.log(respons);
+
     dispatch(setUser(respons.data.data));
     localStorage.setItem("user_token", respons.data.token);
   };
 }
 
-export function CheckLogin(data) {
+export function CheckLogin(token) {
   return async (dispatch) => {
-    // const getDataLogin = await Axios.post(
-    //   `${API_URL}/auth/`,
-    //   {},
-    //   {
-    //     headers: {
-    //       authorization: `Bearer ${data}`,
-    //     },
-    //   }
-    // );
-    // console.log(getDataLogin);
+    console.log(token);
+    let respons = await Axios.post(
+      "http://localhost:8001/part/check-Login",
+      {},
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (respons) {
+      dispatch(setUser(respons.data.data));
+    }
+    console.log(respons);
   };
 }

@@ -1,6 +1,7 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const navigation = [
   { name: "Maintenance", href: "#", current: false },
@@ -15,7 +16,16 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const userGlobal = useSelector((state) => state.user.user);
+
   const navigate = useNavigate();
+
+  const logOut = () => {
+    localStorage.removeItem("user_token");
+    navigate("/");
+    navigate(0);
+  };
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -44,28 +54,43 @@ export default function Navbar() {
 
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <button
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                        onClick={() => {
-                          navigate(`/${item.name}`);
-                        }}
-                      >
-                        {item.name}
-                      </button>
-                    ))}
-                  </div>
+                  {userGlobal.id ? (
+                    <div className="flex space-x-5">
+                      {navigation.map((item) => (
+                        <button
+                          key={item.name}
+                          href={item.href}
+                          className={classNames(
+                            item.current
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "rounded-md px-3 py-2 text-sm font-medium"
+                          )}
+                          aria-current={item.current ? "page" : undefined}
+                          onClick={() => {
+                            navigate(`/${item.name}`);
+                          }}
+                        >
+                          {item.name}
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
               </div>
+              {userGlobal.id ? (
+                <button
+                  className=" flex flex-2 items-end justify-end bg-gray-900 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                  onClick={() => logOut()}
+                >
+                  logout ({userGlobal.name})
+                </button>
+              ) : (
+                <div></div>
+              )}
+
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"></div>
             </div>
           </div>

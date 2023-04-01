@@ -13,5 +13,6 @@ routers.get("/pareto", databaseControllers.fetchDataPareto);
 routers.post("/register", databaseControllers.register);
 routers.post("/login", databaseControllers.login);
 routers.get("/user", veryfyToken, checkRole, databaseControllers.fetchAlluser);
+routers.post("/check-Login", veryfyToken, databaseControllers.checkLogin);
 
 module.exports = routers;

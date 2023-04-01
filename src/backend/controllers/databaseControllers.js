@@ -123,12 +123,14 @@ module.exports = {
       if (!isValid) {
         return res.status(400).send({ message: "email & password infailid2" });
       }
+
       let payload = {
+        name: isEmailExist[0].name,
         id: isEmailExist[0].id_users,
         isAdmin: isEmailExist[0].isAdmin,
       };
       const token = jwt.sign(payload, "khaerul", { expiresIn: "1h" });
-      console.log(token);
+
       delete isEmailExist[0].password;
       return res.status(200).send({
         token,
@@ -143,6 +145,23 @@ module.exports = {
     try {
       const users = await query(`SELECT * FROM users`);
       return res.status(200).send(users);
+    } catch (error) {
+      res.status(error.statusCode || 500).send(error);
+    }
+  },
+
+  checkLogin: async (req, res) => {
+    try {
+      const users = await query(
+        `SELECT * FROM users WHERE id_users = ${db.escape(req.user.id)}`
+      );
+      return res.status(200).send({
+        data: {
+          name: users[0].name,
+          id: users[0].id_users,
+          isAdmin: users[0].isAdmin,
+        },
+      });
     } catch (error) {
       res.status(error.statusCode || 500).send(error);
     }

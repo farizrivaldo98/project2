@@ -16,7 +16,6 @@ import { useEffect } from "react";
 function App() {
   const dispatch = useDispatch();
   const userlocalStorage = localStorage.getItem("user_token");
-  console.log(userlocalStorage);
 
   //KEEP LOGIN CHECKER
   const keepLogin = () => {
