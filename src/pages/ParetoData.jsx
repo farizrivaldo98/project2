@@ -8,29 +8,6 @@ function Pareto() {
   const [dataLine3, setLine3] = useState({});
   const [dataLine4, setLine4] = useState({});
 
-  const [granulasi1, setGranulasi1] = useState();
-  const [tableting1, setTableting1] = useState();
-  const [striping1, setStriiping1] = useState();
-  const [mixing1, setMixing1] = useState();
-  const [CC1, setCC1] = useState();
-  const [CC2, setCC2] = useState();
-  const [CM1, setCM1] = useState();
-  const [CM2, setCM2] = useState();
-  const [CM3, setCM3] = useState();
-  const [CM4, setCM4] = useState();
-  const [CM5, setCM5] = useState();
-
-  const [granulasi2, setGranulasi2] = useState();
-  const [tableting2, setTableting2] = useState();
-  const [botling2, setBotling2] = useState();
-
-  const [granulasi3, setGranulasi3] = useState();
-  const [tableting3, setTableting3] = useState();
-  const [coating3, setCoating3] = useState();
-  const [sortir3, setSortir3] = useState();
-  const [striping3, setStriiping3] = useState();
-  const [mixing3, setMixing3] = useState();
-
   const fetchData = async () => {
     let response1 = await axios.get("http://localhost:8001/part/line1");
     var result1 = {};

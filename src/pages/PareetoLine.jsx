@@ -30,15 +30,13 @@ function ParetoLine() {
     // paretoSetData(dataParetoSaka);
 
     let response = await axios.get("http://localhost:8001/part/pareto");
-    console.log(response);
+
     //setData(response.data);
 
     setline1(Number(response.data[0].y));
     setline2(Number(response.data[1].y));
     setline3(Number(response.data[2].y));
     setline4(Number(response.data[3].y));
-
-    console.log(line1, line2, line3, line4);
   };
 
   useEffect(() => {

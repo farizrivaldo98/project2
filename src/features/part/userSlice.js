@@ -42,7 +42,6 @@ export function loginData(data) {
 
 export function CheckLogin(token) {
   return async (dispatch) => {
-    console.log(token);
     let respons = await Axios.post(
       "http://localhost:8001/part/check-Login",
       {},
@@ -55,6 +54,5 @@ export function CheckLogin(token) {
     if (respons) {
       dispatch(setUser(respons.data.data));
     }
-    console.log(respons);
   };
 }
