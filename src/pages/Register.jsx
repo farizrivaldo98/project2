@@ -36,7 +36,7 @@ function Register() {
     console.log(tempData);
     dispatch(registerData(tempData));
     alert("Data berhasil ditambahkan");
-    navigate("/");
+    navigate("/mail");
   };
 
   return (
@@ -136,7 +136,7 @@ function Register() {
                 className="group relative flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
-                Sign in
+                Register
               </button>
             </div>
           </form>

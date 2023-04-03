@@ -1,6 +1,7 @@
 const { db, query } = require("../database");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("../helpers/nodemailers");
 
 module.exports = {
   fetchDataLine1: async (request, response) => {
@@ -129,6 +130,16 @@ module.exports = {
       name
     )}, false)`;
     let addUserResult = await query(addUserQuery);
+
+    let mail = {
+      from: `Admin <khaerul.fariz98@gmail.com>`,
+      to: `${email}`,
+      subject: `Acount Verification`,
+      html: `<a href="http://localhost:3000/" > Verification Click here</a>`,
+    };
+
+    let response = await nodemailer.sendMail(mail);
+
     return res
       .status(200)
       .send({ data: addUserResult, message: "Register success" });

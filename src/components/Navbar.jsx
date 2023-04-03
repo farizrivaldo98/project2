@@ -81,12 +81,19 @@ export default function Navbar() {
                 </div>
               </div>
               {userGlobal.id ? (
-                <button
-                  className=" flex flex-2 items-end justify-end bg-gray-900 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                  onClick={() => logOut()}
-                >
-                  logout ({userGlobal.name})
-                </button>
+                <>
+                  <button
+                    className=" flex flex-2 items-end justify-end bg-gray-900 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                    onClick={() => logOut()}
+                  >
+                    <img
+                      className="inline-block h-6 w-6 mr-3 rounded-full ring-2 ring-white"
+                      src="http://localhost:8001/IMG_5782-1680529783927.JPG"
+                      alt=""
+                    />
+                    logout ({userGlobal.name})
+                  </button>
+                </>
               ) : (
                 <div></div>
               )}

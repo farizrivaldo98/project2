@@ -37,8 +37,8 @@ function Pareto() {
   return (
     <div class="p-20">
       <ParetoChart
-        width={40}
-        height={10}
+        width={3}
+        height={1}
         lineLabel="Cumulative percentage"
         data={{
           "Line 1": dataLine1,

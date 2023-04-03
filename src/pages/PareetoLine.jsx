@@ -46,8 +46,8 @@ function ParetoLine() {
   return (
     <div class="p-20">
       <ParetoChart
-        width={40}
-        height={10}
+        width={3}
+        height={1}
         lineLabel="Cumulative percentage"
         data={{
           "Saka Farma Plant": {
