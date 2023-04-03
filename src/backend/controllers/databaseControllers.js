@@ -3,6 +3,34 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 module.exports = {
+  fetchDataLine1: async (request, response) => {
+    let fetchquerry =
+      "SELECT Mesin , SUM(total)AS Line1 FROM part WHERE Line='Line1' GROUP BY Mesin";
+    db.query(fetchquerry, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+  fetchDataLine2: async (request, response) => {
+    let fetchquerry =
+      "SELECT Mesin , SUM(total)AS Line2 FROM part WHERE Line='Line2' GROUP BY Mesin";
+    db.query(fetchquerry, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+  fetchDataLine3: async (request, response) => {
+    let fetchquerry =
+      "SELECT Mesin , SUM(total)AS Line3 FROM part WHERE Line='Line3' GROUP BY Mesin";
+    db.query(fetchquerry, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+  fetchDataLine4: async (request, response) => {
+    let fetchquerry =
+      "SELECT Mesin , SUM(total)AS Line4 FROM part WHERE Line='Line4' GROUP BY Mesin";
+    db.query(fetchquerry, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
   fetchDataPareto: async (request, response) => {
     let fatchquerry = "SELECT Line, SUM(total) AS y FROM part GROUP BY Line";
     db.query(fatchquerry, (err, result) => {

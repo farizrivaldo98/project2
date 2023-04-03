@@ -20,11 +20,11 @@ function CreateEdit() {
 
   const tanggal = moment(partId.Tanggal).format("MM/MM/YYYY");
   useEffect(() => {
-    setNewLine(partId.Mesin);
-    setNewMachine(partId.Line);
+    setNewLine(partId.Line);
+    setNewMachine(partId.Mesin);
     setNewJob(partId.Pekerjaan);
     setNewJobDetail(partId.Detail);
-    setNewDate(partId.Tanggal);
+    setNewDate(tanggal);
     setNewQuantity(partId.Quantity);
     setNewUnit(partId.Unit);
     setNewPIC(partId.Pic);
@@ -56,7 +56,6 @@ function CreateEdit() {
   } else {
     var totalMinuites = 0;
   }
-  //console.log(dataList);
 
   const editData = () => {
     let tempData = {
