@@ -35,7 +35,7 @@ function Register() {
     };
 
     dispatch(registerData(tempData));
-    alert("Data berhasil ditambahkan");
+
     navigate("/mail");
   };
 
