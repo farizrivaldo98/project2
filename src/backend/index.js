@@ -5,31 +5,12 @@ const port = 8001;
 const app = express();
 const { databaseRouter } = require("./routers");
 const { body, validationResult } = require("express-validator");
-const multer = require("multer");
-const path = require("path");
 const { log } = require("console");
 const { db, query } = require("./database");
-
+const upload = require("./middleware/multer");
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public");
-  },
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      path.parse(file.originalname).name +
-        "-" +
-        Date.now() +
-        path.extname(file.originalname)
-    );
-  },
-});
-
-const upload = multer({ storage });
 
 app.post(
   "/validation",
