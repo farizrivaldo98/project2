@@ -13,6 +13,7 @@ import { CheckLogin } from "./features/part/userSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import CheckMail from "./pages/CheckMail";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={<Login />} />
+
         <Route path="/register" element={<Register />} />
         <Route path="/Instrument" element={<Instrument />} />
         <Route path="/maintenance" element={<Maintenance />} />
@@ -46,6 +48,7 @@ function App() {
         <Route path="/createedite/:id" element={<CreateEdit />} />
         <Route path="/building" element={<AppPareto />} />
         <Route path="/mail" element={<CheckMail />} />
+        <Route path="/editprofile" element={<EditProfile />} />
       </Routes>
     </div>
   );

@@ -33,7 +33,6 @@ function CreateNew() {
   } else {
     var totalMinuites = 0;
   }
-  //console.log(dataList);
 
   const addData = () => {
     let tempData = {
@@ -50,7 +49,7 @@ function CreateNew() {
       Total: totalMinuites,
     };
     setDataList((dataList, { ...tempData }));
-    console.log(tempData);
+
     dispatch(addPartListData(tempData));
     alert("Data berhasil ditambahkan");
     navigate("/Maintenance");

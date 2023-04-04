@@ -1,7 +1,18 @@
-import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from "@chakra-ui/react";
 
 const navigation = [
   { name: "Maintenance", href: "#", current: false },
@@ -82,17 +93,22 @@ export default function Navbar() {
               </div>
               {userGlobal.id ? (
                 <>
-                  <button
-                    className=" flex flex-2 items-end justify-end bg-gray-900 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                    onClick={() => logOut()}
-                  >
-                    <img
-                      className="inline-block h-6 w-6 mr-3 rounded-full ring-2 ring-white"
-                      src="http://localhost:8001/IMG_5782-1680529783927.JPG"
-                      alt=""
-                    />
-                    logout ({userGlobal.name})
-                  </button>
+                  <Menu>
+                    <MenuButton className=" flex flex-2 items-end justify-end bg-gray-900 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+                      <img
+                        className="inline-block h-6 w-6 mr-3 rounded-full ring-2 ring-red"
+                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                        alt=""
+                      />
+                      {userGlobal.name}
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem onClick={() => navigate("/editprofile")}>
+                        Edit Profile
+                      </MenuItem>
+                      <MenuItem onClick={() => logOut()}>LogOut</MenuItem>
+                    </MenuList>
+                  </Menu>
                 </>
               ) : (
                 <div></div>

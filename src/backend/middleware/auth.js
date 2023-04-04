@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const veryfyToken = (req, res, next) => {
   let token = req.headers.authorization;
-  console.log(token);
+
   if (!token) {
     return res.status(401).send("access dnied");
   }

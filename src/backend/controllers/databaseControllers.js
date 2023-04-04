@@ -91,7 +91,7 @@ module.exports = {
     let updateQuery = `UPDATE part set ${dataUpdate} where id = ${db.escape(
       idParams
     )}`;
-    console.log(updateQuery);
+
     db.query(updateQuery, (err, result) => {
       if (err) response.status(500).send(err);
       response.status(200).send(result);
@@ -135,7 +135,7 @@ module.exports = {
       from: `Admin <khaerul.fariz98@gmail.com>`,
       to: `${email}`,
       subject: `Acount Verification`,
-      html: `<a href="http://localhost:3000/" > Verification Click here</a>`,
+      html: `<a href="http://10.126.15.135:3000/" > Verification Click here</a>`,
     };
 
     let response = await nodemailer.sendMail(mail);
@@ -146,7 +146,6 @@ module.exports = {
   },
   login: async (req, res) => {
     try {
-      console.log(req.body);
       const { email, password } = req.body;
 
       const isEmailExist = await query(

@@ -33,7 +33,7 @@ function Register() {
       username: userName,
       password: password,
     };
-    console.log(tempData);
+
     dispatch(registerData(tempData));
     alert("Data berhasil ditambahkan");
     navigate("/mail");
