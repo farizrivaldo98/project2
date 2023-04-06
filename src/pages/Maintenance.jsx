@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment/moment";
 import {
   Table,
@@ -25,7 +25,7 @@ import { deletePartListData } from "../features/part/partSlice";
 
 function Maintenance() {
   const dispatch = useDispatch();
-
+  const [inputText, setInputText] = useState("");
   const partValue = useSelector((state) => state.part.partValue);
   useEffect(() => {
     dispatch(fetchPart());
@@ -36,14 +36,27 @@ function Maintenance() {
     dispatch(deletePartListData(id));
   };
 
+  let inputHandler = (e) => {
+    var dataInput = e.target.value;
+    setInputText(dataInput);
+  };
+
   const renderPartList = () => {
-    return partValue.map((partdata) => {
+    const filterData = partValue.filter((el) => {
+      if (inputText == "") {
+        return el;
+      } else {
+        return el.Mesin.includes(inputText);
+      }
+    });
+
+    return filterData.map((partdata) => {
       return (
         <Tr>
           <Td>{partdata.Mesin}</Td>
           <Td>{partdata.Line}</Td>
           <Td>{partdata.Pekerjaan}</Td>
-          <Td>{moment(partdata.Tanggal).format("dddd,D MM YYYY")}</Td>
+          <Td>{moment(partdata.Tanggal).format("DD/MM/YYYY")}</Td>
           <Td>{partdata.Quantity}</Td>
           <Td>{partdata.Unit}</Td>
           <Td>{partdata.Pic}</Td>
@@ -84,10 +97,22 @@ function Maintenance() {
         spacing={4}
         align="center"
       >
+        <div className="main">
+          <h1>Search Mesin</h1>
+          <div className="search">
+            <input
+              onChange={inputHandler}
+              id="outlined-basic"
+              variant="outlined"
+              fullWidth
+              label="Search"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
         <div>
-          <h2>MACHINE</h2>
+          <h2>Line</h2>
           <Select placeholder="Select Line">
-            <option value="all">All</option>
             <option value="line1">Line 1</option>
             <option value="line2">Line 2</option>
             <option value="line3">Line 3</option>

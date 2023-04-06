@@ -260,6 +260,7 @@ function CreateNew() {
                   <option value="MKF">Khaerul</option>
                   <option value="RAO">Renaldo</option>
                   <option value="CKA">Chandra</option>
+                  <option value="RDP">Ricy</option>
                   <option value="ARF">Arief</option>
                 </Select>
               </div>

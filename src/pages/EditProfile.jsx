@@ -1,14 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 function EditProfile() {
+  const [file, setFile] = useState(null);
+  const onFileChange = (event) => {
+    setFile(event.target.files[0]);
+    let preview = document.getElementById("imagepreview");
+    preview.src = URL.createObjectURL(event.target.files[0]);
+  };
+
+  const uploadImage = async () => {
+    if (file) {
+      const obj = {
+        id: 4,
+      };
+      let formData = new FormData();
+      formData.append("file", file);
+      formData.append("data", JSON.stringify(obj));
+
+      const response = await axios.post(
+        "http://localhost:8001/upload",
+        formData
+      );
+      console.log(response);
+    } else {
+      alert("Select image first");
+    }
+  };
   const userGlobal = useSelector((state) => state.user.user);
   return (
     <div className="flex min-h-full items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
           <img
-            className="mx-auto h-12 w-auto rounded-full ring-2 ring-red"
+            id="imagepreview"
+            className="mx-auto h-16 w-16 rounded-full ring-2 ring-red"
             src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
           />
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -46,8 +73,24 @@ function EditProfile() {
                   SVG, PNG, JPG or GIF (MAX. 800x400px)
                 </p>
               </div>
-              <input id="dropzone-file" type="file" class="hidden" />
+              <input
+                id="file"
+                type="file"
+                //class="hidden"
+                onChange={(event) => onFileChange(event)}
+              />
             </label>
+          </div>
+          <br />
+          <div>
+            <button
+              onClick={() => uploadImage()}
+              type="button"
+              className="group relative flex w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
+              Upload
+            </button>
           </div>
         </div>
       </div>

@@ -54,7 +54,7 @@ function ParetoLine() {
             "Line 1": line1,
             "Line 2": line2,
             "Line 3": line3,
-            "Line 4": line4,
+            "Line 4": 0,
           },
         }}
       />

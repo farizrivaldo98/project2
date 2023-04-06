@@ -25,7 +25,7 @@ function Login() {
     };
 
     dispatch(loginData(tempData));
-
+    // navigate(0);
     const timeout = setTimeout(() => {
       navigate(0);
     }, 2000);
