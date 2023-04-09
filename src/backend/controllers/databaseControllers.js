@@ -1,9 +1,45 @@
-const { db, query } = require("../database");
+const { db2, db, query } = require("../database");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("../helpers/nodemailers");
+const { request, response } = require("express");
 
 module.exports = {
+  fetchDataHardness: async (request, response) => {
+    const { nobatch } = request.body;
+    let fetchQuerry = `SELECT  id as x , hardness AS y FROM instrument WHERE nobatch= ${db2.escape(
+      nobatch
+    )} `;
+    db2.query(fetchQuerry, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+  fetchDataTickness: async (request, response) => {
+    const { nobatch } = request.body;
+    let fetchQuerry = `SELECT  id as x , thickness AS y FROM instrument WHERE nobatch= ${db2.escape(
+      nobatch
+    )} `;
+    db2.query(fetchQuerry, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+  fetchDataDiameter: async (request, response) => {
+    const { nobatch } = request.body;
+    let fetchQuerry = `SELECT  id as x , diameter AS y FROM instrument WHERE nobatch= ${db2.escape(
+      nobatch
+    )} `;
+    db2.query(fetchQuerry, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+
+  fetchDataInstrument: async (request, response) => {
+    let fetchQuerry = `select * from instrument`;
+    db2.query(fetchQuerry, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+
   fetchDataLine1: async (request, response) => {
     let fetchquerry =
       "SELECT Mesin , SUM(total)AS Line1 FROM part WHERE Line='Line1' GROUP BY Mesin";
@@ -135,7 +171,7 @@ module.exports = {
       from: `Admin <khaerul.fariz98@gmail.com>`,
       to: `${email}`,
       subject: `Acount Verification`,
-      html: `<a href="http://10.126.15.135:3000/" > Verification Click here</a>`,
+      html: `<a href="http://localhost:3000/" > Verification Click here</a>`,
     };
 
     let response = await nodemailer.sendMail(mail);

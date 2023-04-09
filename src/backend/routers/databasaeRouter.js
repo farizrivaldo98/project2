@@ -19,4 +19,9 @@ routers.post("/login", databaseControllers.login);
 routers.get("/user", veryfyToken, checkRole, databaseControllers.fetchAlluser);
 routers.post("/check-Login", veryfyToken, databaseControllers.checkLogin);
 
+routers.get("/instrument", databaseControllers.fetchDataInstrument);
+routers.post("/hardness", databaseControllers.fetchDataHardness);
+routers.post("/thickness", databaseControllers.fetchDataTickness);
+routers.post("/diameter", databaseControllers.fetchDataDiameter);
+
 module.exports = routers;

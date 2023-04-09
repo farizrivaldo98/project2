@@ -29,7 +29,7 @@ function ParetoLine() {
     // console.log(dataParetoSaka);
     // paretoSetData(dataParetoSaka);
 
-    let response = await axios.get("http://10.126.15.135:8001/part/pareto");
+    let response = await axios.get("http://localhost:8001/part/pareto");
 
     //setData(response.data);
 

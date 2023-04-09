@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { useEffect, Component, useState } from "react";
 import CanvasJSReact from "../canvasjs.react";
+import moment from "moment/moment";
 import {
   Table,
   Thead,
@@ -16,11 +17,129 @@ import {
   Input,
   Select,
 } from "@chakra-ui/react";
+import Axios from "axios";
 
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function Instrument() {
+  const [dataInstrument, setDataInstrument] = useState([]);
+  const [inputText, setInputText] = useState("");
+  const [submitText, setSubmitText] = useState("");
+  const [switchAllData, setSwitchAllData] = useState(false);
+
+  const [hardnessData, setHardnessData] = useState([]);
+  const [thicknessData, setThicknessData] = useState([]);
+  const [diameterData, setDiameterData] = useState([]);
+
+  const fetchData = async () => {
+    let response = await Axios.get("http://localhost:8001/part/instrument");
+    setDataInstrument(response.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  let switchAll = (e) => {
+    alert("Membuka Semua data mengakibatkan web menjadi lambat");
+    setSwitchAllData(true);
+  };
+  let hidenAll = (e) => {
+    setSwitchAllData(false);
+  };
+
+  let inputHendeler = (e) => {
+    var dataInput = e.target.value;
+    setInputText(dataInput);
+  };
+
+  let clickSubmit = async () => {
+    setSubmitText(inputText);
+    let data = { nobatch: `${submitText}` };
+    let hardness = await Axios.post(
+      "http://localhost:8001/part/hardness",
+      data
+    );
+
+    var result1 = [];
+    for (var i = 0; i < hardness.data.length; i++) {
+      var obj1 = {
+        x: i,
+        y: Number(hardness.data[i].y),
+      };
+      result1.push(obj1);
+    }
+
+    setHardnessData(result1);
+
+    let thickness = await Axios.post(
+      "http://localhost:8001/part/thickness",
+      data
+    );
+    var result2 = [];
+    for (var i = 0; i < thickness.data.length; i++) {
+      var obj2 = {
+        x: i,
+        y: Number(thickness.data[i].y),
+      };
+      result2.push(obj2);
+    }
+
+    setThicknessData(result2);
+
+    let diameter = await Axios.post(
+      "http://localhost:8001/part/diameter",
+      data
+    );
+    var result3 = [];
+    for (var i = 0; i < diameter.data.length; i++) {
+      var obj3 = {
+        x: i,
+        y: Number(diameter.data[i].y),
+      };
+      result3.push(obj3);
+    }
+
+    setDiameterData(result3);
+  };
+
+  const renderInstrumentList = () => {
+    const filterData = dataInstrument.filter((el) => {
+      if (submitText == "" && switchAllData == false) {
+        return null;
+      }
+      if (switchAllData == true && submitText == "") {
+        return el;
+      }
+      if (switchAllData == true && !submitText == "") {
+        return el.nobatch.includes(submitText);
+      }
+    });
+
+    return filterData.map((instrument) => {
+      return (
+        <Tr>
+          <Td>null</Td>
+          <Td>null</Td>
+          <Td>{instrument.nobatch}</Td>
+          <Td>{instrument.date}</Td>
+          <Td>{instrument.time}</Td>
+          <Td>{instrument.notest}</Td>
+          <Td>{instrument.thickness}</Td>
+          <Td>{instrument.diameter}</Td>
+          <Td>{instrument.hardness}</Td>
+          <Td>{instrument.R_thickness}</Td>
+          <Td>null</Td>
+          <Td>{instrument.R_diameter}</Td>
+          <Td>null</Td>
+          <Td>{instrument.R_hardness}</Td>
+          <Td>null</Td>
+        </Tr>
+      );
+    });
+  };
+
   const options = {
     theme: "light2",
     title: {
@@ -32,113 +151,106 @@ function Instrument() {
       },
     ],
     axisY: {
-      prefix: "₹",
+      prefix: "",
     },
     toolTip: {
       shared: true,
     },
     data: [
       {
-        type: "area",
-        name: "GBP",
+        type: "line",
+        name: "Thickness",
         showInLegend: true,
-        xValueFormatString: "MMM YYYY",
-        yValueFormatString: "₹#,##0.##",
-        dataPoints: [
-          { x: new Date("2017- 01- 01"), y: 84.927 },
-          { x: new Date("2017- 02- 01"), y: 82.609 },
-          { x: new Date("2017- 03- 01"), y: 81.428 },
-          { x: new Date("2017- 04- 01"), y: 83.259 },
-          { x: new Date("2017- 05- 01"), y: 83.153 },
-          { x: new Date("2017- 06- 01"), y: 84.18 },
-          { x: new Date("2017- 07- 01"), y: 84.84 },
-          { x: new Date("2017- 08- 01"), y: 82.671 },
-          { x: new Date("2017- 09- 01"), y: 87.496 },
-          { x: new Date("2017- 10- 01"), y: 86.007 },
-          { x: new Date("2017- 11- 01"), y: 87.233 },
-          { x: new Date("2017- 12- 01"), y: 86.276 },
-        ],
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: thicknessData,
       },
       {
-        type: "area",
-        name: "USD",
+        type: "line",
+        name: "Diameter",
         showInLegend: true,
-        xValueFormatString: "MMM YYYY",
-        yValueFormatString: "₹#,##0.##",
-        dataPoints: [
-          { x: new Date("2017- 01- 01"), y: 67.515 },
-          { x: new Date("2017- 02- 01"), y: 66.725 },
-          { x: new Date("2017- 03- 01"), y: 64.86 },
-          { x: new Date("2017- 04- 01"), y: 64.29 },
-          { x: new Date("2017- 05- 01"), y: 64.51 },
-          { x: new Date("2017- 06- 01"), y: 64.62 },
-          { x: new Date("2017- 07- 01"), y: 64.2 },
-          { x: new Date("2017- 08- 01"), y: 63.935 },
-          { x: new Date("2017- 09- 01"), y: 65.31 },
-          { x: new Date("2017- 10- 01"), y: 64.75 },
-          { x: new Date("2017- 11- 01"), y: 64.49 },
-          { x: new Date("2017- 12- 01"), y: 63.84 },
-        ],
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: diameterData,
       },
       {
-        type: "area",
-        name: "GBP",
+        type: "line",
+        name: "Hardness",
         showInLegend: true,
-        xValueFormatString: "MMM YYYY",
-        yValueFormatString: "₹#,##0.##",
-        dataPoints: [
-          { x: new Date("2017- 01- 01"), y: 34.927 },
-          { x: new Date("2017- 02- 01"), y: 54.609 },
-          { x: new Date("2017- 03- 01"), y: 45.428 },
-          { x: new Date("2017- 04- 01"), y: 34.259 },
-          { x: new Date("2017- 05- 01"), y: 37.153 },
-          { x: new Date("2017- 06- 01"), y: 54.18 },
-          { x: new Date("2017- 07- 01"), y: 43.84 },
-          { x: new Date("2017- 08- 01"), y: 23.671 },
-          { x: new Date("2017- 09- 01"), y: 12.496 },
-          { x: new Date("2017- 10- 01"), y: 23.007 },
-          { x: new Date("2017- 11- 01"), y: 34.233 },
-          { x: new Date("2017- 12- 01"), y: 22.276 },
-        ],
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: hardnessData,
       },
     ],
   };
+
   return (
     <div>
       <CanvasJSChart options={options} />
+      <br />
+      <div
+        className="flex flex-row justify-center"
+        direction="row"
+        spacing={4}
+        align="center"
+      >
+        <div className="main">
+          <h1>Search Betch</h1>
+          <div className="search">
+            <input
+              onChange={inputHendeler}
+              id="outlined-basic"
+              variant="outlined"
+              fullWidth
+              label="Search"
+              className=" mr-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
+        <div>
+          <br />
+          <Button
+            className="ml-4"
+            colorScheme="gray"
+            onClick={() => clickSubmit()}
+          >
+            Submit
+          </Button>
+        </div>
+      </div>
+      <div>
+        <br />
+        <Button className="ml-4" colorScheme="blue" onClick={() => switchAll()}>
+          Show All Data
+        </Button>
+        <Button className="ml-4" colorScheme="red" onClick={() => hidenAll()}>
+          Hiden All Data
+        </Button>
+      </div>
 
       <TableContainer>
         <Table variant="simple">
           <TableCaption>Imperial to metric conversion factors</TableCaption>
           <Thead>
             <Tr>
-              <Th>Mesin</Th>
-              <Th>Line</Th>
-              <Th>Pekerjaan</Th>
-              <Th>Tanggal</Th>
-              <Th>Quantity</Th>
-              <Th>Unit</Th>
-              <Th>Pic</Th>
-              <Th>Awal Pengerjaan</Th>
-              <Th>Ahir Pengerjaan</Th>
-              <Th>Total</Th>
-              <Th>Action</Th>
+              <Th>Operator</Th>
+              <Th>Product</Th>
+              <Th>No.Batch</Th>
+              <Th>Date</Th>
+              <Th>Time</Th>
+              <Th>No.Test</Th>
+              <Th>Thickness</Th>
+              <Th>Diameter</Th>
+              <Th>Hardness</Th>
+              <Th>Ref. Thickness min</Th>
+              <Th>Ref. Thickness max</Th>
+              <Th>Ref. Diameter min</Th>
+              <Th>Ref. Diameter max</Th>
+              <Th>Ref. Hardness min</Th>
+              <Th>Ref. Hardness max</Th>
             </Tr>
           </Thead>
-          <Tbody>
-            <Tr>
-              <Td>data 1</Td>
-              <Td>data 2</Td>
-              <Td>data 3</Td>
-              <Td>data 4</Td>
-              <Td>data 5</Td>
-              <Td>data 6</Td>
-              <Td>data 7</Td>
-              <Td>data 8</Td>
-              <Td>data 9</Td>
-              <Td>data 10</Td>
-            </Tr>
-          </Tbody>
+          <Tbody>{renderInstrumentList()}</Tbody>
         </Table>
       </TableContainer>
     </div>

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Axios from "axios";
+import { Await } from "react-router-dom";
 
 export const partSlice = createSlice({
   name: "part",
@@ -49,14 +50,14 @@ export default partSlice.reducer;
 
 export function addPartListData(data) {
   return async (dispatch) => {
-    let response = await Axios.post("http://10.126.15.135:8001/part/add", data);
+    let response = await Axios.post("http://localhost:8001/part/add", data);
     dispatch(fetchPart());
   };
 }
 
 export function fetchPart() {
   return async (dispatch) => {
-    let response = await Axios.get("http://10.126.15.135:8001/part/get");
+    let response = await Axios.get("http://localhost:8001/part/get");
     dispatch(setPartList(response.data));
   };
 }
@@ -64,7 +65,7 @@ export function fetchPart() {
 export function deletePartListData(data) {
   return async (dispatch) => {
     let response = await Axios.delete(
-      `http://10.126.15.135:8001/part/delet/${data}`
+      `http://localhost:8001/part/delet/${data}`
     );
     dispatch(fetchPart());
   };
@@ -73,7 +74,7 @@ export function deletePartListData(data) {
 export function editePartListData(data, id) {
   return async (dispatch) => {
     let response = await Axios.patch(
-      `http://10.126.15.135:8001/part/edit/${id}`,
+      `http://localhost:8001/part/edit/${id}`,
       data
     );
     dispatch(fetchPart());
@@ -82,7 +83,7 @@ export function editePartListData(data, id) {
 
 export function getDataById(dataId) {
   return async (dispatch) => {
-    let response = await Axios.get("http://10.126.15.135:8001/part/get", {
+    let response = await Axios.get("http://localhost:8001/part/get", {
       params: {
         id: dataId,
       },

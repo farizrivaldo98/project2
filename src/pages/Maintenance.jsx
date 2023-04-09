@@ -22,10 +22,12 @@ import Pareto from "./ParetoData";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPart } from "../features/part/partSlice";
 import { deletePartListData } from "../features/part/partSlice";
+import { dropdown } from "bootstrap-css";
 
 function Maintenance() {
   const dispatch = useDispatch();
   const [inputText, setInputText] = useState("");
+  const [dropDown, UseDropDown] = useState("");
   const partValue = useSelector((state) => state.part.partValue);
   useEffect(() => {
     dispatch(fetchPart());
@@ -41,12 +43,24 @@ function Maintenance() {
     setInputText(dataInput);
   };
 
+  let doprDown = (e) => {
+    var dataInput1 = e.target.value;
+    UseDropDown(dataInput1);
+  };
+
   const renderPartList = () => {
     const filterData = partValue.filter((el) => {
-      if (inputText == "") {
+      if (inputText == "" && dropDown == "") {
         return el;
-      } else {
+      }
+      if (!dropDown == "" && inputText == "") {
+        return el.Line.includes(dropDown);
+      }
+      if (!inputText == "" && dropDown == "") {
         return el.Mesin.includes(inputText);
+      }
+      if (!dropDown == "" && !inputText == "") {
+        return el.Mesin.includes(inputText) && el.Line.includes(dropDown);
       }
     });
 
@@ -112,25 +126,14 @@ function Maintenance() {
         </div>
         <div>
           <h2>Line</h2>
-          <Select placeholder="Select Line">
-            <option value="line1">Line 1</option>
-            <option value="line2">Line 2</option>
-            <option value="line3">Line 3</option>
-            <option value="line4">Line 4</option>
+          <Select placeholder="Select Line" onChange={doprDown}>
+            <option value="Line1">Line 1</option>
+            <option value="Line2">Line 2</option>
+            <option value="Line3">Line 3</option>
+            <option value="Line4">Line 4</option>
           </Select>
         </div>
-        <div>
-          <h2>START TIME</h2>
-          <Input placeholder="Select Date and Time" size="md" type="date" />
-        </div>
-        <div>
-          <h2>FINISH TIME</h2>
-          <Input placeholder="Select Date and Time" size="md" type="date" />
-        </div>
-        <div>
-          <br />
-          <Button colorScheme="gray">Submit</Button>
-        </div>
+
         <div>
           <br />
           <Button
