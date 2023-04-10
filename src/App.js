@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import CheckMail from "./pages/CheckMail";
 import EditProfile from "./pages/EditProfile";
+import Production from "./pages/Production";
 
 function App() {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ function App() {
         <Route path="/building" element={<AppPareto />} />
         <Route path="/mail" element={<CheckMail />} />
         <Route path="/editprofile" element={<EditProfile />} />
+        <Route path="/production" element={<Production />} />
       </Routes>
     </div>
   );

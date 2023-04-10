@@ -1,22 +1,22 @@
 const mysql = require("mysql2");
 const util = require("util");
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "password",
+  host: "10.126.15.138",
+  user: "ems_saka",
+  password: "s4k4f4rmA",
   database: "parammachine_saka",
   port: 3306,
 });
 
 const db2 = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "password",
+  host: "10.126.15.138",
+  user: "ems_saka",
+  password: "s4k4f4rmA",
   database: "ems_saka",
   port: 3306,
 });
 
-// host: "localhost",
+// host: "10.126.15.135",
 // user: "root",
 // password: "password",
 // database: "parammachine_saka",

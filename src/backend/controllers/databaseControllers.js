@@ -5,6 +5,14 @@ const nodemailer = require("../helpers/nodemailers");
 const { request, response } = require("express");
 
 module.exports = {
+  fetchOEEcmt: async (request, response) => {
+    let fetchQuerry =
+      " SELECT`data_index` as 'id', `time@timestamp` as 'time',`data_format_0` as 'avability',`data_format_1` as 'performance',`data_format_2` as 'quality' ,`data_format_3` as 'oee',`data_format_4` as 'output',`data_format_5` as 'runTime',`data_format_6` as 'stopTime', `data_format_7` as 'idleTime' FROM `mezanine.tengah_Cm1_data` ";
+    db.query(fetchQuerry, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+
   fetchDataHardness: async (request, response) => {
     const { nobatch } = request.body;
     let fetchQuerry = `SELECT  id as x , hardness AS y FROM instrument WHERE nobatch= ${db2.escape(
@@ -171,7 +179,7 @@ module.exports = {
       from: `Admin <khaerul.fariz98@gmail.com>`,
       to: `${email}`,
       subject: `Acount Verification`,
-      html: `<a href="http://localhost:3000/" > Verification Click here</a>`,
+      html: `<a href="http://10.126.15.135:3000/" > Verification Click here</a>`,
     };
 
     let response = await nodemailer.sendMail(mail);
