@@ -25,15 +25,46 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function Production() {
   const [oeeCm1, setOeeCm1] = useState([]);
+  const [machineData, setMachine] = useState();
+  const [startDate, setStartDate] = useState();
+  const [finishDate, setFinishDate] = useState();
 
-  const fetchData = async () => {
-    let response = await axios.get("http://10.126.15.135:8001/part/oeecm1");
+  const fetchData = async (data, start, finish) => {
+    console.log(start);
+    console.log(finish);
+    let response = await axios.get("http://10.126.15.135:8001/part/oee", {
+      params: {
+        machine: data,
+      },
+    });
+
     setOeeCm1(response.data);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  let changeMachine = (e) => {
+    var dataInput = e.target.value;
+    setMachine(dataInput);
+  };
+
+  let dateStart = (e) => {
+    var dataInput = e.target.value;
+
+    let unixStart = Math.floor(new Date(dataInput).getTime() / 1000);
+    setStartDate(unixStart);
+  };
+
+  let dateFinish = (e) => {
+    var dataInput = e.target.value;
+
+    let unixFinish = Math.floor(new Date(dataInput).getTime() / 1000);
+    setFinishDate(unixFinish);
+  };
+
+  let submitData = () => {
+    fetchData(machineData, startDate, finishDate);
+  };
+
+  useEffect(() => {}, []);
 
   const renderCm1 = () => {
     return oeeCm1.map((cm1) => {
@@ -48,10 +79,10 @@ function Production() {
               )
               .format("YYYY-MM-DD HH:mm")}
           </Td>
-          <Td>{cm1.avability}</Td>
-          <Td>{cm1.performance}</Td>
-          <Td>{cm1.quality}</Td>
-          <Td className="bg-blue-200">{cm1.oee}</Td>
+          <Td className="bg-blue-200">{cm1.avability}</Td>
+          <Td className="bg-red-200">{cm1.performance}</Td>
+          <Td className="bg-green-200">{cm1.quality}</Td>
+          <Td>{cm1.oee}</Td>
           <Td>{cm1.output}</Td>
           <Td>{cm1.runTime}</Td>
           <Td>{cm1.stopTime}</Td>
@@ -62,24 +93,28 @@ function Production() {
   };
 
   const options = {
-    exportEnabled: true,
     animationEnabled: true,
     title: {
-      text: "OVERALL EQUIPMENT EFFECTIVENESS",
+      text: "Overall Equipment Effectiveness",
     },
+    subtitles: [
+      {
+        text: "80% OEE",
+        verticalAlign: "center",
+        fontSize: 24,
+        dockInsidePlotArea: true,
+      },
+    ],
     data: [
       {
-        type: "pie",
-        startAngle: 75,
-        toolTipContent: "<b>{label}</b>: {y}%",
-        showInLegend: "true",
-        legendText: "{label}",
-        indexLabelFontSize: 16,
-        indexLabel: "{label} - {y}%",
+        type: "doughnut",
+        showInLegend: true,
+        indexLabel: "{name}: {y}",
+        yValueFormatString: "#,###'%'",
         dataPoints: [
-          { y: 80, label: "Avability" },
-          { y: 98, label: "Performance" },
-          { y: 100, label: "Quality" },
+          { name: "Avability", y: 82 },
+          { name: "Performance", y: 98 },
+          { name: "Quality", y: 100 },
         ],
       },
     ],
@@ -91,9 +126,56 @@ function Production() {
         options={options}
         /* onRef={ref => this.chart = ref} */
       />
+      <br />
+      <Stack
+        className="flex flex-row justify-center  "
+        direction="row"
+        spacing={4}
+        align="center"
+      >
+        <div>
+          <h2>Line</h2>
+          <Select placeholder="Select Machine" onChange={changeMachine}>
+            <option value="mezanine.tengah_Cm1_data">Cm1</option>
+            <option value="mezanine.tengah_Cm2_data">Cm2</option>
+            <option value="mezanine.tengah_Cm3_data">Cm3</option>
+            <option value="mezanine.tengah_Cm4_data">Cm4</option>
+            <option value="mezanine.tengah_Cm5_data">Cm5</option>
+          </Select>
+        </div>
+        <div>
+          <h2>Start Time</h2>
+          <Input
+            onChange={dateStart}
+            placeholder="Select Date and Time"
+            size="md"
+            type="datetime-local"
+          />
+        </div>
+        <div>
+          <h2>Finish Time</h2>
+          <Input
+            onChange={dateFinish}
+            placeholder="Select Date and Time"
+            size="md"
+            type="datetime-local"
+          />
+        </div>
+        <div>
+          <br />
+          <Button
+            className="ml-4"
+            colorScheme="gray"
+            onClick={() => submitData()}
+          >
+            Submit
+          </Button>
+        </div>
+      </Stack>
+      <br />
       <TableContainer>
         <Table variant="simple">
-          <TableCaption>Imperial to metric conversion factors</TableCaption>
+          <TableCaption>Machine Performance</TableCaption>
           <Thead>
             <Tr>
               <Th>id</Th>
