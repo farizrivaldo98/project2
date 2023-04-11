@@ -183,6 +183,7 @@ function Instrument() {
       },
     ],
   };
+  console.log(hardnessData);
 
   return (
     <div>

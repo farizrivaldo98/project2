@@ -4,6 +4,11 @@ import React, { useEffect, Component, useState } from "react";
 import CanvasJSReact from "../canvasjs.react";
 
 import {
+  CircularProgress,
+  CircularProgressLabel,
+  Progress,
+} from "@chakra-ui/react";
+import {
   Table,
   Thead,
   Tbody,
@@ -18,6 +23,14 @@ import {
   Stack,
   Input,
   Select,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Heading,
+  StackDivider,
+  Box,
+  Text,
 } from "@chakra-ui/react";
 
 var CanvasJS = CanvasJSReact.CanvasJS;
@@ -30,11 +43,11 @@ function Production() {
   const [finishDate, setFinishDate] = useState();
 
   const fetchData = async (data, start, finish) => {
-    console.log(start);
-    console.log(finish);
     let response = await axios.get("http://10.126.15.135:8001/part/oee", {
       params: {
         machine: data,
+        start: start,
+        finish: finish,
       },
     });
 
@@ -120,12 +133,162 @@ function Production() {
     ],
   };
 
+  const options1 = {
+    theme: "light2",
+    title: {
+      text: "OEE",
+    },
+    subtitles: [
+      {
+        text: "instrument production",
+      },
+    ],
+    axisY: {
+      prefix: "",
+    },
+    toolTip: {
+      shared: true,
+    },
+    data: [
+      {
+        type: "line",
+        name: "Thickness",
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: [
+          { x: 1, y: 100 },
+          { x: 2, y: 98 },
+          { x: 3, y: 30 },
+          { x: 4, y: 58 },
+          { x: 5, y: 87 },
+        ],
+      },
+      {
+        type: "line",
+        name: "Diameter",
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: [
+          { x: 1, y: 98 },
+          { x: 2, y: 50 },
+          { x: 3, y: 26 },
+          { x: 4, y: 45 },
+          { x: 5, y: 70 },
+        ],
+      },
+      {
+        type: "line",
+        name: "Hardness",
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: [
+          { x: 1, y: 80 },
+          { x: 2, y: 50 },
+          { x: 3, y: 64 },
+          { x: 4, y: 75 },
+          { x: 5, y: 64 },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
-      <CanvasJSChart
-        options={options}
-        /* onRef={ref => this.chart = ref} */
-      />
+      <div className="flex flex-row justify-center  ">
+        <CanvasJSChart className="" options={options} />
+      </div>
+      <div className="flex flex-row justify-center  ">
+        <Card
+          direction={{ base: "column", sm: "row" }}
+          overflow="hidden"
+          variant="outline"
+          className="mr-4"
+        >
+          <div>
+            <CircularProgress value={82} color="green.400" size="150px">
+              <CircularProgressLabel>82%</CircularProgressLabel>
+            </CircularProgress>
+          </div>
+          <div></div>
+          <Stack>
+            <CardBody>
+              <Heading size="md">Avability</Heading>
+
+              <Text py="2">
+                Runtime
+                <Progress colorScheme="red" hasStripe value={64} />
+                Idletime
+                <Progress hasStripe value={64} />
+                Stoptime
+                <Progress hasStripe value={64} />
+                <br />
+                availability is the ratio of Run Time to Planned Production
+                Time.
+              </Text>
+            </CardBody>
+          </Stack>
+        </Card>
+
+        <Card
+          direction={{ base: "column", sm: "row" }}
+          overflow="hidden"
+          variant="outline"
+          className="mr-4"
+        >
+          <div>
+            <CircularProgress value={98} color="green.400" size="150px">
+              <CircularProgressLabel>98%</CircularProgressLabel>
+            </CircularProgress>
+          </div>
+
+          <Stack>
+            <CardBody>
+              <Heading size="md">Performance </Heading>
+
+              <Text py="2">
+                Actual Speed
+                <Progress hasStripe value={64} />
+                Setpoint Speed
+                <Progress hasStripe value={64} />
+                <br />
+                Performance is the second of the three OEE factors to be
+                calculated.
+              </Text>
+            </CardBody>
+          </Stack>
+        </Card>
+        <Card
+          direction={{ base: "column", sm: "row" }}
+          overflow="hidden"
+          variant="outline"
+        >
+          <div>
+            <CircularProgress value={100} color="green.400" size="150px">
+              <CircularProgressLabel>100%</CircularProgressLabel>
+            </CircularProgress>
+          </div>
+
+          <Stack>
+            <CardBody>
+              <Heading size="md">Quality</Heading>
+
+              <Text py="2">
+                Good Product
+                <Progress hasStripe value={64} />
+                Afkir Product
+                <Progress hasStripe value={64} />
+                <br />
+                Quality takes into account manufactured parts that do not meet
+                quality standards,
+              </Text>
+            </CardBody>
+          </Stack>
+        </Card>
+      </div>
+      <CanvasJSChart options={options1} />
       <br />
       <Stack
         className="flex flex-row justify-center  "

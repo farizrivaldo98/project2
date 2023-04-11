@@ -11,7 +11,14 @@ module.exports = {
       " " +
       "`" +
       request.query.machine +
-      "`";
+      "`" +
+      "where `time@timestamp` between" +
+      " " +
+      request.query.start +
+      " " +
+      "and" +
+      " " +
+      request.query.finish;
     console.log(fetchQuerry);
     db.query(fetchQuerry, (err, result) => {
       return response.status(200).send(result);
