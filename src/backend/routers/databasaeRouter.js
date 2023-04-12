@@ -25,5 +25,6 @@ routers.post("/thickness", databaseControllers.fetchDataTickness);
 routers.post("/diameter", databaseControllers.fetchDataDiameter);
 
 routers.get("/oee", databaseControllers.fetchOee);
+routers.get("/variableoee", databaseControllers.fetchVariableOee);
 
 module.exports = routers;

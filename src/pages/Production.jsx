@@ -38,6 +38,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function Production() {
   const [oeeCm1, setOeeCm1] = useState([]);
+  const [oeeVar, setVarOee] = useState([]);
   const [machineData, setMachine] = useState();
   const [startDate, setStartDate] = useState();
   const [finishDate, setFinishDate] = useState();
@@ -51,8 +52,20 @@ function Production() {
       },
     });
 
+    let response1 = await axios.get(
+      "http://10.126.15.135:8001/part/variableoee",
+      {
+        params: {
+          machine: data,
+          start: start,
+          finish: finish,
+        },
+      }
+    );
     setOeeCm1(response.data);
+    setVarOee(response1.data);
   };
+  console.log(oeeVar);
 
   let changeMachine = (e) => {
     var dataInput = e.target.value;

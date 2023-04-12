@@ -19,7 +19,28 @@ module.exports = {
       "and" +
       " " +
       request.query.finish;
-    console.log(fetchQuerry);
+
+    db.query(fetchQuerry, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+
+  fetchVariableOee: async (request, response) => {
+    let fetchQuerry =
+      "SELECT AVG(`data_format_0`) as Ava, AVG(`data_format_1`) as Per,  AVG(`data_format_2`) as Qua, AVG(`data_format_3`) AS  oee   FROM " +
+      " " +
+      "`" +
+      request.query.machine +
+      "`" +
+      " " +
+      " where `time@timestamp` between" +
+      " " +
+      request.query.start +
+      " " +
+      "and" +
+      " " +
+      request.query.finish;
+
     db.query(fetchQuerry, (err, result) => {
       return response.status(200).send(result);
     });
