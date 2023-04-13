@@ -43,6 +43,11 @@ function Production() {
   const [perLine, setPerLine] = useState([]);
   const [quaLine, setQuaLine] = useState([]);
   const [oeeLine, setOeeLine] = useState([]);
+  const [toalOut, setTotalOut] = useState();
+  const [totalRun, setTotalRun] = useState();
+  const [totalStop, setTotalStop] = useState();
+  const [totalIdle, setTotalIdle] = useState();
+  const [totalSpeed, setTotalSpeed] = useState();
 
   const [machineData, setMachine] = useState();
   const [startDate, setStartDate] = useState();
@@ -99,11 +104,37 @@ function Production() {
     }
     setQuaLine(resultQua);
 
-    let obj = 0;
+    //Output==================================
+    let objOut = 0;
     for (var i = 0; i < response.data.length; i++) {
-      obj += Number(response.data[i].output);
+      objOut += Number(response.data[i].output);
     }
-    console.log(obj);
+    setTotalOut(objOut);
+
+    //Runtime====================================
+    let objRun = 0;
+    for (var i = 0; i < response.data.length; i++) {
+      objRun += Number(response.data[i].runTime);
+    }
+    setTotalRun(objRun);
+
+    //Stop==================================
+    let objStop = 0;
+    for (var i = 0; i < response.data.length; i++) {
+      objStop += Number(response.data[i].stopTime);
+    }
+    setTotalStop(objStop);
+    //Idle====================================
+    let objIdle = 0;
+    for (var i = 0; i < response.data.length; i++) {
+      objIdle += Number(response.data[i].idleTime);
+    }
+    setTotalIdle(objIdle);
+
+    ////Speed========================================
+    let objSpeed = ((objOut * 25) / 4 / objRun).toFixed(1);
+
+    setTotalSpeed(objSpeed);
   };
 
   let changeMachine = (e) => {
@@ -259,12 +290,12 @@ function Production() {
               <Heading size="md">Avability</Heading>
 
               <Text py="2">
-                Runtime
-                <Progress colorScheme="red" hasStripe value={64} />
-                Idletime
-                <Progress hasStripe value={64} />
-                Stoptime
-                <Progress hasStripe value={64} />
+                Runtime ({totalRun} Min)
+                <Progress hasStripe value={100} />
+                Idletime ({totalIdle} Min)
+                <Progress hasStripe value={(totalIdle / totalRun) * 100} />
+                Stoptime ({totalStop} Min)
+                <Progress hasStripe value={(totalStop / totalRun) * 100} />
                 <br />
                 availability is the ratio of Run Time to Planned Production
                 Time.
@@ -296,10 +327,10 @@ function Production() {
               <Heading size="md">Performance </Heading>
 
               <Text py="2">
-                Actual Speed
-                <Progress hasStripe value={64} />
-                Setpoint Speed
-                <Progress hasStripe value={64} />
+                Actual Speed {totalSpeed} slave/min
+                <Progress hasStripe value={totalSpeed} />
+                Setpoint Speed 40 slave/min
+                <Progress hasStripe value={40} />
                 <br />
                 Performance is the second of the three OEE factors to be
                 calculated.
@@ -329,10 +360,10 @@ function Production() {
               <Heading size="md">Quality</Heading>
 
               <Text py="2">
-                Good Product
+                Good Product ({toalOut} Box)
                 <Progress hasStripe value={64} />
-                Afkir Product
-                <Progress hasStripe value={64} />
+                Afkir Product (0 Box)
+                <Progress hasStripe value={0} />
                 <br />
                 Quality takes into account manufactured parts that do not meet
                 quality standards,
