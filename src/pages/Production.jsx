@@ -38,7 +38,12 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function Production() {
   const [oeeCm1, setOeeCm1] = useState([]);
-  const [oeeVar, setVarOee] = useState([]);
+  const [oeeVar, setVarOee] = useState([{ Ava: 0, Per: 0, Qua: 0, oee: 0 }]);
+  const [avaLine, setAvaLine] = useState([]);
+  const [perLine, setPerLine] = useState([]);
+  const [quaLine, setQuaLine] = useState([]);
+  const [oeeLine, setOeeLine] = useState([]);
+
   const [machineData, setMachine] = useState();
   const [startDate, setStartDate] = useState();
   const [finishDate, setFinishDate] = useState();
@@ -51,7 +56,6 @@ function Production() {
         finish: finish,
       },
     });
-
     let response1 = await axios.get(
       "http://10.126.15.135:8001/part/variableoee",
       {
@@ -64,8 +68,43 @@ function Production() {
     );
     setOeeCm1(response.data);
     setVarOee(response1.data);
+
+    var resultAva = [];
+    for (var i = 0; i < response.data.length; i++) {
+      var objAva = {
+        x: response.data[i].id,
+        y: Number(response.data[i].avability.toFixed(2)),
+      };
+      resultAva.push(objAva);
+    }
+    setAvaLine(resultAva);
+
+    var resultPer = [];
+    for (var i = 0; i < response.data.length; i++) {
+      var objPer = {
+        x: response.data[i].id,
+        y: Number(response.data[i].performance.toFixed(2)),
+      };
+      resultPer.push(objPer);
+    }
+    setPerLine(resultPer);
+
+    var resultQua = [];
+    for (var i = 0; i < response.data.length; i++) {
+      var objQua = {
+        x: response.data[i].id,
+        y: Number(response.data[i].quality.toFixed(2)),
+      };
+      resultQua.push(objQua);
+    }
+    setQuaLine(resultQua);
+
+    let obj = 0;
+    for (var i = 0; i < response.data.length; i++) {
+      obj += Number(response.data[i].output);
+    }
+    console.log(obj);
   };
-  console.log(oeeVar);
 
   let changeMachine = (e) => {
     var dataInput = e.target.value;
@@ -105,10 +144,10 @@ function Production() {
               )
               .format("YYYY-MM-DD HH:mm")}
           </Td>
-          <Td className="bg-blue-200">{cm1.avability}</Td>
-          <Td className="bg-red-200">{cm1.performance}</Td>
-          <Td className="bg-green-200">{cm1.quality}</Td>
-          <Td>{cm1.oee}</Td>
+          <Td className="bg-blue-200">{cm1.avability.toFixed(2)}</Td>
+          <Td className="bg-red-200">{cm1.performance.toFixed(2)}</Td>
+          <Td className="bg-green-200">{cm1.quality.toFixed(2)}</Td>
+          <Td>{cm1.oee.toFixed(2)}</Td>
           <Td>{cm1.output}</Td>
           <Td>{cm1.runTime}</Td>
           <Td>{cm1.stopTime}</Td>
@@ -125,9 +164,9 @@ function Production() {
     },
     subtitles: [
       {
-        text: "80% OEE",
+        text: `${oeeVar[0].oee.toFixed(2)}% OEE`,
         verticalAlign: "center",
-        fontSize: 24,
+        fontSize: 26,
         dockInsidePlotArea: true,
       },
     ],
@@ -137,10 +176,11 @@ function Production() {
         showInLegend: true,
         indexLabel: "{name}: {y}",
         yValueFormatString: "#,###'%'",
+
         dataPoints: [
-          { name: "Avability", y: 82 },
-          { name: "Performance", y: 98 },
-          { name: "Quality", y: 100 },
+          { name: "Avability", y: oeeVar[0].Ava },
+          { name: "Performance", y: oeeVar[0].Per },
+          { name: "Quality", y: oeeVar[0].Qua },
         ],
       },
     ],
@@ -165,45 +205,27 @@ function Production() {
     data: [
       {
         type: "line",
-        name: "Thickness",
+        name: "Avability",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: [
-          { x: 1, y: 100 },
-          { x: 2, y: 98 },
-          { x: 3, y: 30 },
-          { x: 4, y: 58 },
-          { x: 5, y: 87 },
-        ],
+        dataPoints: avaLine,
       },
       {
         type: "line",
-        name: "Diameter",
+        name: "Performance",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: [
-          { x: 1, y: 98 },
-          { x: 2, y: 50 },
-          { x: 3, y: 26 },
-          { x: 4, y: 45 },
-          { x: 5, y: 70 },
-        ],
+        dataPoints: perLine,
       },
       {
         type: "line",
-        name: "Hardness",
+        name: "Quality",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: [
-          { x: 1, y: 80 },
-          { x: 2, y: 50 },
-          { x: 3, y: 64 },
-          { x: 4, y: 75 },
-          { x: 5, y: 64 },
-        ],
+        dataPoints: quaLine,
       },
     ],
   };
@@ -221,8 +243,14 @@ function Production() {
           className="mr-4"
         >
           <div>
-            <CircularProgress value={82} color="green.400" size="150px">
-              <CircularProgressLabel>82%</CircularProgressLabel>
+            <CircularProgress
+              value={oeeVar[0].Ava.toFixed(2)}
+              color="green.400"
+              size="200px"
+            >
+              <CircularProgressLabel>
+                {oeeVar[0].Ava.toFixed(2)}%
+              </CircularProgressLabel>
             </CircularProgress>
           </div>
           <div></div>
@@ -252,8 +280,14 @@ function Production() {
           className="mr-4"
         >
           <div>
-            <CircularProgress value={98} color="green.400" size="150px">
-              <CircularProgressLabel>98%</CircularProgressLabel>
+            <CircularProgress
+              value={oeeVar[0].Per.toFixed(2)}
+              color="green.400"
+              size="200px"
+            >
+              <CircularProgressLabel>
+                {oeeVar[0].Per.toFixed(2)}%
+              </CircularProgressLabel>
             </CircularProgress>
           </div>
 
@@ -279,8 +313,14 @@ function Production() {
           variant="outline"
         >
           <div>
-            <CircularProgress value={100} color="green.400" size="150px">
-              <CircularProgressLabel>100%</CircularProgressLabel>
+            <CircularProgress
+              value={oeeVar[0].Qua.toFixed(2)}
+              color="green.400"
+              size="200px"
+            >
+              <CircularProgressLabel>
+                {oeeVar[0].Qua.toFixed(2)}%
+              </CircularProgressLabel>
             </CircularProgress>
           </div>
 
@@ -310,7 +350,7 @@ function Production() {
         align="center"
       >
         <div>
-          <h2>Line</h2>
+          <h2>Mesin</h2>
           <Select placeholder="Select Machine" onChange={changeMachine}>
             <option value="mezanine.tengah_Cm1_data">Cm1</option>
             <option value="mezanine.tengah_Cm2_data">Cm2</option>
