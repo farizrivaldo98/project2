@@ -48,6 +48,7 @@ function Production() {
   const [totalStop, setTotalStop] = useState();
   const [totalIdle, setTotalIdle] = useState();
   const [totalSpeed, setTotalSpeed] = useState();
+  const [oeeChart, setOeeChart] = useState();
 
   const [machineData, setMachine] = useState();
   const [startDate, setStartDate] = useState();
@@ -135,6 +136,23 @@ function Production() {
     let objSpeed = ((objOut * 25) / 4 / objRun).toFixed(1);
 
     setTotalSpeed(objSpeed);
+
+    //OEE CHART========================================
+    var OeeChart = [];
+    for (var i = 0; i < response.data.length; i++) {
+      var objOeeChart = {
+        label: moment
+          .tz(
+            new Date(response.data[i].time * 1000).toLocaleString(),
+            "America/Los_Angeles"
+          )
+          .format("YYYY-MM-DD HH:mm"),
+        y: Number(response.data[i].oee.toFixed(2)),
+      };
+      OeeChart.push(objOeeChart);
+    }
+    setOeeChart(OeeChart);
+    console.log(OeeChart);
   };
 
   let changeMachine = (e) => {
@@ -235,7 +253,7 @@ function Production() {
     },
     data: [
       {
-        type: "line",
+        type: "spline",
         name: "Avability",
         showInLegend: true,
         xValueFormatString: "",
@@ -243,7 +261,7 @@ function Production() {
         dataPoints: avaLine,
       },
       {
-        type: "line",
+        type: "spline",
         name: "Performance",
         showInLegend: true,
         xValueFormatString: "",
@@ -251,7 +269,7 @@ function Production() {
         dataPoints: perLine,
       },
       {
-        type: "line",
+        type: "spline",
         name: "Quality",
         showInLegend: true,
         xValueFormatString: "",
@@ -261,12 +279,27 @@ function Production() {
     ],
   };
 
+  const options3 = {
+    title: {
+      text: "Basic Column Chart",
+    },
+    data: [
+      {
+        // Change type to "doughnut", "line", "splineArea", etc.
+        type: "column",
+        dataPoints: oeeChart,
+      },
+    ],
+  };
+
   return (
     <>
-      <div className="flex flex-row justify-center  ">
+      <div className="flex flex-row justify-center mx-12 pb-10 ">
         <CanvasJSChart className="" options={options} />
+
+        <CanvasJSChart class="" options={options3} />
       </div>
-      <div className="flex flex-row justify-center  ">
+      <div className="flex flex-row justify-center  pb-10 ">
         <Card
           direction={{ base: "column", sm: "row" }}
           overflow="hidden"
