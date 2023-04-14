@@ -158,7 +158,7 @@ function Instrument() {
     },
     data: [
       {
-        type: "spline",
+        type: "line",
         name: "Thickness",
         showInLegend: true,
         xValueFormatString: "",
@@ -166,7 +166,7 @@ function Instrument() {
         dataPoints: thicknessData,
       },
       {
-        type: "spline",
+        type: "line",
         name: "Diameter",
         showInLegend: true,
         xValueFormatString: "",
@@ -174,7 +174,7 @@ function Instrument() {
         dataPoints: diameterData,
       },
       {
-        type: "spline",
+        type: "line",
         name: "Hardness",
         showInLegend: true,
         xValueFormatString: "",
