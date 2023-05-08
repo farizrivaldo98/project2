@@ -4,6 +4,7 @@ import axios from "axios";
 
 function EditProfile() {
   const [file, setFile] = useState(null);
+
   const onFileChange = (event) => {
     setFile(event.target.files[0]);
     let preview = document.getElementById("imagepreview");
@@ -18,7 +19,7 @@ function EditProfile() {
       let formData = new FormData();
       formData.append("file", file);
       formData.append("data", JSON.stringify(obj));
-
+      console.log(formData);
       const response = await axios.post(
         "http://10.126.15.83:8001/upload",
         formData

@@ -71,6 +71,8 @@ function Production() {
         },
       }
     );
+    console.log(response1);
+
     setOeeCm1(response.data);
     setVarOee(response1.data);
 

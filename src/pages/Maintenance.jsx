@@ -22,18 +22,26 @@ import Pareto from "./ParetoData";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPart } from "../features/part/partSlice";
 import { deletePartListData } from "../features/part/partSlice";
+import { getDateMaintenance } from "../features/part/partSlice";
 import { dropdown } from "bootstrap-css";
 
 function Maintenance() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [inputText, setInputText] = useState("");
   const [dropDown, UseDropDown] = useState("");
+  const [datePicker, SetDatePicker] = useState();
   const partValue = useSelector((state) => state.part.partValue);
-  useEffect(() => {
-    dispatch(fetchPart());
-  }, []);
 
-  const navigate = useNavigate();
+  useEffect(() => {}, []);
+
+  const getDate = (e) => {
+    var dataInput = e.target.value;
+    SetDatePicker(dataInput);
+    dispatch(fetchPart(dataInput));
+    dispatch(getDateMaintenance(dataInput));
+  };
   const deleteData = (id) => {
     dispatch(deletePartListData(id));
   };
@@ -47,6 +55,13 @@ function Maintenance() {
     var dataInput1 = e.target.value;
     UseDropDown(dataInput1);
   };
+
+  const filteredData = partValue.filter((obj) => {
+    const month = new Date(obj.Tanggal).getUTCMonth();
+    return month === 1;
+  });
+
+  console.log(filteredData);
 
   const renderPartList = () => {
     const filterData = partValue.filter((el) => {
@@ -124,6 +139,25 @@ function Maintenance() {
             />
           </div>
         </div>
+
+        <div>
+          <h2>Month serch</h2>
+          <Select placeholder="Select Mounth" onChange={getDate}>
+            <option value="1">Jan</option>
+            <option value="2">Feb</option>
+            <option value="3">Mar</option>
+            <option value="4">Apr</option>
+            <option value="5">Mei</option>
+            <option value="6">Jun</option>
+            <option value="7">Jul</option>
+            <option value="8">Agu</option>
+            <option value="9">Sep</option>
+            <option value="10">Okt</option>
+            <option value="11">Nov</option>
+            <option value="12">Des</option>
+          </Select>
+        </div>
+
         <div>
           <h2>Line</h2>
           <Select placeholder="Select Line" onChange={doprDown}>

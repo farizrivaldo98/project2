@@ -82,43 +82,48 @@ module.exports = {
   },
 
   fetchDataLine1: async (request, response) => {
-    let fetchquerry =
-      "SELECT Mesin , SUM(total)AS Line1 FROM part WHERE Line='Line1' GROUP BY Mesin";
+    const date = request.query.date;
+
+    let fetchquerry = `SELECT Mesin , SUM(total)AS Line1 FROM part WHERE MONTH(tanggal) = ${date} AND Line='Line1' GROUP BY Mesin`;
     db.query(fetchquerry, (err, result) => {
       return response.status(200).send(result);
     });
   },
   fetchDataLine2: async (request, response) => {
-    let fetchquerry =
-      "SELECT Mesin , SUM(total)AS Line2 FROM part WHERE Line='Line2' GROUP BY Mesin";
+    const date = request.query.date;
+
+    let fetchquerry = `SELECT Mesin , SUM(total)AS Line2 FROM part WHERE MONTH(tanggal) = ${date} AND Line='Line2' GROUP BY Mesin`;
     db.query(fetchquerry, (err, result) => {
       return response.status(200).send(result);
     });
   },
   fetchDataLine3: async (request, response) => {
-    let fetchquerry =
-      "SELECT Mesin , SUM(total)AS Line3 FROM part WHERE Line='Line3' GROUP BY Mesin";
+    const date = request.query.date;
+    let fetchquerry = `SELECT Mesin , SUM(total)AS Line3 FROM part WHERE MONTH(tanggal) = ${date} AND Line='Line3' GROUP BY Mesin`;
     db.query(fetchquerry, (err, result) => {
       return response.status(200).send(result);
     });
   },
   fetchDataLine4: async (request, response) => {
     let fetchquerry =
-      "SELECT Mesin , SUM(total)AS Line4 FROM part WHERE Line='Line4' GROUP BY Mesin";
+      "SELECT Mesin , SUM(total)AS Line4 FROM part WHERE MONTH(tanggal) = 4 AND WHERE Line='Line4' GROUP BY Mesin";
     db.query(fetchquerry, (err, result) => {
       return response.status(200).send(result);
     });
   },
   fetchDataPareto: async (request, response) => {
-    let fatchquerry = "SELECT Line, SUM(total) AS y FROM part GROUP BY Line";
+    const date = request.query.date;
+
+    let fatchquerry = `SELECT Line, SUM(total) AS y FROM parammachine_saka.part WHERE MONTH(tanggal) = ${date} GROUP BY Line ORDER BY Line ASC;`;
     db.query(fatchquerry, (err, result) => {
       return response.status(200).send(result);
     });
   },
 
   getData: async (request, response) => {
-    const id = request.query.id;
-    let fatchquerry = "SELECT * FROM part";
+    const date = request.query.date;
+
+    let fatchquerry = `SELECT * FROM parammachine_saka.part WHERE MONTH(tanggal) = ${date};`;
     db.query(fatchquerry, (err, result) => {
       return response.status(200).send(result);
     });
