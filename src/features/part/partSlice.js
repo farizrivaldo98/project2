@@ -4,8 +4,10 @@ import { Await } from "react-router-dom";
 
 export const partSlice = createSlice({
   name: "part",
+
   initialState: {
     partValue: [],
+    date: "",
     partId: {
       Mesin: "",
       Line: "",
@@ -36,6 +38,9 @@ export const partSlice = createSlice({
     partListId: (state, action) => {
       state.partId = action.payload;
     },
+    dateData: (state, action) => {
+      state.date = action.payload;
+    },
   },
 });
 
@@ -45,19 +50,30 @@ export const {
   deletePartList,
   editePartList,
   partListId,
+  dateData,
 } = partSlice.actions;
 export default partSlice.reducer;
 
+export function getDateMaintenance(data) {
+  return async (dispatch) => {
+    dispatch(dateData(data));
+  };
+}
+
 export function addPartListData(data) {
   return async (dispatch) => {
-    let response = await Axios.post("http://10.126.15.135:8001/part/add", data);
+    let response = await Axios.post("http://10.126.15.83:8001/part/add", data);
     dispatch(fetchPart());
   };
 }
 
-export function fetchPart() {
+export function fetchPart(data) {
   return async (dispatch) => {
-    let response = await Axios.get("http://10.126.15.135:8001/part/get");
+    let response = await Axios.get("http://10.126.15.83:8001/part/get", {
+      params: {
+        date: data,
+      },
+    });
     dispatch(setPartList(response.data));
   };
 }
@@ -65,7 +81,7 @@ export function fetchPart() {
 export function deletePartListData(data) {
   return async (dispatch) => {
     let response = await Axios.delete(
-      `http://10.126.15.135:8001/part/delet/${data}`
+      `http://10.126.15.83:8001/part/delet/${data}`
     );
     dispatch(fetchPart());
   };
@@ -74,7 +90,7 @@ export function deletePartListData(data) {
 export function editePartListData(data, id) {
   return async (dispatch) => {
     let response = await Axios.patch(
-      `http://10.126.15.135:8001/part/edit/${id}`,
+      `http://10.126.15.83:8001/part/edit/${id}`,
       data
     );
     dispatch(fetchPart());
@@ -83,7 +99,7 @@ export function editePartListData(data, id) {
 
 export function getDataById(dataId) {
   return async (dispatch) => {
-    let response = await Axios.get("http://10.126.15.135:8001/part/get", {
+    let response = await Axios.get("http://10.126.15.83:8001/part/get", {
       params: {
         id: dataId,
       },

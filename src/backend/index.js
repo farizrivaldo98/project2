@@ -1,7 +1,7 @@
 const { request } = require("express");
 const express = require("express");
 const cors = require("cors");
-const port = 8001;
+const port = 8002;
 const app = express();
 const { databaseRouter } = require("./routers");
 const { body, validationResult } = require("express-validator");

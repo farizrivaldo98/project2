@@ -11,6 +11,10 @@ function ParetoLine() {
   const [line3, setline3] = useState();
   const [line4, setline4] = useState();
 
+  const date = useSelector((state) => state.part.date);
+
+  console.log("date", date);
+
   const fetchData = async () => {
     // class sakaFarmaPlant {
     //   constructor(Line1, Line2, Line3, Line4) {
@@ -29,7 +33,11 @@ function ParetoLine() {
     // console.log(dataParetoSaka);
     // paretoSetData(dataParetoSaka);
 
-    let response = await axios.get("http://10.126.15.135:8001/part/pareto");
+    let response = await axios.get("http://10.126.15.83:8001/part/pareto", {
+      params: {
+        date: date,
+      },
+    });
 
     //setData(response.data);
 
@@ -41,7 +49,7 @@ function ParetoLine() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [date]);
 
   return (
     <div class="p-20">
