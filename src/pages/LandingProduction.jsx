@@ -59,7 +59,7 @@ function LandingProduction() {
     (opeVar[0].Ava / 100) * (opeVar[0].Per / 100) * (opeVar[0].Qua / 100) * 100;
 
   const fetchOPE = async (date) => {
-    let response = await axios.get("http://10.126.15.135:8002/part/ope", {
+    let response = await axios.get("http://10.126.15.124:8002/part/ope", {
       params: {
         date: date,
       },

@@ -18,14 +18,14 @@ function Admin() {
   const [levelSelect, setLevelSelect] = useState();
 
   const fetchUser = async () => {
-    let response = await axios.get("http://10.126.15.135:8002/part/alluser");
+    let response = await axios.get("http://10.126.15.124:8002/part/alluser");
     setUserData(response.data);
   };
 
   const updateUser = async (id, data) => {
     let dataUser = { level: data };
     let response = await axios.patch(
-      `http://10.126.15.135:8002/part/userupdate/${id}`,
+      `http://10.126.15.124:8002/part/userupdate/${id}`,
       dataUser
     );
     if (response) {
@@ -36,7 +36,7 @@ function Admin() {
 
   const deleteUser = async (id) => {
     let response = await axios.delete(
-      `http://10.126.15.135:8002/part/userdelete/${id}`
+      `http://10.126.15.124:8002/part/userdelete/${id}`
     );
     if (response) {
       alert(response.data.message);
@@ -46,7 +46,7 @@ function Admin() {
 
   const editUser = async (id) => {
     let response = await axios.patch(
-      `http://10.126.15.135:8002/part/useredit/${id}`
+      `http://10.126.15.124:8002/part/useredit/${id}`
     );
 
     fetchUser();

@@ -57,7 +57,7 @@ function Production() {
   };
 
   const fetchData = async (data, start, finish) => {
-    let response = await axios.get("http://10.126.15.135:8002/part/oee", {
+    let response = await axios.get("http://10.126.15.124:8002/part/oee", {
       params: {
         machine: data,
         start: start,
@@ -65,7 +65,7 @@ function Production() {
       },
     });
     let response1 = await axios.get(
-      "http://10.126.15.135:8002/part/variableoee",
+      "http://10.126.15.124:8002/part/variableoee",
       {
         params: {
           machine: data,
