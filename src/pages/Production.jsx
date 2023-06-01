@@ -1,6 +1,7 @@
 import axios from "axios";
 import moment from "moment-timezone";
-import React, { useEffect, Component, useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import CanvasJSReact from "../canvasjs.react";
 
 import {
@@ -12,37 +13,34 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   TableCaption,
   TableContainer,
   Button,
-  ButtonGroup,
   Stack,
   Input,
   Select,
   Card,
-  CardHeader,
   CardBody,
-  CardFooter,
   Heading,
-  StackDivider,
-  Box,
   Text,
 } from "@chakra-ui/react";
+//import { useNavigate } from "react-router-dom";
 
-var CanvasJS = CanvasJSReact.CanvasJS;
+//var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function Production() {
+  //const navigate = useNavigate();
+
   const [oeeCm1, setOeeCm1] = useState([]);
   const [oeeVar, setVarOee] = useState([{ Ava: 0, Per: 0, Qua: 0, oee: 0 }]);
   const [avaLine, setAvaLine] = useState([]);
   const [perLine, setPerLine] = useState([]);
   const [quaLine, setQuaLine] = useState([]);
-  const [oeeLine, setOeeLine] = useState([]);
+
   const [toalOut, setTotalOut] = useState();
   const [totalRun, setTotalRun] = useState();
   const [totalStop, setTotalStop] = useState();
@@ -54,8 +52,12 @@ function Production() {
   const [startDate, setStartDate] = useState();
   const [finishDate, setFinishDate] = useState();
 
+  var visitorsChartDrilldownHandler = (e) => {
+    //console.log(e.dataPoint.name);
+  };
+
   const fetchData = async (data, start, finish) => {
-    let response = await axios.get("http://10.126.15.83:8001/part/oee", {
+    let response = await axios.get("http://10.126.15.135:8002/part/oee", {
       params: {
         machine: data,
         start: start,
@@ -63,7 +65,7 @@ function Production() {
       },
     });
     let response1 = await axios.get(
-      "http://10.126.15.83:8001/part/variableoee",
+      "http://10.126.15.135:8002/part/variableoee",
       {
         params: {
           machine: data,
@@ -72,7 +74,6 @@ function Production() {
         },
       }
     );
-    console.log(response1);
 
     setOeeCm1(response.data);
     setVarOee(response1.data);
@@ -88,7 +89,7 @@ function Production() {
     setAvaLine(resultAva);
 
     var resultPer = [];
-    for (var i = 0; i < response.data.length; i++) {
+    for (i = 0; i < response.data.length; i++) {
       var objPer = {
         x: response.data[i].id,
         y: Number(response.data[i].performance.toFixed(2)),
@@ -98,7 +99,7 @@ function Production() {
     setPerLine(resultPer);
 
     var resultQua = [];
-    for (var i = 0; i < response.data.length; i++) {
+    for (i = 0; i < response.data.length; i++) {
       var objQua = {
         x: response.data[i].id,
         y: Number(response.data[i].quality.toFixed(2)),
@@ -109,27 +110,27 @@ function Production() {
 
     //Output==================================
     let objOut = 0;
-    for (var i = 0; i < response.data.length; i++) {
+    for (i = 0; i < response.data.length; i++) {
       objOut += Number(response.data[i].output);
     }
     setTotalOut(objOut);
 
     //Runtime====================================
     let objRun = 0;
-    for (var i = 0; i < response.data.length; i++) {
+    for (i = 0; i < response.data.length; i++) {
       objRun += Number(response.data[i].runTime);
     }
     setTotalRun(objRun);
 
     //Stop==================================
     let objStop = 0;
-    for (var i = 0; i < response.data.length; i++) {
+    for (i = 0; i < response.data.length; i++) {
       objStop += Number(response.data[i].stopTime);
     }
     setTotalStop(objStop);
     //Idle====================================
     let objIdle = 0;
-    for (var i = 0; i < response.data.length; i++) {
+    for (i = 0; i < response.data.length; i++) {
       objIdle += Number(response.data[i].idleTime);
     }
     setTotalIdle(objIdle);
@@ -141,7 +142,7 @@ function Production() {
 
     //OEE CHART========================================
     var OeeChart = [];
-    for (var i = 0; i < response.data.length; i++) {
+    for (i = 0; i < response.data.length; i++) {
       var objOeeChart = {
         label: moment
           .tz(
@@ -154,7 +155,7 @@ function Production() {
       OeeChart.push(objOeeChart);
     }
     setOeeChart(OeeChart);
-    console.log(OeeChart);
+    //console.log(OeeChart);
   };
 
   let changeMachine = (e) => {
@@ -181,6 +182,9 @@ function Production() {
   };
 
   useEffect(() => {}, []);
+
+  let oeeCalculation =
+    (oeeVar[0].Ava / 100) * (oeeVar[0].Per / 100) * (oeeVar[0].Qua / 100) * 100;
 
   const renderCm1 = () => {
     return oeeCm1.map((cm1) => {
@@ -209,13 +213,15 @@ function Production() {
   };
 
   const options = {
+    theme: "light2",
     animationEnabled: true,
     title: {
       text: "Overall Equipment Effectiveness",
     },
     subtitles: [
       {
-        text: `${oeeVar[0].oee.toFixed(2)}% OEE`,
+        //text: `${oeeCalculation.oee.toFixed(2)}% OEE`,
+        text: `${oeeCalculation.toFixed(2)}% OEE`,
         verticalAlign: "center",
         fontSize: 26,
         dockInsidePlotArea: true,
@@ -223,6 +229,7 @@ function Production() {
     ],
     data: [
       {
+        click: visitorsChartDrilldownHandler,
         type: "doughnut",
         showInLegend: true,
         indexLabel: "{name}: {y}",
@@ -282,8 +289,9 @@ function Production() {
   };
 
   const options3 = {
+    theme: "light2",
     title: {
-      text: "Basic Column Chart",
+      text: "OEE Shift",
     },
     data: [
       {
@@ -360,7 +368,6 @@ function Production() {
           <Stack>
             <CardBody>
               <Heading size="md">Performance </Heading>
-
               <Text py="2">
                 Actual Speed {totalSpeed} slave/min
                 <Progress hasStripe value={totalSpeed} />
@@ -431,7 +438,7 @@ function Production() {
             onChange={dateStart}
             placeholder="Select Date and Time"
             size="md"
-            type="datetime-local"
+            type="date"
           />
         </div>
         <div>
@@ -440,7 +447,7 @@ function Production() {
             onChange={dateFinish}
             placeholder="Select Date and Time"
             size="md"
-            type="datetime-local"
+            type="date"
           />
         </div>
         <div>

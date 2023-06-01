@@ -5,6 +5,7 @@ const routers = express.Router();
 const { veryfyToken, checkRole } = require("../middleware/auth");
 
 routers.get("/get", databaseControllers.getData);
+routers.get("/fetch", databaseControllers.fetchEdit);
 routers.post("/add", databaseControllers.addData);
 routers.patch("/edit/:id", databaseControllers.editData);
 routers.delete("/delet/:id", databaseControllers.deletData);
@@ -18,7 +19,11 @@ routers.get("/line4", databaseControllers.fetchDataLine4);
 routers.post("/register", databaseControllers.register);
 routers.post("/login", databaseControllers.login);
 routers.get("/user", veryfyToken, checkRole, databaseControllers.fetchAlluser);
+routers.get("/alluser", databaseControllers.fetchAlluser);
 routers.post("/check-Login", veryfyToken, databaseControllers.checkLogin);
+routers.patch("/userupdate/:id", databaseControllers.updateUsers);
+routers.delete("/userdelete/:id", databaseControllers.deleteUseers);
+routers.patch("/useredit/:id", databaseControllers.editUsers);
 
 routers.get("/instrument", databaseControllers.fetchDataInstrument);
 routers.post("/hardness", databaseControllers.fetchDataHardness);
@@ -27,5 +32,21 @@ routers.post("/diameter", databaseControllers.fetchDataDiameter);
 
 routers.get("/oee", databaseControllers.fetchOee);
 routers.get("/variableoee", databaseControllers.fetchVariableOee);
+
+routers.get("/emsN14", databaseControllers.fetchEMSn14);
+
+routers.get("/ope", databaseControllers.fetchOPE);
+routers.get("/avaline", databaseControllers.fetchAvaLine);
+routers.get("/avamachine", databaseControllers.fetchAvaMachine);
+
+routers.get("/lineData", databaseControllers.lineData);
+routers.get("/procesData", databaseControllers.procesData);
+routers.get("/machineData", databaseControllers.machineData);
+routers.get("/locationData", databaseControllers.locationData);
+
+routers.post("/reportmtc", databaseControllers.reportMTC);
+routers.post("/reportprd", databaseControllers.reportPRD);
+routers.get("/lastPRD", databaseControllers.lastUpdatePRD);
+routers.get("/lastMTC", databaseControllers.lastUpdateMTC);
 
 module.exports = routers;

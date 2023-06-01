@@ -1,4 +1,4 @@
-import { useEffect, useState, Component } from "react";
+import { useEffect, useState } from "react";
 import ParetoChart from "../lib/ParetoChart/node_modules/pareto-chart/";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -7,12 +7,11 @@ function Pareto() {
   const [dataLine1, setLine1] = useState({});
   const [dataLine2, setLine2] = useState({});
   const [dataLine3, setLine3] = useState({});
-  const [dataLine4, setLine4] = useState({});
 
   const date = useSelector((state) => state.part.date);
 
   const fetchData = async () => {
-    let response1 = await axios.get("http://10.126.15.83:8001/part/line1", {
+    let response1 = await axios.get("http://10.126.15.135:8002/part/line1", {
       params: {
         date: date,
       },
@@ -22,26 +21,26 @@ function Pareto() {
       result1[response1.data[i].Mesin] = Number(response1.data[i].Line1);
     }
     setLine1(result1);
-    console.log(result1);
+    //console.log(result1);
 
-    let response2 = await axios.get("http://10.126.15.83:8001/part/line2", {
+    let response2 = await axios.get("http://10.126.15.135:8002/part/line2", {
       params: {
         date: date,
       },
     });
     var result2 = {};
-    for (var i = 0; i < response2.data.length; i++) {
+    for (i = 0; i < response2.data.length; i++) {
       result2[response2.data[i].Mesin] = Number(response2.data[i].Line2);
     }
     setLine2(result2);
 
-    let response3 = await axios.get("http://10.126.15.83:8001/part/line3", {
+    let response3 = await axios.get("http://10.126.15.135:8002/part/line3", {
       params: {
         date: date,
       },
     });
     var result3 = {};
-    for (var i = 0; i < response3.data.length; i++) {
+    for (i = 0; i < response3.data.length; i++) {
       result3[response3.data[i].Mesin] = Number(response3.data[i].Line3);
     }
     setLine3(result3);

@@ -62,16 +62,17 @@ export function getDateMaintenance(data) {
 
 export function addPartListData(data) {
   return async (dispatch) => {
-    let response = await Axios.post("http://10.126.15.83:8001/part/add", data);
+    let response = await Axios.post("http://10.126.15.135:8002/part/add", data);
     dispatch(fetchPart());
   };
 }
 
 export function fetchPart(data) {
   return async (dispatch) => {
-    let response = await Axios.get("http://10.126.15.83:8001/part/get", {
+    let response = await Axios.get("http://10.126.15.135:8002/part/get", {
       params: {
         date: data,
+        id: "",
       },
     });
     dispatch(setPartList(response.data));
@@ -81,7 +82,7 @@ export function fetchPart(data) {
 export function deletePartListData(data) {
   return async (dispatch) => {
     let response = await Axios.delete(
-      `http://10.126.15.83:8001/part/delet/${data}`
+      `http://10.126.15.135:8002/part/delet/${data}`
     );
     dispatch(fetchPart());
   };
@@ -90,21 +91,25 @@ export function deletePartListData(data) {
 export function editePartListData(data, id) {
   return async (dispatch) => {
     let response = await Axios.patch(
-      `http://10.126.15.83:8001/part/edit/${id}`,
+      `http://10.126.15.135:8002/part/edit/${id}`,
       data
     );
     dispatch(fetchPart());
   };
 }
 
-export function getDataById(dataId) {
+export function getDataById(dataId, data) {
   return async (dispatch) => {
-    let response = await Axios.get("http://10.126.15.83:8001/part/get", {
+    let response = await Axios.get("http://10.126.15.135:8002/part/get", {
       params: {
         id: dataId,
+        date: data,
       },
     });
-    const found = response.data.find((element) => element.id == dataId);
+
+    let response1 = await Axios.get("http://10.126.15.135:8002/part/fetch");
+
+    const found = response1.data.find((element) => element.id == dataId);
 
     dispatch(partListId(found));
   };

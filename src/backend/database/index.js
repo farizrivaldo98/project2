@@ -16,7 +16,7 @@ const db2 = mysql.createConnection({
   port: 3306,
 });
 
-// host: "localhost",
+// host: "10.126.15.135",
 // user: "root",
 // password: "password",
 // database: "parammachine_saka",

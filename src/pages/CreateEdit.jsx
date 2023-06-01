@@ -14,11 +14,12 @@ function CreateEdit() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const partId = useSelector((state) => state.part.partId);
+  const tanggal = moment(partId.Tanggal).format("MM/MM/YYYY");
+
   useEffect(() => {
-    dispatch(getDataById(id));
+    dispatch(getDataById(id, tanggal));
   }, []);
 
-  const tanggal = moment(partId.Tanggal).format("MM/MM/YYYY");
   useEffect(() => {
     setNewLine(partId.Line);
     setNewMachine(partId.Mesin);

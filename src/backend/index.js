@@ -1,3 +1,4 @@
+const fetch = require("isomorphic-fetch");
 const { request } = require("express");
 const express = require("express");
 const cors = require("cors");
@@ -24,6 +25,16 @@ app.post(
     return res.status(200).send(req.body);
   }
 );
+
+app.get("/plc", async (req, res) => {
+  try {
+    const response = await fetch("http://10.126.15.134/awp/data/data.js");
+    const data = await response.text();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 app.post("/upload", upload.single("file"), async (req, res) => {
   const { file } = req;

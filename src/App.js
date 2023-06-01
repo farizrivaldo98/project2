@@ -1,4 +1,5 @@
 import "./App.css";
+import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Maintenance from "./pages/Maintenance";
@@ -15,10 +16,18 @@ import { useEffect } from "react";
 import CheckMail from "./pages/CheckMail";
 import EditProfile from "./pages/EditProfile";
 import Production from "./pages/Production";
+import App1 from "./pages/LandingProduction";
+import AvabilityOPE from "./pages/AvabilityOPE";
+import AvabilityMachine from "./pages/AvabilityMachine";
+import Admin from "./pages/Admin";
+import Sidebar from "./components/Sidebar";
+import OEEline from "./pages/OEEline";
+import Utility from "./pages/Utility";
 
 function App() {
   const dispatch = useDispatch();
   const userlocalStorage = localStorage.getItem("user_token");
+  const userGlobal = useSelector((state) => state.user.user.id);
 
   //KEEP LOGIN CHECKER
   const keepLogin = () => {
@@ -33,27 +42,56 @@ function App() {
     keepLogin();
   }, []);
 
-  return (
-    <div>
+  if (userGlobal) {
+    return (
       <div>
-        <Navbar />
-      </div>
-      <Routes>
-        <Route path="/" element={<Login />} />
+        <div>
+          <div>
+            <Navbar />
+          </div>
+          {/* <div>
+            <Sidebar />
+          </div> */}
+        </div>
 
-        <Route path="/register" element={<Register />} />
-        <Route path="/Instrument" element={<Instrument />} />
-        <Route path="/maintenance" element={<Maintenance />} />
-        <Route path="/pareto" element={<Pareto />} />
-        <Route path="/createnew" element={<CreateNew />} />
-        <Route path="/createedite/:id" element={<CreateEdit />} />
-        <Route path="/building" element={<AppPareto />} />
-        <Route path="/mail" element={<CheckMail />} />
-        <Route path="/editprofile" element={<EditProfile />} />
-        <Route path="/production" element={<Production />} />
-      </Routes>
-    </div>
-  );
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/Instrument" element={<Instrument />} />
+          <Route path="/maintenance" element={<Maintenance />} />
+          <Route path="/pareto" element={<Pareto />} />
+          <Route path="/createnew" element={<CreateNew />} />
+          <Route path="/createedite/:id" element={<CreateEdit />} />
+          <Route path="/building" element={<AppPareto />} />
+          <Route path="/mail" element={<CheckMail />} />
+          <Route path="/editprofile" element={<EditProfile />} />
+          <Route path="/production" element={<Production />} />
+          <Route path="/OPE" element={<App1 />} />
+          <Route path="/avabilityope" element={<AvabilityOPE />} />
+          <Route path="/avabilitmachine" element={<AvabilityMachine />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/oeeLine" element={<OEEline />} />
+          <Route path="/Utility" element={<Utility />} />
+        </Routes>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <div>
+          <div>
+            <Navbar />
+          </div>
+        </div>
+
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/mail" element={<CheckMail />} />
+        </Routes>
+      </div>
+    );
+  }
 }
 
 export default App;

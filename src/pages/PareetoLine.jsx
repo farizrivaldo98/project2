@@ -33,18 +33,20 @@ function ParetoLine() {
     // console.log(dataParetoSaka);
     // paretoSetData(dataParetoSaka);
 
-    let response = await axios.get("http://10.126.15.83:8001/part/pareto", {
+    let response = await axios.get("http://10.126.15.135:8002/part/pareto", {
       params: {
         date: date,
       },
     });
 
-    //setData(response.data);
-
     setline1(Number(response.data[0].y));
     setline2(Number(response.data[1].y));
     setline3(Number(response.data[2].y));
     setline4(Number(response.data[3].y));
+  };
+
+  var onClick = (e) => {
+    //console.log(e);
   };
 
   useEffect(() => {

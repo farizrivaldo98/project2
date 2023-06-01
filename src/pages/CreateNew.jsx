@@ -4,6 +4,9 @@ import { Select, Input } from "@chakra-ui/react";
 import { addPartListData } from "../features/part/partSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
+import axios from "axios";
+import { event } from "jquery";
 
 function CreateNew() {
   const dispatch = useDispatch();
@@ -11,7 +14,9 @@ function CreateNew() {
 
   const [dataList, setDataList] = useState({});
   const [newLine, setNewLine] = useState("");
+  const [newProces, setNewProces] = useState("");
   const [newMachine, setNewMachine] = useState("");
+  const [newLocation, setNewLocation] = useState("");
   const [newJob, setNewJob] = useState("");
   const [newJobDetail, setNewJobDetail] = useState("");
   const [newDate, setNewDate] = useState();
@@ -20,6 +25,100 @@ function CreateNew() {
   const [newPIC, setNewPIC] = useState("");
   const [newStartTime, setNewStartTime] = useState();
   const [newFinishTime, setNewFinishTime] = useState();
+
+  const [fetchLineData, setFetchLineData] = useState([]);
+  const [fetchProcesData, setFetchProcesData] = useState([]);
+  const [fetchMachineData, setFetchMachineData] = useState([]);
+  const [fetchLocationData, setFetchLocationData] = useState([]);
+
+  //=================================FETCH new=================
+
+  const fetchLine = async () => {
+    let response = await axios.get("http://10.126.15.135:8002/part/lineData");
+    setFetchLineData(response.data);
+  };
+
+  const fetchProces = async (line) => {
+    let response = await axios.get(
+      "http://10.126.15.135:8002/part/procesData",
+      {
+        params: {
+          line_name: line,
+        },
+      }
+    );
+
+    setFetchProcesData(response.data);
+  };
+
+  const fetchMachine = async (line, proces) => {
+    let response = await axios.get(
+      "http://10.126.15.135:8002/part/machineData",
+      {
+        params: {
+          line_name: line,
+          proces_name: proces,
+        },
+      }
+    );
+    setFetchMachineData(response.data);
+  };
+
+  const fetchLocation = async (line, proces, machine) => {
+    let response = await axios.get(
+      "http://10.126.15.135:8002/part/locationData",
+      {
+        params: {
+          line_name: line,
+          proces_name: proces,
+          machine_name: machine,
+        },
+      }
+    );
+    setFetchLocationData(response.data);
+  };
+
+  const renderLine = () => {
+    return fetchLineData.map((lineCategory) => {
+      return (
+        <option value={lineCategory.line_name}>{lineCategory.line_name}</option>
+      );
+    });
+  };
+
+  const renderProces = () => {
+    return fetchProcesData.map((procesCategory) => {
+      return (
+        <option value={procesCategory.proces_name}>
+          {procesCategory.proces_name}
+        </option>
+      );
+    });
+  };
+
+  const renderMachine = () => {
+    return fetchMachineData.map((machineCategory) => {
+      return (
+        <option value={machineCategory.machine_name}>
+          {machineCategory.machine_name}
+        </option>
+      );
+    });
+  };
+
+  const renderLocation = () => {
+    return fetchLocationData.map((locationCategory) => {
+      return (
+        <option value={locationCategory.location_name}>
+          {locationCategory.location_name}
+        </option>
+      );
+    });
+  };
+
+  useEffect(() => {
+    fetchLine();
+  }, []);
 
   if (newStartTime && newFinishTime) {
     var hm = newStartTime;
@@ -36,7 +135,7 @@ function CreateNew() {
 
   const addData = () => {
     let tempData = {
-      Mesin: newMachine,
+      Mesin: newProces,
       Line: newLine,
       Pekerjaan: newJob,
       Detail: newJobDetail,
@@ -49,7 +148,6 @@ function CreateNew() {
       Total: totalMinuites,
     };
     setDataList((dataList, { ...tempData }));
-
     dispatch(addPartListData(tempData));
     alert("Data berhasil ditambahkan");
     navigate("/Maintenance");
@@ -57,10 +155,27 @@ function CreateNew() {
 
   const lineHendeler = (event) => {
     setNewLine(event.target.value);
+    fetchProces(event.target.value);
+    //console.log(event.target.value);
   };
+
+  const procesHendeler = (event) => {
+    setNewProces(event.target.value);
+    fetchMachine(newLine, event.target.value);
+    //console.log(event.target.value);
+  };
+
   const machineHendeler = (event) => {
     setNewMachine(event.target.value);
+    fetchLocation(newLine, newProces, event.target.value);
+    //console.log(event.target.value);
   };
+
+  const locationHendeler = (event) => {
+    setNewLocation(event.target.value);
+    //(event.target.value);
+  };
+
   const jobHendeler = (event) => {
     setNewJob(event.target.value);
   };
@@ -87,14 +202,14 @@ function CreateNew() {
   };
 
   return (
-    <div className="ml-60 mr-60">
-      <div className="space-y-20 ">
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900 mt-10">
+    <div className="px-96">
+      <div className=" space-y-20 ">
+        <div className=" border-gray-900/10 pb-12 border-solid border-4 mt-8 ">
+          <h2 className="text-base text-center font-bold leading-7 ml-4 text-gray-900 mt-10">
             INPUT DATA MAINTENANCE
           </h2>
 
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div className="flex flex-auto mt-2 gap-x-6 gap-y-8 p-4  sm:grid-cols-6   ">
             <div className="sm:col-span-4">
               <label
                 htmlFor="username"
@@ -102,19 +217,30 @@ function CreateNew() {
               >
                 Line Area
               </label>
-              <div className="mt-2">
+              <div className="mt-2 w-48">
                 <Select
                   placeholder="Select Line"
                   id="line"
                   onChange={lineHendeler}
                 >
-                  <option value="Line1">Line 1</option>
-                  <option value="Line2">Line 2</option>
-                  <option value="Line3">Line 3</option>
-                  <option value="Line4">Line 4</option>
+                  {renderLine()}
                 </Select>
               </div>
             </div>
+            <div className="sm:col-span-4 ">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Proces
+              </label>
+              <div className="mt-2 w-48">
+                <Select placeholder="Select Machine" onChange={procesHendeler}>
+                  {renderProces()}
+                </Select>
+              </div>
+            </div>
+
             <div className="sm:col-span-4">
               <label
                 htmlFor="username"
@@ -122,82 +248,32 @@ function CreateNew() {
               >
                 Machine
               </label>
-              <div className="mt-2">
+              <div className="mt-2 w-48">
                 <Select placeholder="Select Machine" onChange={machineHendeler}>
-                  <option value="PMA">PMA</option>
-                  <option value="FBD">FBD</option>
-                  <option value="EPH">EPH</option>
-                  <option value="FinalMixing">Final MIxing</option>
-                  <option value="Fette">Fette</option>
-                  <option value="Coating">Coating</option>
-                  <option value="Striping">Striping</option>
-                  <option value="CM1">CM1</option>
-                  <option value="Cm2">CM2</option>
-                  <option value="CM3">CM3</option>
-                  <option value="CM4">CM4</option>
-                  <option value="CM5">CM5</option>
-                  <option value="CC1">CC1</option>
-                  <option value="CC2">CC2</option>
+                  {renderMachine()}
                 </Select>
               </div>
             </div>
 
             <div className="sm:col-span-4">
               <label
-                htmlFor="Pekerjaan"
+                htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Pekerjaan
+                Location
               </label>
-              <div className="mt-2">
-                <input
-                  onChange={jobHendeler}
-                  id="Pekerjaan"
-                  name="Pekerjaan"
-                  type="Pekerjaan"
-                  autoComplete="Pekerjaan"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+              <div className="mt-2 w-48">
+                <Select
+                  placeholder="Select Machine"
+                  onChange={locationHendeler}
+                >
+                  {renderLocation()}
+                </Select>
               </div>
             </div>
-
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="about"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Detail Pekerjaan
-              </label>
-              <div className="mt-2">
-                <textarea
-                  onChange={jobDetailHendeler}
-                  id="about"
-                  name="about"
-                  rows={3}
-                  className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6"
-                  defaultValue={""}
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="photo"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Tanggal
-              </label>
-              <div className="mt-2 flex items-center gap-x-3">
-                <Input
-                  onChange={dateHendeler}
-                  placeholder="Select Date and Time"
-                  size="md"
-                  type="date"
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-4">
+          </div>
+          <div className="flex flex-auto  gap-x-6 gap-y-8 sm:grid-cols-6 p-4 ">
+            {/* <div className="sm:col-span-4 ">
               <label
                 htmlFor="Pekerjaan"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -210,7 +286,7 @@ function CreateNew() {
                   name="Pekerjaan"
                   type="Pekerjaan"
                   autoComplete="Pekerjaan"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-48 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -222,7 +298,7 @@ function CreateNew() {
               >
                 Quantity
               </label>
-              <div className="mt-2">
+              <div className="mt-2 w-48">
                 <Input onChange={quantityHendeler} size="md" type="number" />
               </div>
             </div>
@@ -234,7 +310,7 @@ function CreateNew() {
               >
                 Unit
               </label>
-              <div className="mt-2">
+              <div className="mt-2 w-48">
                 <Select onChange={unitHendeler} placeholder="Select Unit">
                   <option value="Pcs">Pcs</option>
                   <option value="Rol">Rol</option>
@@ -245,7 +321,7 @@ function CreateNew() {
                   <option value="Pack">Pack</option>
                 </Select>
               </div>
-            </div>
+            </div> */}
 
             <div className="sm:col-span-4">
               <label
@@ -254,7 +330,7 @@ function CreateNew() {
               >
                 PIC
               </label>
-              <div className="mt-2">
+              <div className="mt-2 w-48">
                 <Select onChange={PICHendeler} placeholder="Select PIC">
                   <option value="SGO">Sugino</option>
                   <option value="MKF">Khaerul</option>
@@ -271,7 +347,24 @@ function CreateNew() {
                 htmlFor="photo"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Awal Pengerjaan
+                Tanggal
+              </label>
+              <div className="mt-2 flex items-center gap-x-3 w-48">
+                <Input
+                  onChange={dateHendeler}
+                  placeholder="Select Date and Time"
+                  size="md"
+                  type="date"
+                />
+              </div>
+            </div>
+
+            <div className="sm:col-span-4">
+              <label
+                htmlFor="photo"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Start Time
               </label>
               <div className="mt-2 flex items-center gap-x-3">
                 <Input
@@ -287,7 +380,7 @@ function CreateNew() {
                 htmlFor="photo"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Akhir Pengerjaan
+                Finish Time
               </label>
               <div className="mt-2 flex items-center gap-x-3">
                 <Input
@@ -295,6 +388,44 @@ function CreateNew() {
                   placeholder="Select Date and Time"
                   size="md"
                   type="time"
+                />
+              </div>
+            </div>
+            <div className="sm:col-span-4">
+              <label
+                htmlFor="Pekerjaan"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Pekerjaan
+              </label>
+              <div className="mt-2">
+                <input
+                  onChange={jobHendeler}
+                  id="Pekerjaan"
+                  name="Pekerjaan"
+                  type="Pekerjaan"
+                  autoComplete="Pekerjaan"
+                  className=" w-48 block  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-auto  gap-x-6 gap-y-8 sm:grid-cols-6 p-4 ">
+            <div className="sm:col-span-4">
+              <label
+                htmlFor="about"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Detail Pekerjaan
+              </label>
+              <div className="mt-2 ">
+                <textarea
+                  onChange={jobDetailHendeler}
+                  id="about"
+                  name="about"
+                  rows={3}
+                  className="block w-96 rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6"
+                  defaultValue={""}
                 />
               </div>
             </div>

@@ -2,6 +2,7 @@ import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
 
 import {
   Menu,
@@ -20,6 +21,7 @@ const navigation = [
   { name: "Utility", href: "#", current: false },
   { name: "Production", href: "#", current: false },
   { name: "building", href: "#", current: false },
+  { name: "OPE", href: "#", current: false },
 ];
 
 function classNames(...classes) {
@@ -28,6 +30,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const userGlobal = useSelector((state) => state.user.user);
+  const [activeMenu, setActiveMenu] = useState("");
 
   const navigate = useNavigate();
 
@@ -35,6 +38,48 @@ export default function Navbar() {
     localStorage.removeItem("user_token");
     navigate("/");
     navigate(0);
+  };
+
+  const [currentDateTimeString, setCurrentDateTimeString] = useState("");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentDateTime = new Date();
+      const day = currentDateTime.getDate().toString().padStart(2, "0");
+      const monthIndex = currentDateTime.getMonth();
+      const year = currentDateTime.getFullYear().toString();
+      const hours = currentDateTime.getHours().toString().padStart(2, "0");
+      const minutes = currentDateTime.getMinutes().toString().padStart(2, "0");
+      const seconds = currentDateTime.getSeconds().toString().padStart(2, "0");
+
+      const monthNames = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      const month = monthNames[monthIndex];
+
+      const updatedDateTimeString = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+
+      setCurrentDateTimeString(updatedDateTimeString);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  const clickHendeler = (e) => {
+    //console.log(e.target.value);
   };
 
   return (
@@ -57,9 +102,10 @@ export default function Navbar() {
 
               <div>
                 <img
-                  className="hidden h-12 w-auto lg:block flex-row"
+                  className="hidden h-12 w-auto lg:block flex-row cursor-pointer"
                   src="https://kalbeconsumerhealth-web.s3.ap-southeast-1.amazonaws.com/assets/media/1636428076601-829757853-logo-putih.png"
                   alt="Your Company"
+                  onClick={() => navigate("/")}
                 />
               </div>
 
@@ -72,13 +118,16 @@ export default function Navbar() {
                           key={item.name}
                           href={item.href}
                           className={classNames(
-                            item.current
-                              ? "bg-gray-900 text-white"
+                            item.name === activeMenu
+                              ? "bg-gray-700 text-white h-12"
                               : "text-gray-300 hover:bg-gray-700 hover:text-white",
                             "rounded-md px-3 py-2 text-sm font-medium"
                           )}
-                          aria-current={item.current ? "page" : undefined}
+                          aria-current={
+                            item.name === activeMenu ? "page" : undefined
+                          }
                           onClick={() => {
+                            setActiveMenu(item.name);
                             navigate(`/${item.name}`);
                           }}
                         >
@@ -90,6 +139,9 @@ export default function Navbar() {
                     <div></div>
                   )}
                 </div>
+              </div>
+              <div>
+                <p class="text-white mr-4">{currentDateTimeString}</p>
               </div>
               {userGlobal.id ? (
                 <>
@@ -103,6 +155,11 @@ export default function Navbar() {
                       {userGlobal.name}
                     </MenuButton>
                     <MenuList>
+                      {userGlobal.isAdmin == 1 ? (
+                        <MenuItem onClick={() => navigate("/Admin")}>
+                          Admin
+                        </MenuItem>
+                      ) : null}
                       <MenuItem onClick={() => navigate("/editprofile")}>
                         Edit Profile
                       </MenuItem>

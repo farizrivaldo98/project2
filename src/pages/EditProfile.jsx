@@ -19,12 +19,12 @@ function EditProfile() {
       let formData = new FormData();
       formData.append("file", file);
       formData.append("data", JSON.stringify(obj));
-      console.log(formData);
+      //console.log(formData);
       const response = await axios.post(
-        "http://10.126.15.83:8001/upload",
+        "http://10.126.15.135:8002/upload",
         formData
       );
-      console.log(response);
+      //console.log(response);
     } else {
       alert("Select image first");
     }
@@ -44,7 +44,7 @@ function EditProfile() {
           </h2>
         </div>
         <div className="-space-y-px rounded-md shadow-sm">
-          <div class="flex items-center justify-center w-full">
+          {/* <div class="flex items-center justify-center w-full">
             <label
               for="dropzone-file"
               class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
@@ -81,9 +81,9 @@ function EditProfile() {
                 onChange={(event) => onFileChange(event)}
               />
             </label>
-          </div>
+          </div> */}
           <br />
-          <div>
+          {/* <div>
             <button
               onClick={() => uploadImage()}
               type="button"
@@ -92,7 +92,7 @@ function EditProfile() {
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
               Upload
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
