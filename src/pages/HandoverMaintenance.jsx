@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Select,
   Input,
@@ -10,7 +10,6 @@ import {
 import { addPartListData } from "../features/part/partSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { useEffect } from "react";
 import axios from "axios";
 
 function HandoverMaintenance() {
@@ -292,6 +291,25 @@ function HandoverMaintenance() {
     alert(response.data.message);
 
     // navigate("/maintenance", { replace: true });
+    setNewLine("");
+    setNewProces("");
+    setNewMachine("");
+    setNewLocation("");
+    setNewPIC("");
+    setNewDate("");
+    setNewStartTime("");
+    setNewFinishTime("");
+    setNewTotal("");
+    setNewSparepart("");
+    setNewQuantity("");
+    setNewUnit("");
+    setNewPMjob("");
+    setNewPMactual("");
+    setNewSafety("");
+    setNewQuality("");
+    setNewStatus("");
+    setNewJobDetail("");
+    setBreakdownType("");
   };
 
   //================================PROD Report Hendeler=============================================
