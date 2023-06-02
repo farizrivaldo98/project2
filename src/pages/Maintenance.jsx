@@ -20,7 +20,7 @@ function Maintenance() {
       <CardBody>
         <Tabs isFitted size={"lg"} variant="enclosed" class=" p-3  ">
           <TabList>
-            {userGlobal.level == 1 || 2 ? (
+            {userGlobal.level <= 2 ? (
               <Tab className="font-bold">Maintenance Breakdown Pareto</Tab>
             ) : (
               <>
@@ -32,7 +32,7 @@ function Maintenance() {
           </TabList>
 
           <TabPanels>
-            {userGlobal.level == 1 || 2 ? (
+            {userGlobal.level <= 2 ? (
               <TabPanel>
                 <MachineBreakdown />
               </TabPanel>
