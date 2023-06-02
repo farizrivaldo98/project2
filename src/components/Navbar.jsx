@@ -24,7 +24,7 @@ export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState("");
 
   const navigate = useNavigate();
-
+  console.log(userGlobal.level);
   var navigation = [
     { name: "Maintenance", href: "#", current: false },
     { name: "Instrument", href: "#", current: false },
