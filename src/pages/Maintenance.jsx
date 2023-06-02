@@ -18,7 +18,7 @@ function Maintenance() {
       <CardBody>
         <Tabs isFitted size={"lg"} variant="enclosed" class=" p-3  ">
           <TabList>
-            <Tab className="font-bold">Maintenance Report Report</Tab>
+            <Tab className="font-bold">Maintenance Report</Tab>
             <Tab className="font-bold">Maintenance Breakdown Pareto</Tab>
 
             <Tab className="font-bold">Data Report</Tab>
