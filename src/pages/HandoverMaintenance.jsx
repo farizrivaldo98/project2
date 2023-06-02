@@ -291,25 +291,6 @@ function HandoverMaintenance() {
     alert(response.data.message);
 
     // navigate("/maintenance", { replace: true });
-    setNewLine("");
-    setNewProces("");
-    setNewMachine("");
-    setNewLocation("");
-    setNewPIC("");
-    setNewDate("");
-    setNewStartTime("");
-    setNewFinishTime("");
-    setNewTotal("");
-    setNewSparepart("");
-    setNewQuantity("");
-    setNewUnit("");
-    setNewPMjob("");
-    setNewPMactual("");
-    setNewSafety("");
-    setNewQuality("");
-    setNewStatus("");
-    setNewJobDetail("");
-    setBreakdownType("");
   };
 
   //================================PROD Report Hendeler=============================================
