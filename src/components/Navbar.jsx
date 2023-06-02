@@ -15,15 +15,6 @@ import {
   MenuDivider,
 } from "@chakra-ui/react";
 
-const navigation = [
-  { name: "Maintenance", href: "#", current: false },
-  { name: "Instrument", href: "#", current: false },
-  { name: "Utility", href: "#", current: false },
-  { name: "Production", href: "#", current: false },
-  { name: "building", href: "#", current: false },
-  { name: "OPE", href: "#", current: false },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -33,6 +24,15 @@ export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState("");
 
   const navigate = useNavigate();
+
+  var navigation = [
+    { name: "Maintenance", href: "#", current: false },
+    { name: "Instrument", href: "#", current: false },
+    { name: "Utility", href: "#", current: false },
+    { name: "Production", href: "#", current: false },
+    { name: "building", href: "#", current: false },
+    { name: "OPE", href: "#", current: false },
+  ];
 
   const logOut = () => {
     localStorage.removeItem("user_token");
