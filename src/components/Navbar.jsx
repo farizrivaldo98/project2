@@ -24,15 +24,46 @@ export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState("");
 
   const navigate = useNavigate();
-  console.log(userGlobal.level);
-  var navigation = [
-    { name: "Maintenance", href: "#", current: false },
-    { name: "Instrument", href: "#", current: false },
-    { name: "Utility", href: "#", current: false },
-    { name: "Production", href: "#", current: false },
-    { name: "building", href: "#", current: false },
-    { name: "OPE", href: "#", current: false },
-  ];
+
+  if (userGlobal.level == 1) {
+    var navigation = [{ name: "Maintenance", href: "#", current: false }];
+  }
+  if (userGlobal.level == 2) {
+    var navigation = [
+      { name: "Maintenance", href: "#", current: false },
+      { name: "Instrument", href: "#", current: false },
+      { name: "Production", href: "#", current: false },
+    ];
+  }
+  if (userGlobal.level == 3) {
+    var navigation = [
+      { name: "Maintenance", href: "#", current: false },
+      { name: "Instrument", href: "#", current: false },
+      { name: "Utility", href: "#", current: false },
+      { name: "Production", href: "#", current: false },
+      { name: "building", href: "#", current: false },
+    ];
+  }
+  if (userGlobal.level == 4) {
+    var navigation = [
+      { name: "Maintenance", href: "#", current: false },
+      { name: "Instrument", href: "#", current: false },
+      { name: "Utility", href: "#", current: false },
+      { name: "Production", href: "#", current: false },
+      { name: "building", href: "#", current: false },
+      { name: "OPE", href: "#", current: false },
+    ];
+  }
+  if (userGlobal.level == 5) {
+    var navigation = [
+      { name: "Maintenance", href: "#", current: false },
+      { name: "Instrument", href: "#", current: false },
+      { name: "Utility", href: "#", current: false },
+      { name: "Production", href: "#", current: false },
+      { name: "building", href: "#", current: false },
+      { name: "OPE", href: "#", current: false },
+    ];
+  }
 
   const logOut = () => {
     localStorage.removeItem("user_token");
