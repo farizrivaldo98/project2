@@ -83,7 +83,7 @@ function EditProfile() {
             </label>
           </div>
           <br />
-          {/* <div>
+          <div>
             <button
               onClick={() => uploadImage()}
               type="button"
@@ -92,7 +92,7 @@ function EditProfile() {
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
               Upload
             </button>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
