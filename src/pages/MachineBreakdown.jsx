@@ -112,14 +112,19 @@ function MaintenanceBreakdown() {
             <Td>{partdata.Tahir}</Td>
             <Td>{partdata.Total}</Td>
             <Td>
-              <Button
-                colorScheme="green"
-                onClick={() => {
-                  navigate(`/createedite/${partdata.id}`);
-                }}
-              >
-                Edit
-              </Button>
+              {userGlobal.level > 2 ? (
+                <Button
+                  colorScheme="green"
+                  onClick={() => {
+                    navigate(`/createedite/${partdata.id}`);
+                  }}
+                >
+                  Edit
+                </Button>
+              ) : (
+                <></>
+              )}
+
               <Button colorScheme="red" onClick={() => deleteData(partdata.id)}>
                 Delet
               </Button>
