@@ -32,15 +32,23 @@ function Maintenance() {
           </TabList>
 
           <TabPanels>
-            <TabPanel>
-              <HandoverMaintenance />
-            </TabPanel>
-            <TabPanel>
-              <MachineBreakdown />
-            </TabPanel>
-            <TabPanel>
-              <p>three!</p>
-            </TabPanel>
+            {userGlobal.level == 1 || 2 ? (
+              <TabPanel>
+                <MachineBreakdown />
+              </TabPanel>
+            ) : (
+              <>
+                <TabPanel>
+                  <HandoverMaintenance />
+                </TabPanel>
+                <TabPanel>
+                  <MachineBreakdown />
+                </TabPanel>
+                <TabPanel>
+                  <p>three!</p>
+                </TabPanel>
+              </>
+            )}
           </TabPanels>
         </Tabs>
       </CardBody>
