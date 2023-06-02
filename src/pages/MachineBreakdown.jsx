@@ -29,6 +29,7 @@ import axios from "axios";
 function MaintenanceBreakdown() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userGlobal = useSelector((state) => state.user.user);
 
   const [inputText, setInputText] = useState("");
   const [dropDown, UseDropDown] = useState("");
@@ -134,8 +135,14 @@ function MaintenanceBreakdown() {
         <h1 class="text-center text-4xl antialiased hover:subpixel-antialiased; p-8">
           PARETO MACHINE BREAKDOWN
         </h1>
-        <App />
-        <Pareto />
+        {userGlobal.level == 1 ? (
+          <></>
+        ) : (
+          <>
+            <App />
+            <Pareto />
+          </>
+        )}
       </div>
 
       <Stack
