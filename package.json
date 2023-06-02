@@ -33,6 +33,7 @@
     "moment-timezone": "^0.5.43",
     "mysql": "^2.18.1",
     "node-opcua": "^2.103.0",
+    "nodemon": "^2.0.22",
     "pareto-chart": "^1.0.22",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",

@@ -307,6 +307,7 @@ module.exports = {
         id: isEmailExist[0].id_users,
         isAdmin: isEmailExist[0].isAdmin,
         level: isEmailExist[0].level,
+        imagePath :isEmailExist[0].imagePath,
       };
       const token = jwt.sign(payload, "khaerul", { expiresIn: "8h" });
 
@@ -340,6 +341,8 @@ module.exports = {
           id: users[0].id_users,
           isAdmin: users[0].isAdmin,
           level: users[0].level,
+          imagePath: users[0].imagePath,
+          
         },
       });
     } catch (error) {

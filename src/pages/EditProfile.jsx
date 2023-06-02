@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, Component } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
 function EditProfile() {
+
+  const userGlobal = useSelector((state) => state.user.user);
+  const [idData, setidData] = useState();
   const [file, setFile] = useState(null);
 
+  useEffect(() => {
+    setidData(userGlobal.id)
+    console.log(idData);
+  }, []);
+  
   const onFileChange = (event) => {
     setFile(event.target.files[0]);
     let preview = document.getElementById("imagepreview");
@@ -12,9 +20,10 @@ function EditProfile() {
   };
 
   const uploadImage = async () => {
+    console.log(userGlobal.id);
     if (file) {
       const obj = {
-        id: 4,
+        id: userGlobal.id
       };
       let formData = new FormData();
       formData.append("file", file);
@@ -29,7 +38,8 @@ function EditProfile() {
       alert("Select image first");
     }
   };
-  const userGlobal = useSelector((state) => state.user.user);
+  const imageData = `http://10.126.15.124:8002${userGlobal.imagePath}`
+
   return (
     <div className="flex min-h-full items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -37,7 +47,7 @@ function EditProfile() {
           <img
             id="imagepreview"
             className="mx-auto h-16 w-16 rounded-full ring-2 ring-red"
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            src={imageData}
           />
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             Edit Profile {userGlobal.name}

@@ -11,6 +11,7 @@ export const userSlice = createSlice({
       email: "",
       isAdmin: "",
       level: "",
+      imagePath:""
     },
   },
   reducers: {

@@ -42,14 +42,21 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   let data = JSON.parse(req.body.data);
 
   res.status(200).send({ filepath });
+  console.log(filepath);
+  console.log(data.id);
 
-  let response = await query(
-    `UPDATE parammachine_saka.users SET imagePath = ${db.escape(
-      filepath
-    )} WHERE id_users = ${db.escape(data.id)}`
-  );
+  let fetchQuerry =`UPDATE parammachine_saka.users SET imagePath = ${db.escape(filepath)} WHERE id_users = ${db.escape(data.id)}`
 
-  res.status(200).send({ filepath });
+  db.query(fetchQuerry, (err, result) => {
+    if (err) {
+      // return response.status(400).send(err.message);
+    } else {
+      let fatchquerry = "SELECT * FROM parammachine_saka.users";
+      db.query(fatchquerry, (err, result) => {
+        // return response.status(200).send(result);
+      });
+    }
+  });
 });
 
 app.use("/part", databaseRouter);
