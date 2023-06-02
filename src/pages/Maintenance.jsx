@@ -37,17 +37,21 @@ function Maintenance() {
                 <MachineBreakdown />
               </TabPanel>
             ) : (
-              <>
+              ((
                 <TabPanel>
                   <HandoverMaintenance />
                 </TabPanel>
+              ),
+              (
                 <TabPanel>
                   <MachineBreakdown />
                 </TabPanel>
+              ),
+              (
                 <TabPanel>
                   <p>three!</p>
                 </TabPanel>
-              </>
+              ))
             )}
           </TabPanels>
         </Tabs>
