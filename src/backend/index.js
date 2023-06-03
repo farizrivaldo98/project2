@@ -45,15 +45,22 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   console.log(filepath);
   console.log(data.id);
 
-  let fetchQuerry =`UPDATE parammachine_saka.users SET imagePath = ${db.escape(filepath)} WHERE id_users = ${db.escape(data.id)}`
+  let fetchQuerry = `UPDATE parammachine_saka.users SET imagePath = ${db.escape(
+    filepath
+  )} WHERE id_users = ${db.escape(data.id)}`;
 
   db.query(fetchQuerry, (err, result) => {
     if (err) {
-      // return response.status(400).send(err.message);
+      return response.status(200).send({
+        isSucess: true,
+        message: "File not suport,(don't use spacing in name of file) ",
+      });
     } else {
       let fatchquerry = "SELECT * FROM parammachine_saka.users";
       db.query(fatchquerry, (err, result) => {
-        // return response.status(200).send(result);
+        return response
+          .status(200)
+          .send({ isSucess: true, message: "Succes update data" });
       });
     }
   });
