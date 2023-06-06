@@ -38,7 +38,14 @@ function EditProfile() {
       alert("Select image first");
     }
   };
-  const imageData = `http://10.126.15.124:8002${userGlobal.imagePath}`
+  var imageData = ``
+
+  if (userGlobal.imagePath) {
+   
+    imageData = `http://10.126.15.124:8002${userGlobal.imagePath}`
+  }else{
+    imageData = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+  }
 
   return (
     <div className="flex min-h-full items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
@@ -47,7 +54,7 @@ function EditProfile() {
           <img
             id="imagepreview"
             className="mx-auto h-16 w-16 rounded-full ring-2 ring-red"
-            src={imageData}
+            src={imageData  }
           />
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             Edit Profile {userGlobal.name}
@@ -77,7 +84,7 @@ function EditProfile() {
                 </svg>
                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
                   <span class="font-semibold">
-                    Click to upload your Profil Picture
+                  Click to upload your Profil Picture
                   </span>{" "}
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">

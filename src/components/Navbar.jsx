@@ -113,7 +113,15 @@ export default function Navbar() {
     //console.log(e.target.value);
   };
 
-  const imageData = `http://10.126.15.124:8002${userGlobal.imagePath}`
+  var imageData = ``
+
+  if (userGlobal.imagePath) {
+    imageData = `http://10.126.15.124:8002${userGlobal.imagePath}`
+    
+  }else{
+
+    imageData = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+  }
 
 
   return (
@@ -183,7 +191,7 @@ export default function Navbar() {
                     <MenuButton className=" flex flex-2 items-end justify-end bg-gray-900 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
                       <img
                         className="inline-block h-6 w-6 mr-3 rounded-full ring-2 ring-red"
-                        src={imageData}
+                        src={imageData  }
                         alt=""
                       />
                       {userGlobal.name}

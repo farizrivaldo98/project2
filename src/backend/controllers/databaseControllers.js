@@ -263,12 +263,12 @@ module.exports = {
 
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
-
+    const defaultImage = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
     let addUserQuery = `INSERT INTO users VALUES (null, ${db.escape(
       username
     )}, ${db.escape(email)}, ${db.escape(hashPassword)}, ${db.escape(
       name
-    )}, false,NULL)`;
+    )}, false,1,null)`;
     let addUserResult = await query(addUserQuery);
 
     let mail = {

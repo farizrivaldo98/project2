@@ -51,17 +51,14 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 
   db.query(fetchQuerry, (err, result) => {
     if (err) {
-      return response.status(200).send({
-        isSucess: true,
-        message: "File not suport,(don't use spacing in name of file) ",
-      });
+      // return response.status(200).send({
+      //   isSucess: true,
+      //   message: "File not suport,(don't use spacing in name of file) ",
+      // });
+
     } else {
-      let fatchquerry = "SELECT * FROM parammachine_saka.users";
-      db.query(fatchquerry, (err, result) => {
-        return response
-          .status(200)
-          .send({ isSucess: true, message: "Succes update data" });
-      });
+      //return response.status(200).send({ isSucess: true, message: "Succes update data" });
+      
     }
   });
 });
