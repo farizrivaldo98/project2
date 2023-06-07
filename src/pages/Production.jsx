@@ -430,6 +430,7 @@ function Production() {
             <option value="mezanine.tengah_Cm3_data">Cm3</option>
             <option value="mezanine.tengah_Cm4_data">Cm4</option>
             <option value="mezanine.tengah_Cm5_data">Cm5</option>
+            <option value="mezanine.tengah_Hm1_data">Hm1</option>
           </Select>
         </div>
         <div>

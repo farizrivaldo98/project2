@@ -250,7 +250,7 @@ module.exports = {
     });
   },
 
-  //====================================================================================================================
+  //=====================================(Login & Register)===============================================================================
 
   register: async (req, res) => {
     const { username, email, name, password } = req.body;
@@ -263,7 +263,8 @@ module.exports = {
 
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
-    const defaultImage = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+    const defaultImage =
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
     let addUserQuery = `INSERT INTO users VALUES (null, ${db.escape(
       username
     )}, ${db.escape(email)}, ${db.escape(hashPassword)}, ${db.escape(
@@ -307,7 +308,7 @@ module.exports = {
         id: isEmailExist[0].id_users,
         isAdmin: isEmailExist[0].isAdmin,
         level: isEmailExist[0].level,
-        imagePath :isEmailExist[0].imagePath,
+        imagePath: isEmailExist[0].imagePath,
       };
       const token = jwt.sign(payload, "khaerul", { expiresIn: "8h" });
 
@@ -342,7 +343,6 @@ module.exports = {
           isAdmin: users[0].isAdmin,
           level: users[0].level,
           imagePath: users[0].imagePath,
-          
         },
       });
     } catch (error) {
