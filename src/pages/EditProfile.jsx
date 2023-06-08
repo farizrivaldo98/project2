@@ -3,16 +3,15 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 function EditProfile() {
-
   const userGlobal = useSelector((state) => state.user.user);
   const [idData, setidData] = useState();
   const [file, setFile] = useState(null);
 
   useEffect(() => {
-    setidData(userGlobal.id)
+    setidData(userGlobal.id);
     console.log(idData);
   }, []);
-  
+
   const onFileChange = (event) => {
     setFile(event.target.files[0]);
     let preview = document.getElementById("imagepreview");
@@ -23,7 +22,7 @@ function EditProfile() {
     console.log(userGlobal.id);
     if (file) {
       const obj = {
-        id: userGlobal.id
+        id: userGlobal.id,
       };
       let formData = new FormData();
       formData.append("file", file);
@@ -38,13 +37,13 @@ function EditProfile() {
       alert("Select image first");
     }
   };
-  var imageData = ``
+  var imageData = ``;
 
   if (userGlobal.imagePath) {
-   
-    imageData = `http://10.126.15.124:8002${userGlobal.imagePath}`
-  }else{
-    imageData = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+    imageData = `http://10.126.15.124:8002${userGlobal.imagePath}`;
+  } else {
+    imageData =
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
   }
 
   return (
@@ -54,7 +53,7 @@ function EditProfile() {
           <img
             id="imagepreview"
             className="mx-auto h-16 w-16 rounded-full ring-2 ring-red"
-            src={imageData  }
+            src={imageData}
           />
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             Edit Profile {userGlobal.name}
@@ -84,7 +83,7 @@ function EditProfile() {
                 </svg>
                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
                   <span class="font-semibold">
-                  Click to upload your Profil Picture
+                    Click to upload your Profil Picture
                   </span>{" "}
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
