@@ -64,6 +64,7 @@ function Production() {
         finish: finish,
       },
     });
+
     let response1 = await axios.get(
       "http://10.126.15.124:8002/part/variableoee",
       {
@@ -77,6 +78,8 @@ function Production() {
 
     setOeeCm1(response.data);
     setVarOee(response1.data);
+
+    console.log(oeeChart);
 
     var resultAva = [];
     for (var i = 0; i < response.data.length; i++) {

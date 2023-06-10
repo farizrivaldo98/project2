@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("../helpers/nodemailers");
 const { request, response } = require("express");
+const { log } = require("util");
 
 module.exports = {
   fetchOee: async (request, response) => {
@@ -573,6 +574,44 @@ module.exports = {
   lastUpdateMTC: async (request, response) => {
     let queryData =
       "SELECT tanggal FROM parammachine_saka.mtc_report ORDER BY tanggal DESC LIMIT 1;";
+    db.query(queryData, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+
+  //=========================POWER MANAGEMENT============================================================
+
+  getPowerData: async (request, response) => {
+    const { area, start, finish } = request.query;
+    let queryData =
+      "SELECT    p1.date AS label,    p1.id AS x,    p2.`" +
+      area +
+      "`  - p1.`" +
+      area +
+      "`  AS y  FROM    parammachine_saka.power_data p1  JOIN    parammachine_saka.power_data p2 ON p2.date = (      SELECT MIN(date)      FROM parammachine_saka.power_data      WHERE date > p1.date    )  WHERE    p1.date >= '" +
+      start +
+      "' AND p1.date <= '" +
+      finish +
+      "'  ORDER BY    p1.date;";
+
+    db.query(queryData, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+
+  getPowerMonthly: async (request, response) => {
+    const { area, start, finish } = request.query;
+    console.log(area, start, finish);
+    let queryData =
+      "  SELECT    MONTH(p1.date) AS label,    SUM(p2.`" +
+      area +
+      "` - p1.`" +
+      area +
+      "`) AS y  FROM    parammachine_saka.power_data p1  JOIN    parammachine_saka.power_data p2 ON p2.date = (      SELECT MIN(date)      FROM parammachine_saka.power_data      WHERE date > p1.date    )  WHERE      MONTH(p1.date) >= " +
+      start +
+      " AND MONTH(p1.date) <= " +
+      finish +
+      "  GROUP BY    MONTH(p1.date)  ORDER BY    MONTH(p1.date);";
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });

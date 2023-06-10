@@ -8,6 +8,7 @@ import {
   Card,
   CardBody,
 } from "@chakra-ui/react";
+import PowerManagement from "./PowerManagement";
 
 function Utility() {
   return (
@@ -27,7 +28,7 @@ function Utility() {
 
             <TabPanels>
               <TabPanel>
-                <div>Power Management</div>
+                <PowerManagement />
               </TabPanel>
               <TabPanel>
                 <div>Water Management</div>

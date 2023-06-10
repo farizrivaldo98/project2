@@ -49,4 +49,7 @@ routers.post("/reportprd", databaseControllers.reportPRD);
 routers.get("/lastPRD", databaseControllers.lastUpdatePRD);
 routers.get("/lastMTC", databaseControllers.lastUpdateMTC);
 
+routers.get("/getpowerdata", databaseControllers.getPowerData);
+routers.get("/getpowermonthly", databaseControllers.getPowerMonthly);
+
 module.exports = routers;
