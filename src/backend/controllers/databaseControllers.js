@@ -619,6 +619,7 @@ module.exports = {
 
   getPowerSec: async (request, response) => {
     const { area, start, finish } = request.query;
+   
     let queryData =
       "SELECT FROM_UNIXTIME(`time@timestamp`) AS datetime, (`data_format_0`) as freq, (`data_format_1`) as PtoP,  (`data_format_2`) as PtoN FROM parammachine_saka.`" +
       area +
@@ -627,6 +628,7 @@ module.exports = {
       " AND " +
       finish +
       ";";
+      console.log(queryData);
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });

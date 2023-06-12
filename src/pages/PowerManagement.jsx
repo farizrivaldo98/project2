@@ -79,6 +79,7 @@ export default function PowerManagement() {
           finish: finishMonth,
         },
       }
+    
     );
 
     if (areaMonth === "MVMDP") {
@@ -120,6 +121,7 @@ export default function PowerManagement() {
           finish: secFinish,
         },
       }
+      
     );
 
     console.log(response.data);
@@ -159,14 +161,14 @@ export default function PowerManagement() {
   };
   let getSecStart = (e) => {
     var dataInput = e.target.value;
-    let unixStart = Math.floor(new Date(dataInput).getTime() / 1000);
+    let unixStart = Math.floor(new Date(dataInput).getTime() / 1000 +25200 );
     setSecStart(unixStart);
   };
   let getSecFinish = (e) => {
     var dataInput = e.target.value;
-    let unixStart = Math.floor(new Date(dataInput).getTime() / 1000);
+    let unixStart = Math.floor(new Date(dataInput).getTime() / 1000 +25200   );
     setSecFinish(unixStart);
-    console.log(unixStart);
+  
   };
 
   const options = {
