@@ -20,6 +20,10 @@ export default function PowerManagement() {
   const [finishMonth, setFinishMonth] = useState();
   const [areaMonth, setAreaMonth] = useState();
 
+  const [secArea, setSecArea] = useState();
+  const [secStart, setSecStart] = useState();
+  const [secFinish, setSecFinish] = useState();
+
   const fetchDataDayly = async () => {
     let response = await axios.get(
       "http://10.126.15.124:8002/part/getpowerdata",
@@ -132,6 +136,22 @@ export default function PowerManagement() {
   let getAreaMonth = (e) => {
     var dataInput = e.target.value;
     setAreaMonth(dataInput);
+  };
+
+  let getSecArea = (e) => {
+    var dataInput = e.target.value;
+    setSecArea(dataInput);
+  };
+  let getSecStart = (e) => {
+    var dataInput = e.target.value;
+    let unixStart = Math.floor(new Date(dataInput).getTime() / 1000);
+    setSecStart(unixStart);
+  };
+  let getSecFinish = (e) => {
+    var dataInput = e.target.value;
+    let unixStart = Math.floor(new Date(dataInput).getTime() / 1000);
+    setSecFinish(unixStart);
+    console.log(unixStart);
   };
 
   const options = {
@@ -498,7 +518,7 @@ export default function PowerManagement() {
       >
         <div>
           <h2>Panel</h2>
-          <Select placeholder="Select Panel">
+          <Select placeholder="Select Panel" onChange={getSecArea}>
             <option value="MVMDP">MVMDP</option>
             <option value="LVMDP1">LVMDP1</option>
             <option value="LVMDP2">LVMDP2</option>
@@ -507,7 +527,7 @@ export default function PowerManagement() {
         <div>
           <h2>Start Time</h2>
           <Input
-     
+            onChange={getSecStart}
             placeholder="Select Date and Time"
             size="md"
             type="datetime-local"
@@ -516,7 +536,7 @@ export default function PowerManagement() {
         <div>
           <h2>Finish Time</h2>
           <Input
- 
+            onChange={getSecFinish}
             placeholder="Select Date and Time"
             size="md"
             type="datetime-local"
@@ -532,7 +552,6 @@ export default function PowerManagement() {
             Submit
           </Button>
         </div>
-
       </Stack>
 
       <div className="flex flex-row mt-10">
