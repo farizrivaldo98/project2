@@ -601,7 +601,7 @@ module.exports = {
 
   getPowerMonthly: async (request, response) => {
     const { area, start, finish } = request.query;
-    console.log(area, start, finish);
+
     let queryData =
       "  SELECT    MONTH(p1.date) AS label,    SUM(p2.`" +
       area +

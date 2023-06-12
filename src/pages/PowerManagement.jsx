@@ -191,13 +191,13 @@ export default function PowerManagement() {
   };
 
   const options3 = {
-    theme: "light2",
+    theme: "light5",
     title: {
-      text: "Monthly Power",
+      text: "Phase to Netral",
     },
     subtitles: [
       {
-        text: "kilo watt per hour",
+        text: "Trend Volt",
       },
     ],
     axisY: {
@@ -219,13 +219,13 @@ export default function PowerManagement() {
   };
 
   const options4 = {
-    theme: "light2",
+    theme: "light3",
     title: {
-      text: "Monthly Power",
+      text: "Phase to Phase",
     },
     subtitles: [
       {
-        text: "kilo watt per hour",
+        text: "Trend Volt",
       },
     ],
     axisY: {
@@ -247,13 +247,13 @@ export default function PowerManagement() {
   };
 
   const options5 = {
-    theme: "light2",
+    theme: "light4",
     title: {
-      text: "Monthly Power",
+      text: "Frequency",
     },
     subtitles: [
       {
-        text: "kilo watt per hour",
+        text: "Trend Frequency",
       },
     ],
     axisY: {
@@ -490,7 +490,52 @@ export default function PowerManagement() {
       </Stack>
       <CanvasJSChart className="" options={options2} />
 
-      <div className="flex flex-row">
+      <Stack
+        className="flex flex-row justify-center mb-4 mt-4 "
+        direction="row"
+        spacing={4}
+        align="center"
+      >
+        <div>
+          <h2>Panel</h2>
+          <Select placeholder="Select Panel">
+            <option value="MVMDP">MVMDP</option>
+            <option value="LVMDP1">LVMDP1</option>
+            <option value="LVMDP2">LVMDP2</option>
+          </Select>
+        </div>
+        <div>
+          <h2>Start Time</h2>
+          <Input
+     
+            placeholder="Select Date and Time"
+            size="md"
+            type="datetime-local"
+          />
+        </div>
+        <div>
+          <h2>Finish Time</h2>
+          <Input
+ 
+            placeholder="Select Date and Time"
+            size="md"
+            type="datetime-local"
+          />
+        </div>
+        <div>
+          <br />
+          <Button
+            className="ml-4"
+            colorScheme="gray"
+            //onClick={() => fetchDataDayly()}
+          >
+            Submit
+          </Button>
+        </div>
+
+      </Stack>
+
+      <div className="flex flex-row mt-10">
         <CanvasJSChart className="" options={options3} />
         <CanvasJSChart className="" options={options4} />
         <CanvasJSChart className="" options={options5} />
