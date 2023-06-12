@@ -128,22 +128,43 @@ const [secPtN , setSecPtN] = useState([])
       
     );
 
-    var multipliedData = response.data.map((data) => ({
-      label: data.datetime.slice(0, -5).replace("T", " "),
-      y: Number(data.freq.toFixed(2)),
-      x: data.id,
-    }));
+    if(secArea == "cMT-SparexUTY_MVMDP_data"){
+      var multipliedData = response.data.map((data) => ({
+        label: data.datetime.slice(0, -5).replace("T", " "),
+        y: Number(data.freq.toFixed(2)),
+        x: data.id,
+      }));
+      var multipliedData1 = response.data.map((data) => ({
+        label: data.datetime.slice(0, -5).replace("T", " "),
+        y: Number(data.PtoP.toFixed(2)),
+        x: data.id,
+      }));
+      var multipliedData2 = response.data.map((data) => ({
+        label: data.datetime.slice(0, -5).replace("T", " "),
+        y: Number(data.PtoN.toFixed(2)),
+        x: data.id,
+      }));
+    }else{
+      var multipliedData = response.data.map((data) => ({
+        label: data.datetime.slice(0, -5).replace("T", " "),
+        y: Number(data.freq.toFixed(2))/1000,
+        x: data.id,
+      }));
+      var multipliedData1 = response.data.map((data) => ({
+        label: data.datetime.slice(0, -5).replace("T", " "),
+        y: Number(data.PtoP.toFixed(2))/100,
+        x: data.id,
+      }));
+      var multipliedData2 = response.data.map((data) => ({
+        label: data.datetime.slice(0, -5).replace("T", " "),
+        y: Number(data.PtoN.toFixed(2))/100,
+        x: data.id,
+      }));
+    }
 
-    var multipliedData1 = response.data.map((data) => ({
-      label: data.datetime.slice(0, -5).replace("T", " "),
-      y: Number(data.PtoP.toFixed(2)),
-      x: data.id,
-    }));
-    var multipliedData2 = response.data.map((data) => ({
-      label: data.datetime.slice(0, -5).replace("T", " "),
-      y: Number(data.PtoN.toFixed(2)),
-      x: data.id,
-    }));
+ 
+
+  
 
 
     setSecFreq(multipliedData);
@@ -262,7 +283,8 @@ const [secPtN , setSecPtN] = useState([])
       },
     ],
     axisY: {
-      prefix: "",
+      
+      valueFormatString:  "#,##0.##"
     },
     toolTip: {
       shared: true,
@@ -270,7 +292,7 @@ const [secPtN , setSecPtN] = useState([])
     data: [
       {
         type: "splineArea",
-        name: "Volt",
+        name: "Volt L-N",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
@@ -290,7 +312,8 @@ const [secPtN , setSecPtN] = useState([])
       },
     ],
     axisY: {
-      prefix: "",
+    
+      valueFormatString:  "#,##0.##"
     },
     toolTip: {
       shared: true,
@@ -298,7 +321,7 @@ const [secPtN , setSecPtN] = useState([])
     data: [
       {
         type: "splineArea",
-        name: "Volt",
+        name: "Volt L-L",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
@@ -318,7 +341,8 @@ const [secPtN , setSecPtN] = useState([])
       },
     ],
     axisY: {
-      prefix: "",
+     
+      valueFormatString:  "###.##"
     },
     toolTip: {
       shared: true,
