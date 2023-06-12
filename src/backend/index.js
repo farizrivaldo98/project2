@@ -9,6 +9,7 @@ const { body, validationResult } = require("express-validator");
 const { log } = require("console");
 const { db, query } = require("./database");
 const upload = require("./middleware/multer");
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
@@ -55,10 +56,8 @@ app.post("/upload", upload.single("file"), async (req, res) => {
       //   isSucess: true,
       //   message: "File not suport,(don't use spacing in name of file) ",
       // });
-
     } else {
       //return response.status(200).send({ isSucess: true, message: "Succes update data" });
-      
     }
   });
 });

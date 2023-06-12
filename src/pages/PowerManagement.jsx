@@ -190,6 +190,90 @@ export default function PowerManagement() {
     ],
   };
 
+  const options3 = {
+    theme: "light2",
+    title: {
+      text: "Monthly Power",
+    },
+    subtitles: [
+      {
+        text: "kilo watt per hour",
+      },
+    ],
+    axisY: {
+      prefix: "",
+    },
+    toolTip: {
+      shared: true,
+    },
+    data: [
+      {
+        type: "splineArea",
+        name: "Kwh",
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: monthlyPower,
+      },
+    ],
+  };
+
+  const options4 = {
+    theme: "light2",
+    title: {
+      text: "Monthly Power",
+    },
+    subtitles: [
+      {
+        text: "kilo watt per hour",
+      },
+    ],
+    axisY: {
+      prefix: "",
+    },
+    toolTip: {
+      shared: true,
+    },
+    data: [
+      {
+        type: "splineArea",
+        name: "Kwh",
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: monthlyPower,
+      },
+    ],
+  };
+
+  const options5 = {
+    theme: "light2",
+    title: {
+      text: "Monthly Power",
+    },
+    subtitles: [
+      {
+        text: "kilo watt per hour",
+      },
+    ],
+    axisY: {
+      prefix: "",
+    },
+    toolTip: {
+      shared: true,
+    },
+    data: [
+      {
+        type: "splineArea",
+        name: "Kwh",
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: monthlyPower,
+      },
+    ],
+  };
+
   return (
     <div>
       <Stack
@@ -405,6 +489,12 @@ export default function PowerManagement() {
         </div>
       </Stack>
       <CanvasJSChart className="" options={options2} />
+
+      <div className="flex flex-row">
+        <CanvasJSChart className="" options={options3} />
+        <CanvasJSChart className="" options={options4} />
+        <CanvasJSChart className="" options={options5} />
+      </div>
     </div>
   );
 }
