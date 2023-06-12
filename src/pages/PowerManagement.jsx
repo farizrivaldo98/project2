@@ -168,7 +168,6 @@ export default function PowerManagement() {
     var dataInput = e.target.value;
     let unixStart = Math.floor(new Date(dataInput).getTime() / 1000 +25200   );
     setSecFinish(unixStart);
-  
   };
 
   const options = {
