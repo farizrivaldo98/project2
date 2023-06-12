@@ -51,5 +51,6 @@ routers.get("/lastMTC", databaseControllers.lastUpdateMTC);
 
 routers.get("/getpowerdata", databaseControllers.getPowerData);
 routers.get("/getpowermonthly", databaseControllers.getPowerMonthly);
+routers.get("/getPowerSec", databaseControllers.getPowerSec);
 
 module.exports = routers;

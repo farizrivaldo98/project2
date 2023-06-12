@@ -110,6 +110,21 @@ export default function PowerManagement() {
     setTotalMonthly(totalY);
   };
 
+  const fetchSec = async () => {
+    let response = await axios.get(
+      "http://10.126.15.124:8002/part/getPowerSec",
+      {
+        params: {
+          area: secArea,
+          start: secStart,
+          finish: secFinish,
+        },
+      }
+    );
+
+    console.log(response.data);
+  };
+
   let dateStart = (e) => {
     var dataInput = e.target.value;
     setStartDate(dataInput);
@@ -519,9 +534,9 @@ export default function PowerManagement() {
         <div>
           <h2>Panel</h2>
           <Select placeholder="Select Panel" onChange={getSecArea}>
-            <option value="MVMDP">MVMDP</option>
-            <option value="LVMDP1">LVMDP1</option>
-            <option value="LVMDP2">LVMDP2</option>
+            <option value="cMT-SparexUTY_MVMDP_data">MVMDP</option>
+            <option value="cMT-SparexUTY_LVMDP_data">LVMDP1</option>
+            {/* <option value="LVMDP2">LVMDP2</option> */}
           </Select>
         </div>
         <div>
@@ -547,7 +562,7 @@ export default function PowerManagement() {
           <Button
             className="ml-4"
             colorScheme="gray"
-            //onClick={() => fetchDataDayly()}
+            onClick={() => fetchSec()}
           >
             Submit
           </Button>
