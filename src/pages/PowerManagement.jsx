@@ -24,6 +24,9 @@ export default function PowerManagement() {
   const [secStart, setSecStart] = useState();
   const [secFinish, setSecFinish] = useState();
 
+  const [secFreq, setSecFreq] = useState([])
+const [secPtP , setSecPtP] = useState([])
+const [secPtN , setSecPtN] = useState([])
   const fetchDataDayly = async () => {
     let response = await axios.get(
       "http://10.126.15.124:8002/part/getpowerdata",
@@ -122,8 +125,30 @@ export default function PowerManagement() {
         },
       }
       
+      
     );
 
+    var multipliedData = response.data.map((data) => ({
+      label: data.datetime.slice(0, -5).replace("T", " "),
+      y: Number(data.freq.toFixed(2)),
+      x: data.id,
+    }));
+
+    var multipliedData1 = response.data.map((data) => ({
+      label: data.datetime.slice(0, -5).replace("T", " "),
+      y: Number(data.PtoP.toFixed(2)),
+      x: data.id,
+    }));
+    var multipliedData2 = response.data.map((data) => ({
+      label: data.datetime.slice(0, -5).replace("T", " "),
+      y: Number(data.PtoN.toFixed(2)),
+      x: data.id,
+    }));
+
+
+    setSecFreq(multipliedData);
+    setSecPtP(multipliedData1)
+    setSecPtN(multipliedData2)
     console.log(response.data);
   };
 
@@ -245,11 +270,11 @@ export default function PowerManagement() {
     data: [
       {
         type: "splineArea",
-        name: "Kwh",
+        name: "Volt",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: monthlyPower,
+        dataPoints: secPtN,
       },
     ],
   };
@@ -273,17 +298,17 @@ export default function PowerManagement() {
     data: [
       {
         type: "splineArea",
-        name: "Kwh",
+        name: "Volt",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: monthlyPower,
+        dataPoints: secPtP,
       },
     ],
   };
 
   const options5 = {
-    theme: "light4",
+    theme: "light2",
     title: {
       text: "Frequency",
     },
@@ -301,11 +326,11 @@ export default function PowerManagement() {
     data: [
       {
         type: "splineArea",
-        name: "Kwh",
+        name: "Hz",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: monthlyPower,
+        dataPoints: secFreq,
       },
     ],
   };
