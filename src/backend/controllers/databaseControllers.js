@@ -632,4 +632,11 @@ module.exports = {
       return response.status(200).send(result);
     });
   },
+
+  getRangeSet: async (request, response) => {
+    let queryData = "SELECT * FROM power_setpoint";
+    db.query(queryData, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
 };
