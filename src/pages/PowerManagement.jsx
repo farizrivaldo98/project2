@@ -210,12 +210,16 @@ export default function PowerManagement() {
         x: data.id,
       }));
 
+      var freqArray = [];
+
       for (var i = 0; i <= response.data.length; i++) {
         setmaxSecFreq.push({
           y: response1.data.Freq_max,
           x: i,
         });
       }
+
+      freqArray = setmaxSecFreq;
       console.log(maxSecFreq);
 
       var multipliedData3 = response1.data.map((data) => ({
