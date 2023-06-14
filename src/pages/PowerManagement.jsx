@@ -213,7 +213,7 @@ export default function PowerManagement() {
       var freqArray = [];
 
       for (var i = 0; i <= response.data.length; i++) {
-        setmaxSecFreq.push({
+        freqArray.push({
           y: response1.data.Freq_max,
           x: i,
         });
