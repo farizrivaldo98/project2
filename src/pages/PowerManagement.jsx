@@ -45,6 +45,16 @@ export default function PowerManagement() {
   const [dataavgPtoP, setdataavgPtoP] = useState();
   const [dataavgPtoN, setdataavgPtoN] = useState();
 
+  const [datawidth, setWidth] = useState();
+  const [dataheight, setHeight] = useState();
+
+  useEffect(() => {
+    var bodyWidth = document.body.clientWidth;
+    var bodyHeight = document.body.clientHeight;
+    setWidth(bodyWidth);
+    setHeight(bodyHeight);
+  },[])
+
   const fetchDataDayly = async () => {
     let response = await axios.get(
       "http://10.126.15.124:8002/part/getpowerdata",
@@ -474,6 +484,44 @@ export default function PowerManagement() {
     ],
   };
 
+  const options6 = {
+    theme: "light2",
+    animationEnabled: true,
+    // width: datawidth,
+    // height: dataheight,
+
+    title: {},
+    subtitles: [
+      {
+        //text: `${oeeCalculation.oee.toFixed(2)}% OEE`,
+
+        text: `Volt`,
+        verticalAlign: "center",
+
+        fontSize: 30,
+        dockInsidePlotArea: true,
+      },
+    ],
+
+    data: [
+      {
+        //click: visitorsChartDrilldownHandler,
+
+        type: "doughnut",
+        showInLegend: true,
+        indexLabel: "{name}: {y}",
+        yValueFormatString: "#,###'%'",
+
+        dataPoints: [
+          { name: "Line-R", y: 50 },
+          { name: "Line-S", y: 20 },
+          { name: "Line-T", y: 30 },
+        ],
+      },
+    ],
+  };
+
+
   return (
     <div>
       <Stack
@@ -733,6 +781,7 @@ export default function PowerManagement() {
           </Button>
         </div>
       </Stack>
+      <CanvasJSChart className="" options={options6} />
 
       <div className="flex flex-row mt-10">
         <CanvasJSChart className="" options={options3} />
@@ -756,6 +805,9 @@ export default function PowerManagement() {
           <p> avg Freq : {dataavgFreq} Hz</p>
         </div>
       </div>
+
+
+
     </div>
   );
 }
