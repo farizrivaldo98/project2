@@ -35,8 +35,6 @@ export default function PowerManagement() {
   const [minSecPtP, setminSecPtP] = useState([]);
   const [minSecPtN, setminSecPtN] = useState([]);
 
-  
-
   const [datamaxFreq, setdatamaxFreq] = useState();
   const [datamaxPtoP, setdatamaxPtoP] = useState();
   const [datamaxPtoN, setdatamaxPtoN] = useState();
@@ -144,6 +142,10 @@ export default function PowerManagement() {
         },
       }
     );
+    let response1 = await axios.get(
+      "http://10.126.15.124:8002/part/getRangeSet"
+    );
+    console.log(response1);
 
     if (secArea == "cMT-SparexUTY_MVMDP_data") {
       var multipliedData = response.data.map((data) => ({
@@ -368,9 +370,7 @@ export default function PowerManagement() {
         xValueFormatString: "",
         yValueFormatString: "",
         dataPoints: secPtN,
- 
       },
-
     ],
   };
 
