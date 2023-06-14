@@ -28,6 +28,15 @@ export default function PowerManagement() {
   const [secPtP, setSecPtP] = useState([]);
   const [secPtN, setSecPtN] = useState([]);
 
+  const [maxSecFreq, setmaxSecFreq] = useState([]);
+  const [maxSecPtP, setmaxSecPtP] = useState([]);
+  const [maxSecPtN, setmaxSecPtN] = useState([]);
+  const [minSecFreq, setminSecFreq] = useState([]);
+  const [minSecPtP, setminSecPtP] = useState([]);
+  const [minSecPtN, setminSecPtN] = useState([]);
+
+  
+
   const [datamaxFreq, setdatamaxFreq] = useState();
   const [datamaxPtoP, setdatamaxPtoP] = useState();
   const [datamaxPtoN, setdatamaxPtoN] = useState();
@@ -353,22 +362,15 @@ export default function PowerManagement() {
     },
     data: [
       {
-        type: "Multi-Series Line Chart",
+        type: "spline",
         name: "Volt L-N",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: [
-          {
-            type: "line",
-            dataPoints: secPtN,
-          },
-          {
-            type: "line",
-            dataPoints: secFreq,
-          },
-        ],
+        dataPoints: secPtN,
+ 
       },
+
     ],
   };
 
@@ -390,7 +392,7 @@ export default function PowerManagement() {
     },
     data: [
       {
-        type: "splineArea",
+        type: "line",
         name: "Volt L-L",
         showInLegend: true,
         xValueFormatString: "",
@@ -418,7 +420,7 @@ export default function PowerManagement() {
     },
     data: [
       {
-        type: "splineArea",
+        type: "line",
         name: "Hz",
         showInLegend: true,
         xValueFormatString: "",
