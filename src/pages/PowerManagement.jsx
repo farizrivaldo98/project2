@@ -152,6 +152,37 @@ export default function PowerManagement() {
         y: Number(data.PtoN.toFixed(2)),
         x: data.id,
       }));
+
+      const maxFreq = Math.max(...response.data.map((item) => item.freq));
+      const maxPtoP = Math.max(...response.data.map((item) => item.PtoP));
+      const maxPtoN = Math.max(...response.data.map((item) => item.PtoN));
+      const minFreq = Math.min(...response.data.map((item) => item.freq));
+      const minPtoP = Math.min(...response.data.map((item) => item.PtoP));
+      const minPtoN = Math.min(...response.data.map((item) => item.PtoN));
+      const sumFreq = response.data.reduce(
+        (total, item) => total + item.freq,
+        0
+      );
+      const sumPtoP = response.data.reduce(
+        (total, item) => total + item.PtoP,
+        0
+      );
+      const sumPtoN = response.data.reduce(
+        (total, item) => total + item.PtoN,
+        0
+      );
+      const avgFreq = sumFreq / response.data.length;
+      const avgPtoP = sumPtoP / response.data.length;
+      const avgPtoN = sumPtoN / response.data.length;
+      setdatamaxFreq(maxFreq.toFixed(2));
+      setdatamaxPtoP(maxPtoP.toFixed(2));
+      setdatamaxPtoN(maxPtoN.toFixed(2));
+      setdataminFreq(minFreq.toFixed(2));
+      setdataminPtoP(minPtoP.toFixed(2));
+      setdataminPtoN(minPtoN.toFixed(2));
+      setdataavgFreq(avgFreq.toFixed(2));
+      setdataavgPtoP(avgPtoP.toFixed(2));
+      setdataavgPtoN(avgPtoN.toFixed(2));
     } else {
       var multipliedData = response.data.map((data) => ({
         label: data.datetime.slice(0, -5).replace("T", " "),
@@ -168,35 +199,41 @@ export default function PowerManagement() {
         y: Number(data.PtoN.toFixed(2)) / 100,
         x: data.id,
       }));
+      const maxFreq = Math.max(...response.data.map((item) => item.freq));
+      const maxPtoP = Math.max(...response.data.map((item) => item.PtoP));
+      const maxPtoN = Math.max(...response.data.map((item) => item.PtoN));
+      const minFreq = Math.min(...response.data.map((item) => item.freq));
+      const minPtoP = Math.min(...response.data.map((item) => item.PtoP));
+      const minPtoN = Math.min(...response.data.map((item) => item.PtoN));
+      const sumFreq = response.data.reduce(
+        (total, item) => total + item.freq,
+        0
+      );
+      const sumPtoP = response.data.reduce(
+        (total, item) => total + item.PtoP,
+        0
+      );
+      const sumPtoN = response.data.reduce(
+        (total, item) => total + item.PtoN,
+        0
+      );
+      const avgFreq = sumFreq / response.data.length;
+      const avgPtoP = sumPtoP / response.data.length;
+      const avgPtoN = sumPtoN / response.data.length;
+      setdatamaxFreq(maxFreq.toFixed(2) / 100);
+      setdatamaxPtoP(maxPtoP.toFixed(2) / 100);
+      setdatamaxPtoN(maxPtoN.toFixed(2) / 100);
+      setdataminFreq(minFreq.toFixed(2) / 100);
+      setdataminPtoP(minPtoP.toFixed(2) / 100);
+      setdataminPtoN(minPtoN.toFixed(2) / 100);
+      setdataavgFreq(avgFreq.toFixed(2) / 100);
+      setdataavgPtoP(avgPtoP.toFixed(2) / 100);
+      setdataavgPtoN(avgPtoN.toFixed(2) / 100);
     }
 
     setSecFreq(multipliedData);
     setSecPtP(multipliedData1);
     setSecPtN(multipliedData2);
-
-    const maxFreq = Math.max(...response.data.map((item) => item.freq));
-    const maxPtoP = Math.max(...response.data.map((item) => item.PtoP));
-    const maxPtoN = Math.max(...response.data.map((item) => item.PtoN));
-    const minFreq = Math.min(...response.data.map((item) => item.freq));
-    const minPtoP = Math.min(...response.data.map((item) => item.PtoP));
-    const minPtoN = Math.min(...response.data.map((item) => item.PtoN));
-    const sumFreq = response.data.reduce((total, item) => total + item.freq, 0);
-    const sumPtoP = response.data.reduce((total, item) => total + item.PtoP, 0);
-    const sumPtoN = response.data.reduce((total, item) => total + item.PtoN, 0);
-
-    const avgFreq = sumFreq / response.data.length;
-    const avgPtoP = sumPtoP / response.data.length;
-    const avgPtoN = sumPtoN / response.data.length;
-
-    setdatamaxFreq(maxFreq);
-    setdatamaxPtoP(maxPtoP);
-    setdatamaxPtoN(maxPtoN);
-    setdataminFreq(minFreq);
-    setdataminPtoP(minPtoP);
-    setdataminPtoN(minPtoN);
-    setdataavgFreq(avgFreq);
-    setdataavgPtoP(avgPtoP);
-    setdataavgPtoN(avgPtoN);
   };
 
   let dateStart = (e) => {
