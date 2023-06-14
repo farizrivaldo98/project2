@@ -220,15 +220,15 @@ export default function PowerManagement() {
       const avgFreq = sumFreq / response.data.length;
       const avgPtoP = sumPtoP / response.data.length;
       const avgPtoN = sumPtoN / response.data.length;
-      setdatamaxFreq((maxFreq/1000).toFixed(2));
-      setdatamaxPtoP((maxPtoP/100).toFixed(2));
-      setdatamaxPtoN((maxPtoN/100).toFixed(2));
-      setdataminFreq((minFreq/1000).toFixed(2));
-      setdataminPtoP((minPtoP/100).toFixed(2));
-      setdataminPtoN((minPtoN/100).toFixed(2));
-      setdataavgFreq((avgFreq/1000).toFixed(2));
-      setdataavgPtoP((avgPtoP/100).toFixed(2));
-      setdataavgPtoN((avgPtoN/100).toFixed(2));
+      setdatamaxFreq((maxFreq / 1000).toFixed(2));
+      setdatamaxPtoP((maxPtoP / 100).toFixed(2));
+      setdatamaxPtoN((maxPtoN / 100).toFixed(2));
+      setdataminFreq((minFreq / 1000).toFixed(2));
+      setdataminPtoP((minPtoP / 100).toFixed(2));
+      setdataminPtoN((minPtoN / 100).toFixed(2));
+      setdataavgFreq((avgFreq / 1000).toFixed(2));
+      setdataavgPtoP((avgPtoP / 100).toFixed(2));
+      setdataavgPtoN((avgPtoN / 100).toFixed(2));
     }
 
     setSecFreq(multipliedData);
@@ -353,12 +353,21 @@ export default function PowerManagement() {
     },
     data: [
       {
-        type: "splineArea",
+        type: "Multi-Series Line Chart",
         name: "Volt L-N",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: secPtN,
+        dataPoints: [
+          {
+            type: "line",
+            dataPoints: secPtN,
+          },
+          {
+            type: "line",
+            dataPoints: secFreq,
+          },
+        ],
       },
     ],
   };
@@ -685,7 +694,7 @@ export default function PowerManagement() {
         <CanvasJSChart className="" options={options5} />
       </div>
       <div className="flex flex-row justify-around mt-4">
-      <div className="flex flex-col">
+        <div className="flex flex-col">
           <p> Max L-N : {datamaxPtoN} V</p>
           <p> Min L-N : {dataminPtoN} V</p>
           <p> avg L-N : {dataavgPtoN} V</p>
