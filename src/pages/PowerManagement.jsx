@@ -219,7 +219,6 @@ export default function PowerManagement() {
         });
       }
 
-      freqArray = setmaxSecFreq;
       console.log(freqArray);
 
       var multipliedData3 = response1.data.map((data) => ({
