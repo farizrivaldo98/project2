@@ -656,7 +656,7 @@ export default function PowerManagement() {
         <div className="flex flex-col">
           <p>Data Max L-L : {datamaxPtoP}</p>
           <p>Data Min L-L : {dataminPtoP}</p>
-          <p>Data avg L-L : {dataavgPtoPN}</p>
+          <p>Data avg L-L : {dataavgPtoP}</p>
         </div>
         <div className="flex flex-col">
           <p>Data Max Freq : {datamaxFreq}</p>
