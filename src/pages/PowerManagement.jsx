@@ -220,7 +220,7 @@ export default function PowerManagement() {
       }
 
       freqArray = setmaxSecFreq;
-      console.log(maxSecFreq);
+      console.log(freqArray);
 
       var multipliedData3 = response1.data.map((data) => ({
         y: Number(data.Freq_max),
