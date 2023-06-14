@@ -220,15 +220,15 @@ export default function PowerManagement() {
       const avgFreq = sumFreq / response.data.length;
       const avgPtoP = sumPtoP / response.data.length;
       const avgPtoN = sumPtoN / response.data.length;
-      setdatamaxFreq(maxFreq.toFixed(2) / 100);
-      setdatamaxPtoP(maxPtoP.toFixed(2) / 100);
-      setdatamaxPtoN(maxPtoN.toFixed(2) / 100);
-      setdataminFreq(minFreq.toFixed(2) / 100);
-      setdataminPtoP(minPtoP.toFixed(2) / 100);
-      setdataminPtoN(minPtoN.toFixed(2) / 100);
-      setdataavgFreq(avgFreq.toFixed(2) / 100);
-      setdataavgPtoP(avgPtoP.toFixed(2) / 100);
-      setdataavgPtoN(avgPtoN.toFixed(2) / 100);
+      setdatamaxFreq((maxFreq/1000).toFixed(2));
+      setdatamaxPtoP((maxPtoP/100).toFixed(2));
+      setdatamaxPtoN((maxPtoN/100).toFixed(2));
+      setdataminFreq((minFreq/1000).toFixed(2));
+      setdataminPtoP((minPtoP/100).toFixed(2));
+      setdataminPtoN((minPtoN/100).toFixed(2));
+      setdataavgFreq((avgFreq/1000).toFixed(2));
+      setdataavgPtoP((avgPtoP/100).toFixed(2));
+      setdataavgPtoN((avgPtoN/100).toFixed(2));
     }
 
     setSecFreq(multipliedData);
@@ -684,21 +684,21 @@ export default function PowerManagement() {
         <CanvasJSChart className="" options={options4} />
         <CanvasJSChart className="" options={options5} />
       </div>
-      <div className="flex justify-between mt-10">
-        <div className="flex flex-col">
-          <p>Data Max L-N : {datamaxPtoN}</p>
-          <p>Data Min L-N : {dataminPtoN}</p>
-          <p>Data avg L-N : {dataavgPtoN}</p>
+      <div className="flex flex-row justify-around mt-4">
+      <div className="flex flex-col">
+          <p> Max L-N : {datamaxPtoN} V</p>
+          <p> Min L-N : {dataminPtoN} V</p>
+          <p> avg L-N : {dataavgPtoN} V</p>
         </div>
         <div className="flex flex-col">
-          <p>Data Max L-L : {datamaxPtoP}</p>
-          <p>Data Min L-L : {dataminPtoP}</p>
-          <p>Data avg L-L : {dataavgPtoP}</p>
+          <p> Max L-L : {datamaxPtoP} V</p>
+          <p> Min L-L : {dataminPtoP} V</p>
+          <p> avg L-L : {dataavgPtoP} V</p>
         </div>
         <div className="flex flex-col">
-          <p>Data Max Freq : {datamaxFreq}</p>
-          <p>Data Min Freq : {dataminFreq}</p>
-          <p>Data avg Freq : {dataavgFreq}</p>
+          <p> Max Freq : {datamaxFreq} Hz</p>
+          <p> Min Freq : {dataminFreq} Hz</p>
+          <p> avg Freq : {dataavgFreq} Hz</p>
         </div>
       </div>
     </div>
