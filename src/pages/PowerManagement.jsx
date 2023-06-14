@@ -609,12 +609,14 @@ export default function PowerManagement() {
       </Stack>
 
       <div className="flex flex-row mt-10">
-        <div className="flex flex-col">
-          <CanvasJSChart className="" options={options3} />
-          <p>coba cekkk</p>
-        </div>
+        <CanvasJSChart className="" options={options3} />
         <CanvasJSChart className="" options={options4} />
         <CanvasJSChart className="" options={options5} />
+      </div>
+      <div className="flex flex-row mt-10">
+        <p>sadasffsasafsafsaf</p>
+        <p>8932wyriutg54jrbt3ufyeg</p>
+        <p>dsvkhciulsc7ewte8rwfiud</p>
       </div>
     </div>
   );
