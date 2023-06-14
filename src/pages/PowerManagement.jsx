@@ -27,6 +27,17 @@ export default function PowerManagement() {
   const [secFreq, setSecFreq] = useState([]);
   const [secPtP, setSecPtP] = useState([]);
   const [secPtN, setSecPtN] = useState([]);
+
+  const [datamaxFreq, setdatamaxFreq] = useState();
+  const [datamaxPtoP, setdatamaxPtoP] = useState();
+  const [datamaxPtoN, setdatamaxPtoN] = useState();
+  const [dataminFreq, setdataminFreq] = useState();
+  const [dataminPtoP, setdataminPtoP] = useState();
+  const [dataminPtoN, setdataminPtoN] = useState();
+  const [dataavgFreq, setdataavgFreq] = useState();
+  const [dataavgPtoP, setdataavgPtoP] = useState();
+  const [dataavgPtoN, setdataavgPtoN] = useState();
+
   const fetchDataDayly = async () => {
     let response = await axios.get(
       "http://10.126.15.124:8002/part/getpowerdata",
@@ -166,13 +177,9 @@ export default function PowerManagement() {
     const maxFreq = Math.max(...response.data.map((item) => item.freq));
     const maxPtoP = Math.max(...response.data.map((item) => item.PtoP));
     const maxPtoN = Math.max(...response.data.map((item) => item.PtoN));
-
-    // Mengambil data dengan nilai terendah
     const minFreq = Math.min(...response.data.map((item) => item.freq));
     const minPtoP = Math.min(...response.data.map((item) => item.PtoP));
     const minPtoN = Math.min(...response.data.map((item) => item.PtoN));
-
-    // Menghitung rata-rata data
     const sumFreq = response.data.reduce((total, item) => total + item.freq, 0);
     const sumPtoP = response.data.reduce((total, item) => total + item.PtoP, 0);
     const sumPtoN = response.data.reduce((total, item) => total + item.PtoN, 0);
@@ -181,20 +188,15 @@ export default function PowerManagement() {
     const avgPtoP = sumPtoP / response.data.length;
     const avgPtoN = sumPtoN / response.data.length;
 
-    console.log("Data dengan nilai tertinggi:");
-    console.log("freq:", maxFreq);
-    console.log("PtoP:", maxPtoP);
-    console.log("PtoN:", maxPtoN);
-
-    console.log("Data dengan nilai terendah:");
-    console.log("freq:", minFreq);
-    console.log("PtoP:", minPtoP);
-    console.log("PtoN:", minPtoN);
-
-    console.log("Rata-rata data:");
-    console.log("freq:", avgFreq);
-    console.log("PtoP:", avgPtoP);
-    console.log("PtoN:", avgPtoN);
+    setdatamaxFreq(maxFreq);
+    setdatamaxPtoP(maxPtoP);
+    setdatamaxPtoN(maxPtoN);
+    setdataminFreq(minFreq);
+    setdataminPtoP(minPtoP);
+    setdataminPtoN(minPtoN);
+    setdataavgFreq(avgFreq);
+    setdataavgPtoP(avgPtoP);
+    setdataavgPtoN(avgPtoN);
   };
 
   let dateStart = (e) => {
@@ -646,7 +648,11 @@ export default function PowerManagement() {
         <CanvasJSChart className="" options={options5} />
       </div>
       <div className="flex justify-between mt-10">
-        <p>sadasffsasafsafsaf</p>
+        <div className="flex flex-col">
+          <p>Data Max L-N : {datamaxPtoN}</p>
+          <p>Data Min L-N : {dataminPtoN}</p>
+          <p>Data avg L-N : {dataavgPtoN}</p>
+        </div>
         <p>8932wyriutg54jrbt3ufyeg</p>
         <p>dsvkhciulsc7ewte8rwfiud</p>
       </div>
