@@ -613,7 +613,7 @@ export default function PowerManagement() {
         <CanvasJSChart className="" options={options4} />
         <CanvasJSChart className="" options={options5} />
       </div>
-      <div className="flex flex-row mt-10">
+      <div className="flex justify-between mt-10">
         <p>sadasffsasafsafsaf</p>
         <p>8932wyriutg54jrbt3ufyeg</p>
         <p>dsvkhciulsc7ewte8rwfiud</p>
