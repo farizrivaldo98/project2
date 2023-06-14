@@ -653,8 +653,16 @@ export default function PowerManagement() {
           <p>Data Min L-N : {dataminPtoN}</p>
           <p>Data avg L-N : {dataavgPtoN}</p>
         </div>
-        <p>8932wyriutg54jrbt3ufyeg</p>
-        <p>dsvkhciulsc7ewte8rwfiud</p>
+        <div className="flex flex-col">
+          <p>Data Max L-L : {datamaxPtoP}</p>
+          <p>Data Min L-L : {dataminPtoP}</p>
+          <p>Data avg L-L : {dataavgPtoPN}</p>
+        </div>
+        <div className="flex flex-col">
+          <p>Data Max Freq : {datamaxFreq}</p>
+          <p>Data Min Freq : {dataminFreq}</p>
+          <p>Data avg Freq : {dataavgFreq}</p>
+        </div>
       </div>
     </div>
   );
