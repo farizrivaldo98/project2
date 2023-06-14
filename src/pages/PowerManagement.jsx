@@ -145,7 +145,6 @@ export default function PowerManagement() {
     let response1 = await axios.get(
       "http://10.126.15.124:8002/part/getRangeSet"
     );
-    console.log(response1);
 
     if (secArea == "cMT-SparexUTY_MVMDP_data") {
       var multipliedData = response.data.map((data) => ({
@@ -208,6 +207,19 @@ export default function PowerManagement() {
       var multipliedData2 = response.data.map((data) => ({
         label: data.datetime.slice(0, -5).replace("T", " "),
         y: Number(data.PtoN.toFixed(2)) / 100,
+        x: data.id,
+      }));
+
+      for (var i = 0; i <= response.data.length; i++) {
+        setmaxSecFreq.push({
+          y: response1.data.Freq_max,
+          x: i,
+        });
+      }
+      console.log(maxSecFreq);
+
+      var multipliedData3 = response1.data.map((data) => ({
+        y: Number(data.Freq_max),
         x: data.id,
       }));
       const maxFreq = Math.max(...response.data.map((item) => item.freq));
