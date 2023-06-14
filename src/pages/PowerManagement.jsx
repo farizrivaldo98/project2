@@ -162,7 +162,39 @@ export default function PowerManagement() {
     setSecFreq(multipliedData);
     setSecPtP(multipliedData1);
     setSecPtN(multipliedData2);
-    console.log(response.data);
+
+    const maxFreq = Math.max(...response.data.map((item) => item.freq));
+    const maxPtoP = Math.max(...response.data.map((item) => item.PtoP));
+    const maxPtoN = Math.max(...response.data.map((item) => item.PtoN));
+
+    // Mengambil data dengan nilai terendah
+    const minFreq = Math.min(...response.data.map((item) => item.freq));
+    const minPtoP = Math.min(...response.data.map((item) => item.PtoP));
+    const minPtoN = Math.min(...response.data.map((item) => item.PtoN));
+
+    // Menghitung rata-rata data
+    const sumFreq = response.data.reduce((total, item) => total + item.freq, 0);
+    const sumPtoP = response.data.reduce((total, item) => total + item.PtoP, 0);
+    const sumPtoN = response.data.reduce((total, item) => total + item.PtoN, 0);
+
+    const avgFreq = sumFreq / response.data.length;
+    const avgPtoP = sumPtoP / response.data.length;
+    const avgPtoN = sumPtoN / response.data.length;
+
+    console.log("Data dengan nilai tertinggi:");
+    console.log("freq:", maxFreq);
+    console.log("PtoP:", maxPtoP);
+    console.log("PtoN:", maxPtoN);
+
+    console.log("Data dengan nilai terendah:");
+    console.log("freq:", minFreq);
+    console.log("PtoP:", minPtoP);
+    console.log("PtoN:", minPtoN);
+
+    console.log("Rata-rata data:");
+    console.log("freq:", avgFreq);
+    console.log("PtoP:", avgPtoP);
+    console.log("PtoN:", avgPtoN);
   };
 
   let dateStart = (e) => {
