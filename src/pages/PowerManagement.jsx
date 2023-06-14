@@ -24,9 +24,9 @@ export default function PowerManagement() {
   const [secStart, setSecStart] = useState();
   const [secFinish, setSecFinish] = useState();
 
-  const [secFreq, setSecFreq] = useState([])
-const [secPtP , setSecPtP] = useState([])
-const [secPtN , setSecPtN] = useState([])
+  const [secFreq, setSecFreq] = useState([]);
+  const [secPtP, setSecPtP] = useState([]);
+  const [secPtN, setSecPtN] = useState([]);
   const fetchDataDayly = async () => {
     let response = await axios.get(
       "http://10.126.15.124:8002/part/getpowerdata",
@@ -82,7 +82,6 @@ const [secPtN , setSecPtN] = useState([])
           finish: finishMonth,
         },
       }
-    
     );
 
     if (areaMonth === "MVMDP") {
@@ -124,11 +123,9 @@ const [secPtN , setSecPtN] = useState([])
           finish: secFinish,
         },
       }
-      
-      
     );
 
-    if(secArea == "cMT-SparexUTY_MVMDP_data"){
+    if (secArea == "cMT-SparexUTY_MVMDP_data") {
       var multipliedData = response.data.map((data) => ({
         label: data.datetime.slice(0, -5).replace("T", " "),
         y: Number(data.freq.toFixed(2)),
@@ -144,32 +141,27 @@ const [secPtN , setSecPtN] = useState([])
         y: Number(data.PtoN.toFixed(2)),
         x: data.id,
       }));
-    }else{
+    } else {
       var multipliedData = response.data.map((data) => ({
         label: data.datetime.slice(0, -5).replace("T", " "),
-        y: Number(data.freq.toFixed(2))/1000,
+        y: Number(data.freq.toFixed(2)) / 1000,
         x: data.id,
       }));
       var multipliedData1 = response.data.map((data) => ({
         label: data.datetime.slice(0, -5).replace("T", " "),
-        y: Number(data.PtoP.toFixed(2))/100,
+        y: Number(data.PtoP.toFixed(2)) / 100,
         x: data.id,
       }));
       var multipliedData2 = response.data.map((data) => ({
         label: data.datetime.slice(0, -5).replace("T", " "),
-        y: Number(data.PtoN.toFixed(2))/100,
+        y: Number(data.PtoN.toFixed(2)) / 100,
         x: data.id,
       }));
     }
 
- 
-
-  
-
-
     setSecFreq(multipliedData);
-    setSecPtP(multipliedData1)
-    setSecPtN(multipliedData2)
+    setSecPtP(multipliedData1);
+    setSecPtN(multipliedData2);
     console.log(response.data);
   };
 
@@ -207,12 +199,12 @@ const [secPtN , setSecPtN] = useState([])
   };
   let getSecStart = (e) => {
     var dataInput = e.target.value;
-    let unixStart = Math.floor(new Date(dataInput).getTime() / 1000 +25200 );
+    let unixStart = Math.floor(new Date(dataInput).getTime() / 1000 + 25200);
     setSecStart(unixStart);
   };
   let getSecFinish = (e) => {
     var dataInput = e.target.value;
-    let unixStart = Math.floor(new Date(dataInput).getTime() / 1000 +25200   );
+    let unixStart = Math.floor(new Date(dataInput).getTime() / 1000 + 25200);
     setSecFinish(unixStart);
   };
 
@@ -283,8 +275,7 @@ const [secPtN , setSecPtN] = useState([])
       },
     ],
     axisY: {
-      
-      valueFormatString:  "#,##0.##"
+      valueFormatString: "#,##0.##",
     },
     toolTip: {
       shared: true,
@@ -312,8 +303,7 @@ const [secPtN , setSecPtN] = useState([])
       },
     ],
     axisY: {
-    
-      valueFormatString:  "#,##0.##"
+      valueFormatString: "#,##0.##",
     },
     toolTip: {
       shared: true,
@@ -341,8 +331,7 @@ const [secPtN , setSecPtN] = useState([])
       },
     ],
     axisY: {
-     
-      valueFormatString:  "###.##"
+      valueFormatString: "###.##",
     },
     toolTip: {
       shared: true,
@@ -620,7 +609,10 @@ const [secPtN , setSecPtN] = useState([])
       </Stack>
 
       <div className="flex flex-row mt-10">
-        <CanvasJSChart className="" options={options3} />
+        <div className="flex flex-col">
+          <CanvasJSChart className="" options={options3} />
+          <p>coba cekkk</p>
+        </div>
         <CanvasJSChart className="" options={options4} />
         <CanvasJSChart className="" options={options5} />
       </div>
