@@ -210,16 +210,27 @@ export default function PowerManagement() {
         x: data.id,
       }));
 
-      var freqArray = [];
+      var freqArrayMax = [];
+      var freqArrayMin = [];
 
       for (var i = 0; i <= response.data.length; i++) {
-        freqArray.push({
-          y: response1.data.Freq_max,
-          x: i,
+        freqArrayMax.push({
+          y: response1.data[0].Freq_max,
+          x: response.data[0].id+i,
         });
+        freqArrayMin.push({
+          y: response1.data[0].Freq_min,
+          x: response.data[0].id+i,
+        })
       }
 
-      console.log(freqArray);
+      setmaxSecFreq(freqArrayMax)
+      setminSecFreq(freqArrayMin)
+
+     
+      
+
+   
 
       var multipliedData3 = response1.data.map((data) => ({
         y: Number(data.Freq_max),
@@ -435,13 +446,31 @@ export default function PowerManagement() {
     },
     data: [
       {
-        type: "line",
+        type: "spline",
         name: "Hz",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
         dataPoints: secFreq,
       },
+      // {
+      //   type: "spline",
+      //   name: "Set",
+      //   showInLegend: true,
+      //   xValueFormatString: "",
+      //   yValueFormatString: "",
+      //   dataPoints: maxSecFreq,
+      // },
+      // {
+      //   type: "spline",
+      //   name: "Set",
+      //   showInLegend: true,
+      //   xValueFormatString: "",
+      //   yValueFormatString: "",
+      //   dataPoints: minSecFreq,
+      // },
+      
+      
     ],
   };
 
