@@ -628,6 +628,7 @@ module.exports = {
       " AND " +
       finish +
       ";";
+    console.log(queryData);
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });
