@@ -45,6 +45,13 @@ export default function PowerManagement() {
   const [dataavgPtoP, setdataavgPtoP] = useState();
   const [dataavgPtoN, setdataavgPtoN] = useState();
 
+  const [percentRR, setPercentRR] = useState();
+  const [percentSS, setPercentSS] = useState();
+  const [percentTT, setPercentTT] = useState();
+  const [percentRN, setPercentRN] = useState();
+  const [percentSN, setPercentSN] = useState();
+  const [percentTN, setPercentTN] = useState();
+
   const [datawidth, setWidth] = useState();
   const [dataheight, setHeight] = useState();
 
@@ -53,7 +60,7 @@ export default function PowerManagement() {
     var bodyHeight = document.body.clientHeight;
     setWidth(bodyWidth);
     setHeight(bodyHeight);
-  },[])
+  }, []);
 
   const fetchDataDayly = async () => {
     let response = await axios.get(
@@ -152,11 +159,44 @@ export default function PowerManagement() {
         },
       }
     );
-    let response1 = await axios.get(
-      "http://10.126.15.124:8002/part/getRangeSet"
+    let response2 = await axios.get(
+      "http://10.126.15.124:8002/part/getavgpower",
+      {
+        params: {
+          area: secArea,
+          start: secStart,
+          finish: secFinish,
+        },
+      }
     );
 
-    if (secArea == "cMT-SparexUTY_MVMDP_data") {
+    const totalLL =
+      Number(response2.data[0].RR) +
+      Number(response2.data[0].SS) +
+      Number(response2.data[0].TT);
+
+    const totalLN =
+      Number(response2.data[0].RN) +
+      Number(response2.data[0].SN) +
+      Number(response2.data[0].TN);
+
+    const RRdata = (Number(response2.data[0].RR) / totalLL) * 100;
+    const SSdata = (Number(response2.data[0].SS) / totalLL) * 100;
+    const TTdata = (Number(response2.data[0].TT) / totalLL) * 100;
+
+    const RNdata = (Number(response2.data[0].RN) / totalLN) * 100;
+    const SNdata = (Number(response2.data[0].SN) / totalLN) * 100;
+    const TNdata = (Number(response2.data[0].TN) / totalLN) * 100;
+
+    // let response1 = await axios.get("http://10.126.15.124:8002/part/getRangeSet");
+
+    setPercentRR(RRdata);
+    setPercentSS(SSdata);
+    setPercentTT(TTdata);
+    setPercentRN(RNdata);
+    setPercentSN(SNdata);
+    setPercentTN(TNdata);
+    if (secArea == "cmt-gedung-uty_mvmdp_detik_data") {
       var multipliedData = response.data.map((data) => ({
         label: data.datetime.slice(0, -5).replace("T", " "),
         y: Number(data.freq.toFixed(2)),
@@ -223,29 +263,24 @@ export default function PowerManagement() {
       var freqArrayMax = [];
       var freqArrayMin = [];
 
-      for (var i = 0; i <= response.data.length; i++) {
-        freqArrayMax.push({
-          y: response1.data[0].Freq_max,
-          x: response.data[0].id+i,
-        });
-        freqArrayMin.push({
-          y: response1.data[0].Freq_min,
-          x: response.data[0].id+i,
-        })
-      }
+      // for (var i = 0; i <= response.data.length; i++) {
+      //   freqArrayMax.push({
+      //     y: response1.data[0].Freq_max,
+      //     x: response.data[0].id + i,
+      //   });
+      //   freqArrayMin.push({
+      //     y: response1.data[0].Freq_min,
+      //     x: response.data[0].id + i,
+      //   });
+      // }
 
-      setmaxSecFreq(freqArrayMax)
-      setminSecFreq(freqArrayMin)
+      setmaxSecFreq(freqArrayMax);
+      setminSecFreq(freqArrayMin);
 
-     
-      
-
-   
-
-      var multipliedData3 = response1.data.map((data) => ({
-        y: Number(data.Freq_max),
-        x: data.id,
-      }));
+      // var multipliedData3 = response1.data.map((data) => ({
+      //   y: Number(data.Freq_max),
+      //   x: data.id,
+      // }));
       const maxFreq = Math.max(...response.data.map((item) => item.freq));
       const maxPtoP = Math.max(...response.data.map((item) => item.PtoP));
       const maxPtoN = Math.max(...response.data.map((item) => item.PtoN));
@@ -479,8 +514,6 @@ export default function PowerManagement() {
       //   yValueFormatString: "",
       //   dataPoints: minSecFreq,
       // },
-      
-      
     ],
   };
 
@@ -495,7 +528,7 @@ export default function PowerManagement() {
       {
         //text: `${oeeCalculation.oee.toFixed(2)}% OEE`,
 
-        text: `Volt`,
+        text: `Volt L-L`,
         verticalAlign: "center",
 
         fontSize: 30,
@@ -510,17 +543,52 @@ export default function PowerManagement() {
         type: "doughnut",
         showInLegend: true,
         indexLabel: "{name}: {y}",
-        yValueFormatString: "#,###'%'",
+        yValueFormatString: "##.##'%'",
 
         dataPoints: [
-          { name: "Line-R", y: 50 },
-          { name: "Line-S", y: 20 },
-          { name: "Line-T", y: 30 },
+          { name: "Line-R", y: percentRR },
+          { name: "Line-S", y: percentSS },
+          { name: "Line-T", y: percentTT },
         ],
       },
     ],
   };
+  const options7 = {
+    theme: "light2",
+    animationEnabled: true,
+    // width: datawidth,
+    // height: dataheight,
 
+    title: {},
+    subtitles: [
+      {
+        //text: `${oeeCalculation.oee.toFixed(2)}% OEE`,
+
+        text: `Volt L-N`,
+        verticalAlign: "center",
+
+        fontSize: 30,
+        dockInsidePlotArea: true,
+      },
+    ],
+
+    data: [
+      {
+        //click: visitorsChartDrilldownHandler,
+
+        type: "doughnut",
+        showInLegend: true,
+        indexLabel: "{name}: {y}",
+        yValueFormatString: "##.##'%'",
+
+        dataPoints: [
+          { name: "Line-R", y: percentRN },
+          { name: "Line-S", y: percentSN },
+          { name: "Line-T", y: percentTN },
+        ],
+      },
+    ],
+  };
 
   return (
     <div>
@@ -747,9 +815,12 @@ export default function PowerManagement() {
         <div>
           <h2>Panel</h2>
           <Select placeholder="Select Panel" onChange={getSecArea}>
-            <option value="cMT-SparexUTY_MVMDP_data">MVMDP</option>
-            <option value="cMT-SparexUTY_LVMDP_data">LVMDP1</option>
-            {/* <option value="LVMDP2">LVMDP2</option> */}
+            <option value="cmt-gedung-uty_mvmdp_detik_data">MVMDP</option>
+            <option value="cmt-gedung-uty_lvmdp1_detik_data">LVMDP1</option>
+            <option value="cMT-gedung-uty_lvmdp2_detik_data">LVMDP2</option>
+            <option value="cMT-gedung-uty_mixagrip_detik_data">Line 1</option>
+            <option value="cMT-gedung-uty_puyer_detik_data">Line 2</option>
+            <option value="cMT-gedung-uty_fatigon_detik_data">Line 3</option>
           </Select>
         </div>
         <div>
@@ -781,7 +852,13 @@ export default function PowerManagement() {
           </Button>
         </div>
       </Stack>
-      <CanvasJSChart className="" options={options6} />
+      <div className="flex justify-center font-bold text-4xl mt-10">
+        Voltage Balance
+      </div>
+      <div className="flex flex-row mx-96 px-60 mt-2">
+        <CanvasJSChart className="" options={options6} />
+        <CanvasJSChart className="" options={options7} />
+      </div>
 
       <div className="flex flex-row mt-10">
         <CanvasJSChart className="" options={options3} />
@@ -805,9 +882,6 @@ export default function PowerManagement() {
           <p> avg Freq : {dataavgFreq} Hz</p>
         </div>
       </div>
-
-
-
     </div>
   );
 }
