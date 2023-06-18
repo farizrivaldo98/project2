@@ -169,6 +169,7 @@ export default function PowerManagement() {
         },
       }
     );
+    console.log(response2.data);
 
     const totalLL =
       Number(response2.data[0].RR) +
@@ -196,7 +197,7 @@ export default function PowerManagement() {
     setPercentRN(RNdata);
     setPercentSN(SNdata);
     setPercentTN(TNdata);
-    if (secArea == "cmt-gedung-uty_mvmdp_detik_data") {
+    if (secArea == "cMT-Gedung-UTY_MVMDP_Detik_data") {
       var multipliedData = response.data.map((data) => ({
         label: data.datetime.slice(0, -5).replace("T", " "),
         y: Number(data.freq.toFixed(2)),
@@ -484,7 +485,7 @@ export default function PowerManagement() {
       },
     ],
     axisY: {
-      valueFormatString: "###.##",
+      valueFormatString: "##.###.##",
     },
     toolTip: {
       shared: true,
@@ -815,12 +816,12 @@ export default function PowerManagement() {
         <div>
           <h2>Panel</h2>
           <Select placeholder="Select Panel" onChange={getSecArea}>
-            <option value="cmt-gedung-uty_mvmdp_detik_data">MVMDP</option>
-            <option value="cmt-gedung-uty_lvmdp1_detik_data">LVMDP1</option>
-            <option value="cMT-gedung-uty_lvmdp2_detik_data">LVMDP2</option>
-            <option value="cMT-gedung-uty_mixagrip_detik_data">Line 1</option>
-            <option value="cMT-gedung-uty_puyer_detik_data">Line 2</option>
-            <option value="cMT-gedung-uty_fatigon_detik_data">Line 3</option>
+            <option value="cMT-Gedung-UTY_MVMDP_Detik_data">MVMDP</option>
+            <option value="cMT-Gedung-UTY_LVMDP1_Detik_data">LVMDP1</option>
+            <option value="cMT-Gedung-UTY_LVMDP2_Detik_data">LVMDP2</option>
+            <option value="cMT-Gedung-UTY_Mixagrip_Detik_data">Line 1</option>
+            <option value="cMT-Gedung-UTY_Puyer_Detik_data">Line 2</option>
+            <option value="cMT-Gedung-UTY_Fatigon_Detik_data">Line 3</option>
           </Select>
         </div>
         <div>
