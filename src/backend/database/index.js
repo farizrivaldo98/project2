@@ -1,19 +1,20 @@
+require("dotenv").config();
 const mysql = require("mysql2");
 const util = require("util");
 const db = mysql.createConnection({
-  host: "10.126.15.138",
-  user: "ems_saka",
-  password: "s4k4f4rmA",
-  database: "parammachine_saka",
-  port: 3306,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE1,
+  port: process.env.PORT,
 });
 
 const db2 = mysql.createConnection({
-  host: "10.126.15.138",
-  user: "ems_saka",
-  password: "s4k4f4rmA",
-  database: "ems_saka",
-  port: 3306,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE2,
+  port: process.env.PORT,
 });
 
 // host: "10.126.15.124",
