@@ -4,17 +4,17 @@ const util = require("util");
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.PASSWORD,
-  database: process.env.DATABASE1,
-  port: process.env.PORT,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE1,
+  port: process.env.DB_PORT,
 });
 
 const db2 = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.PASSWORD,
-  database: process.env.DATABASE2,
-  port: process.env.PORT,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE2,
+  port: process.env.DB_PORT,
 });
 
 // host: "10.126.15.124",
