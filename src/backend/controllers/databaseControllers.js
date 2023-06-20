@@ -311,7 +311,8 @@ module.exports = {
         level: isEmailExist[0].level,
         imagePath: isEmailExist[0].imagePath,
       };
-      const token = jwt.sign(payload, "khaerul", { expiresIn: "8h" });
+      //const token = jwt.sign(payload, "khaerul", { expiresIn: "8h" });
+      const token = jwt.sign(payload, "khaerul");
 
       delete isEmailExist[0].password;
       return res.status(200).send({
@@ -630,7 +631,7 @@ module.exports = {
       " AND " +
       finish +
       ";";
-    console.log(area);
+
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });
@@ -647,7 +648,7 @@ module.exports = {
       " AND " +
       finish +
       " ;";
-      console.log(queryData);
+    
 
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);

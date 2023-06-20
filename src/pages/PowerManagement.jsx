@@ -45,12 +45,21 @@ export default function PowerManagement() {
   const [dataavgPtoP, setdataavgPtoP] = useState();
   const [dataavgPtoN, setdataavgPtoN] = useState();
 
-  const [percentRR, setPercentRR] = useState();
-  const [percentSS, setPercentSS] = useState();
-  const [percentTT, setPercentTT] = useState();
-  const [percentRN, setPercentRN] = useState();
-  const [percentSN, setPercentSN] = useState();
-  const [percentTN, setPercentTN] = useState();
+  const [percentRR, setPercentRR] = useState(0);
+  const [percentSS, setPercentSS] = useState(0);
+  const [percentTT, setPercentTT] = useState(0);
+  const [percentRN, setPercentRN] = useState(0);
+  const [percentSN, setPercentSN] = useState(0);
+  const [percentTN, setPercentTN] = useState(0);
+
+  const [totalRR, settotalRR] = useState(0);
+  const [totalSS, settotalSS] = useState(0);
+  const [totalTT, settotalTT] = useState(0);
+  const [totalRN, settotalRN] = useState(0);
+  const [totalSN, settotalSN] = useState(0);
+  const [totalTN, settotalTN] = useState(0);
+
+
 
   const [datawidth, setWidth] = useState();
   const [dataheight, setHeight] = useState();
@@ -169,7 +178,8 @@ export default function PowerManagement() {
         },
       }
     );
-    console.log(response2.data);
+
+
 
     const totalLL =
       Number(response2.data[0].RR) +
@@ -244,6 +254,12 @@ export default function PowerManagement() {
       setdataavgFreq(avgFreq.toFixed(2));
       setdataavgPtoP(avgPtoP.toFixed(2));
       setdataavgPtoN(avgPtoN.toFixed(2));
+      settotalRR((Number(response2.data[0].RR)).toFixed(2))
+      settotalSS(( Number(response2.data[0].SS)).toFixed(2))
+      settotalTT((Number(response2.data[0].TT)).toFixed(2))
+      settotalRN((Number(response2.data[0].RN)).toFixed(2))
+      settotalSN((Number(response2.data[0].SN)).toFixed(2))
+      settotalTN((Number(response2.data[0].TN)).toFixed(2))
     } else {
       var multipliedData = response.data.map((data) => ({
         label: data.datetime.slice(0, -5).replace("T", " "),
@@ -312,6 +328,12 @@ export default function PowerManagement() {
       setdataavgFreq((avgFreq / 1000).toFixed(2));
       setdataavgPtoP((avgPtoP / 100).toFixed(2));
       setdataavgPtoN((avgPtoN / 100).toFixed(2));
+      settotalRR((Number(response2.data[0].RR)/ 100).toFixed(2))
+      settotalSS(( Number(response2.data[0].SS)/ 100).toFixed(2))
+      settotalTT((Number(response2.data[0].TT)/ 100).toFixed(2))
+      settotalRN((Number(response2.data[0].RN)/ 100).toFixed(2))
+      settotalSN((Number(response2.data[0].SN)/ 100).toFixed(2))
+      settotalTN((Number(response2.data[0].TN)/ 100).toFixed(2))
     }
 
     setSecFreq(multipliedData);
@@ -543,13 +565,13 @@ export default function PowerManagement() {
 
         type: "doughnut",
         showInLegend: true,
-        indexLabel: "{name}: {y}",
+        indexLabel: "{name}: {y} | {volt} V",
         yValueFormatString: "##.##'%'",
 
         dataPoints: [
-          { name: "Line-R", y: percentRR },
-          { name: "Line-S", y: percentSS },
-          { name: "Line-T", y: percentTT },
+          { name: "Line-R", y: percentRR, volt : totalRR },
+          { name: "Line-S", y: percentSS, volt: totalSS },
+          { name: "Line-T", y: percentTT, volt: totalTT },
         ],
       },
     ],
@@ -579,13 +601,13 @@ export default function PowerManagement() {
 
         type: "doughnut",
         showInLegend: true,
-        indexLabel: "{name}: {y}",
+        indexLabel: "{name}: {y} | {volt} V",
         yValueFormatString: "##.##'%'",
 
         dataPoints: [
-          { name: "Line-R", y: percentRN },
-          { name: "Line-S", y: percentSN },
-          { name: "Line-T", y: percentTN },
+          { name: "Line-R", y: percentRN, volt: totalRN },
+          { name: "Line-S", y: percentSN, volt: totalSN },
+          { name: "Line-T", y: percentTN, volt: totalTN },
         ],
       },
     ],
@@ -856,7 +878,7 @@ export default function PowerManagement() {
       <div className="flex justify-center font-bold text-4xl mt-10">
         Voltage Balance
       </div>
-      <div className="flex flex-row mx-96 px-60 mt-2">
+      <div className="flex flex-row mx-96 px-30 mt-2">
         <CanvasJSChart className="" options={options6} />
         <CanvasJSChart className="" options={options7} />
       </div>
