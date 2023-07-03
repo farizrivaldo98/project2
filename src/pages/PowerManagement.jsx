@@ -260,6 +260,8 @@ export default function PowerManagement() {
       settotalRN((Number(response2.data[0].RN)).toFixed(2))
       settotalSN((Number(response2.data[0].SN)).toFixed(2))
       settotalTN((Number(response2.data[0].TN)).toFixed(2))
+      
+
     } else {
       var multipliedData = response.data.map((data) => ({
         label: data.datetime.slice(0, -5).replace("T", " "),
@@ -878,7 +880,7 @@ export default function PowerManagement() {
       <div className="flex justify-center font-bold text-4xl mt-10">
         Voltage Balance
       </div>
-      <div className="flex flex-row mx-96 px-30 mt-2">
+      <div className="flex flex-row mx-50 px-30 mt-2">
         <CanvasJSChart className="" options={options6} />
         <CanvasJSChart className="" options={options7} />
       </div>
