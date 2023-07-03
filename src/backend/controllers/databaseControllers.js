@@ -613,7 +613,7 @@ module.exports = {
     const { area, start, finish } = request.query;
 
     let queryData =
-      " SELECT     DATE_FORMAT(label, '%b') AS lable,      SUM(y) AS y  FROM (      SELECT          p1.date AS label,          p1.id AS x,          p2.`" +
+      " SELECT      DATE_FORMAT(label, '%b') AS label, MONTH(label) AS x,     SUM(y) AS y  FROM (      SELECT          p1.date AS label,          p1.id AS x,          p2.`" +
       area +
       "` - p1.`" +
       area +
