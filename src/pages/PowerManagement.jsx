@@ -81,16 +81,16 @@ export default function PowerManagement() {
       }
     );
 
-    if (powerArea === "MVMDP") {
+    if (powerArea === "cMT-Gedung-UTY_MVMDP_data") {
       var multipliedData = response.data.map((data) => ({
         label: data.label,
         y: data.y * 1000000,
         x: data.x,
       }));
     } else if (
-      powerArea === "LVMDP1" ||
-      powerArea === "LVMDP2" ||
-      powerArea === "SDP.1-Produksi"
+      powerArea === "cMT-Gedung-UTY_LVMDP1_data" ||
+      powerArea === "cMT-Gedung-UTY_LVMDP2_data" ||
+      powerArea === "cMT-Gedung-UTY_SDP.1-Produksi_data"
     ) {
       var multipliedData = response.data.map((data) => ({
         label: data.label,
@@ -133,7 +133,7 @@ export default function PowerManagement() {
       }));
     } else if (
       areaMonth === "cMT-Gedung-UTY_LVMDP1_data" ||
-      areaMonth === "cMT-Gedung-UTY_LVMDP1_data" ||
+      areaMonth === "cMT-Gedung-UTY_LVMDP2_data" ||
       areaMonth === "cMT-Gedung-UTY_SDP.1-Produksi_data"
     ) {
       var multipliedData1 = response.data.map((data) => ({
