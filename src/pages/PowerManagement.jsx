@@ -765,55 +765,101 @@ export default function PowerManagement() {
         <div>
           <h2>Panel</h2>
           <Select placeholder="Select Panel" onChange={getAreaMonth}>
-            <option value="MVMDP">MVMDP</option>
-            <option value="LVMDP1">LVMDP1</option>
-            <option value="LVMDP2">LVMDP2</option>
-            <option value="Solar-Panel1-6">Solar-Panel1-6</option>
-            <option value="Solar-Panel7-12">Solar-Panel7-12</option>
-            <option value="SDP.1-Utility">SDP.1-Utility</option>
-            <option value="PPLP.1-UtilityLt.2">PPLP.1-UtilityLt.2</option>
-            <option value="PP.1-Chiller">PP.1-Chiller</option>
-            <option value="PPLP.1-UtilityLt.1">PPLP.1-UtilityLt.1</option>
-            <option value="PP.1-Genset">PP.1-Genset</option>
-            <option value="PP.1-Boiler & PW">PP.1-Boiler & PW</option>
-            <option value="PP.1-Kompressor">PP.1-Kompressor</option>
-            <option value="PP.1-HWP">PP.1-HWP</option>
-            <option value="PP.1-PUMPS">PP.1-PUMPS</option>
-            <option value="PP.1-Lift">PP.1-Lift</option>
-            <option value="PP.1-AC1.1">PP.1-AC1.1</option>
-            <option value="PP.1-AC1.2">PP.1-AC1.2</option>
-            <option value="PP.1-AC1.3">PP.1-AC1.3</option>
-            <option value="PP.1-AC2.3">PP.1-AC2.3</option>
-            <option value="SDP.1-Produksi">SDP.1-Produksi</option>
-            <option value="SDP.2-Produksi">SDP.2-Produksi</option>
-            <option value="PP.2-Hydrant.">PP.2-Hydrant.</option>
-            <option value="PP.2-Fatigon">PP.2-Fatigon</option>
-            <option value="PP.2-Puyer">PP.2-Puyer</option>
-            <option value="PP.2-Mixagrib">PP.2-Mixagrib</option>
-            <option value="PP.2-LabLt.2">PP.2-LabLt.2</option>
-            <option value="PP.2-Fasilitas">PP.2-Fasilitas</option>
-            <option value="PP.2-PackWH">PP.2-PackWH</option>
-            <option value="LP.2-PRO1.1">LP.2-PRO1.1</option>
-            <option value="LP.2-PRO1.2">LP.2-PRO1.2</option>
-            <option value="LP.2-PRO1.3">LP.2-PRO1.3</option>
-            <option value="LP.2-PRO2.3">LP.2-PRO2.3</option>
-            <option value="LP.2-PRO3.1">LP.2-PRO3.1</option>
-            <option value="LP.2-PRO4.1">LP.2-PRO4.1</option>
-            <option value="LP.2-WH1.1">LP.2-WH1.1</option>
-            <option value="PPLP.2-Mezz1.1">PPLP.2-Mezz1.1</option>
-            <option value="PPLP.1-PosJaga1">PPLP.1-PosJaga1</option>
-            <option value="PPLP.1-PosJaga2">PPLP.1-PosJaga2</option>
-            <option value="PPLP.1-Workshop">PPLP.1-Workshop</option>
-            <option value="PPLP.1-Koperasi">PPLP.1-Koperasi</option>
-            <option value="GCPGenset">GCPGenset</option>
-            <option value="SDPGenset">SDPGenset</option>
-            <option value="PP.1-WWTP">PP.1-WWTP</option>
-            <option value="PP.1-DumbWaiter">PP.1-DumbWaiter</option>
-            <option value="PP.1-OfficeLt.1">PP.1-OfficeLt.1</option>
-            <option value="PP.1-PumpitUtama">PP.1-PumpitUtama</option>
-            <option value="PPChiller1">PPChiller1</option>
-            <option value="PPChiller2">PPChiller2</option>
-            <option value="PPChiller3">PPChiller3</option>
+            <option value="cMT-Gedung-UTY_MVMDP_data">MVMDP</option>
+            <option value="cMT-Gedung-UTY_LVMDP1_data">LVMDP1</option>
+            <option value="cMT-Gedung-UTY_LVMDP2_data">LVMDP2</option>
+            <option value="cMT-Gedung-UTY_Inverter1-6_SP_data">
+              Solar-Panel1-6
+            </option>
+            <option value="cMT-Gedung-UTY_Inverter7-12_SP_data">
+              Solar-Panel7-12
+            </option>
+            <option value="cMT-Gedung-UTY_SDP.1-Utility_data">
+              SDP.1-Utility
+            </option>
+            <option value="cMT-Gedung-UTY_PPLP.1-UTY_Lt.2_data">
+              PPLP.1-UtilityLt.2
+            </option>
+            <option value="cMT-Gedung-UTY_PP.1-Chiller_data">
+              PP.1-Chiller
+            </option>
+            <option value="cMT-Gedung-UTY_PPLP.1-UTY_Lt.1_data">
+              PPLP.1-UtilityLt.1
+            </option>
+            <option value="cMT-Gedung-UTY_PP.1-Genset_data">PP.1-Genset</option>
+            <option value="cMT-Gedung-UTY_PP.1-Boiler&PW_data">
+              PP.1-Boiler & PW
+            </option>
+            <option value="cMT-Gedung-UTY_PP.1-Kompressor_data">
+              PP.1-Kompressor
+            </option>
+            <option value="cMT-Gedung-UTY_PP.1-HWP_data">PP.1-HWP</option>
+            <option value="cMT-Gedung-UTY_PP.1-PUMPS_data">PP.1-PUMPS</option>
+            <option value="cMT-Gedung-UTY_PP.1-Lift_data">PP.1-Lift</option>
+            <option value="cMT-Gedung-UTY_PP.1-AC1.1_data">PP.1-AC1.1</option>
+            <option value="cMT-Gedung-UTY_PP.1-AC1.2_data">PP.1-AC1.2</option>
+            <option value="cMT-Gedung-UTY_PP.1-AC1.3_data">PP.1-AC1.3</option>
+            <option value="cMT-Gedung-UTY_PP.1-AC2.3_data">PP.1-AC2.3</option>
+            <option value="cMT-Gedung-UTY_SDP.1-Produksi_data">
+              SDP.1-Produksi
+            </option>
+            <option value="cMT-Gedung-UTY_SDP.2-Produksi_data">
+              SDP.2-Produksi
+            </option>
+            <option value="cMT-Gedung-UTY_PP.2-Hydrant_data">
+              PP.2-Hydrant.
+            </option>
+            <option value="cMT-Gedung-UTY_PP.2-Fatigon_data">
+              PP.2-Fatigon
+            </option>
+            <option value="cMT-Gedung-UTY_PP.2-Puyer_data">PP.2-Puyer</option>
+            <option value="cMT-Gedung-UTY_PP.2-Mixagrib_data">
+              PP.2-Mixagrib
+            </option>
+            <option value="cMT-Gedung-UTY_PP.2-LabLt.2_data">
+              PP.2-LabLt.2
+            </option>
+            <option value="cMT-Gedung-UTY_PP.2-Fasilitas_data">
+              PP.2-Fasilitas
+            </option>
+            <option value="cMT-Gedung-UTY_PP.2-PackWH_data">PP.2-PackWH</option>
+            <option value="cMT-Gedung-UTY_LP.2-PRO1.1_data">LP.2-PRO1.1</option>
+            <option value="cMT-Gedung-UTY_LP.2-PRO1.2_data">LP.2-PRO1.2</option>
+            <option value="cMT-Gedung-UTY_LP.2-PRO1.3_data">LP.2-PRO1.3</option>
+            <option value="cMT-Gedung-UTY_LP.2-PRO2.3_data">LP.2-PRO2.3</option>
+            <option value="cMT-Gedung-UTY_LP.2-PRO3.1_data">LP.2-PRO3.1</option>
+            <option value="cMT-Gedung-UTY_LP.2-PRO4.1_data">LP.2-PRO4.1</option>
+            <option value="cMT-Gedung-UTY_LP.2WH1.1_data">LP.2-WH1.1</option>
+            <option value="cMT-Gedung-UTY_LP.2MEZZ1.1_data">
+              PPLP.2-Mezz1.1
+            </option>
+            <option value="cMT-Gedung-UTY_PPLP.2-PosJaga1_data">
+              PPLP.1-PosJaga1
+            </option>
+            <option value="cMT-Gedung-UTY_PPLP.2-PosJaga2_data">
+              PPLP.1-PosJaga2
+            </option>
+            <option value="cMT-Gedung-UTY_PPLP.2-Workshop_data">
+              PPLP.1-Workshop
+            </option>
+            <option value="cMT-Gedung-UTY_PPLP.2-Koperasi_data">
+              PPLP.1-Koperasi
+            </option>
+            <option value="cMT-Gedung-UTY_GCP_Genset_data">GCPGenset</option>
+            <option value="cMT-Gedung-UTY_SDP_Genset_data">SDPGenset</option>
+            <option value="cMT-Gedung-UTY_PP.1WWTP_data">PP.1-WWTP</option>
+            <option value="cMT-Gedung-UTY_PP.2DumbWaiter_data">
+              PP.1-DumbWaiter
+            </option>
+            <option value="cMT-Gedung-UTY_PPLP.2OfficeLt1_data">
+              PP.1-OfficeLt.1
+            </option>
+            <option value="cMT-Gedung-UTY_PP.2Pumpit_data">
+              PP.1-PumpitUtama
+            </option>
+            <option value="cMT-Gedung-UTY_Chiller1_data">PPChiller1</option>
+            <option value="cMT-Gedung-UTY_Chiller2_data">PPChiller2</option>
+            <option value="cMT-Gedung-UTY_Chiller3_data">PPChiller3</option>
           </Select>
         </div>
         <div>
