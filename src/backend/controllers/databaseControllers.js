@@ -453,7 +453,7 @@ module.exports = {
       // `${db.escape(date)}` +
       " ORDER BY y DESC;";
 
-      console.log(query);
+    console.log(query);
     db2.query(query, (err, result) => {
       return response.status(200).send(result);
     });
@@ -596,10 +596,8 @@ module.exports = {
       "' AND p1.date <= '" +
       finish +
       "'  ORDER BY    p1.date;";
-      let queryData2 =
-      "SELECT      DATE_FORMAT(FROM_UNIXTIME(p1.`time@timestamp`), '%Y-%m-%d') as label,      p1.data_index as x,      p2.`data_format_0` - p1.`data_format_0` as y  FROM      parammachine_saka.`cMT-Gedung-UTY_LVMDP1_data` p1  JOIN      parammachine_saka.`cMT-Gedung-UTY_LVMDP1_data` p2      ON DATE_FORMAT(FROM_UNIXTIME(p2.`time@timestamp`), '%Y-%m-%d') = (          SELECT MIN(DATE_FORMAT(FROM_UNIXTIME(`time@timestamp`), '%Y-%m-%d'))          FROM parammachine_saka.`cMT-Gedung-UTY_LVMDP1_data`          WHERE DATE_FORMAT(FROM_UNIXTIME(`time@timestamp`), '%Y-%m-%d') > DATE_FORMAT(FROM_UNIXTIME(p1.`time@timestamp`), '%Y-%m-%d')      )  WHERE      DATE_FORMAT(FROM_UNIXTIME(p1.`time@timestamp`), '%Y-%m-%d') >= '2023-06-21'      AND DATE_FORMAT(FROM_UNIXTIME(p1.`time@timestamp`), '%Y-%m-%d') <= '2023-07-03'";
-
-
+    let queryData2 =
+      "SELECT      label,      x,      y  FROM (      SELECT          p1.date AS label,          p1.id AS x,          p2.`LVMDP1` - p1.`LVMDP1` AS y      FROM          parammachine_saka.power_data p1      JOIN          parammachine_saka.power_data p2 ON p2.date = (              SELECT MIN(date)              FROM parammachine_saka.power_data              WHERE date > p1.date          )      UNION ALL      SELECT          DATE_FORMAT(FROM_UNIXTIME(p1.`time@timestamp`), '%Y-%m-%d') AS label,          p1.data_index AS x,          p2.`data_format_0` - p1.`data_format_0` AS y      FROM          parammachine_saka.`cMT-Gedung-UTY_LVMDP1_data` p1      JOIN          parammachine_saka.`cMT-Gedung-UTY_LVMDP1_data` p2          ON DATE_FORMAT(FROM_UNIXTIME(p2.`time@timestamp`), '%Y-%m-%d') = (              SELECT MIN(DATE_FORMAT(FROM_UNIXTIME(`time@timestamp`), '%Y-%m-%d'))              FROM parammachine_saka.`cMT-Gedung-UTY_LVMDP1_data`              WHERE DATE_FORMAT(FROM_UNIXTIME(`time@timestamp`), '%Y-%m-%d') > DATE_FORMAT(FROM_UNIXTIME(p1.`time@timestamp`), '%Y-%m-%d')          )  ) AS subquery  WHERE      label >= '2023-01-21'      AND label <= '2023-07-03'  ";
     db.query(queryData2, (err, result) => {
       return response.status(200).send(result);
     });
@@ -651,7 +649,6 @@ module.exports = {
       " AND " +
       finish +
       " ;";
-    
 
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
