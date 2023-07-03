@@ -126,15 +126,15 @@ export default function PowerManagement() {
       }
     );
 
-    if (areaMonth === "MVMDP") {
+    if (areaMonth === "cMT-Gedung-UTY_MVMDP_data") {
       var multipliedData1 = response.data.map((data) => ({
         label: data.label,
         y: data.y * 1000000,
       }));
     } else if (
-      areaMonth === "LVMDP1" ||
-      areaMonth === "LVMDP2" ||
-      areaMonth === "SDP.1-Produksi"
+      areaMonth === "cMT-Gedung-UTY_LVMDP1_data" ||
+      areaMonth === "cMT-Gedung-UTY_LVMDP1_data" ||
+      areaMonth === "cMT-Gedung-UTY_SDP.1-Produksi_data"
     ) {
       var multipliedData1 = response.data.map((data) => ({
         label: data.label,
