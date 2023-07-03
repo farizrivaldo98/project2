@@ -615,15 +615,21 @@ module.exports = {
     const { area, start, finish } = request.query;
 
     let queryData =
-      "  SELECT    MONTH(p1.date) AS label,    SUM(p2.`" +
+      " SELECT      MONTH(label) AS month,      SUM(y) AS total_y  FROM (      SELECT          p1.date AS label,          p1.id AS x,          p2.`" +
       area +
       "` - p1.`" +
       area +
-      "`) AS y  FROM    parammachine_saka.power_data p1  JOIN    parammachine_saka.power_data p2 ON p2.date = (      SELECT MIN(date)      FROM parammachine_saka.power_data      WHERE date > p1.date    )  WHERE      MONTH(p1.date) >= " +
+      "` AS y      FROM          parammachine_saka.power_data p1      JOIN          parammachine_saka.power_data p2 ON p2.date = (              SELECT MIN(date)              FROM parammachine_saka.power_data              WHERE date > p1.date          )      UNION ALL      SELECT          DATE_FORMAT(FROM_UNIXTIME(p1.`time@timestamp`), '%Y-%m-%d') AS label,          p1.data_index AS x,          p2.`data_format_0` - p1.`data_format_0` AS y      FROM          parammachine_saka.`" +
+      area +
+      "` p1      JOIN          parammachine_saka.`" +
+      area +
+      "` p2          ON DATE_FORMAT(FROM_UNIXTIME(p2.`time@timestamp`), '%Y-%m-%d') = (              SELECT MIN(DATE_FORMAT(FROM_UNIXTIME(`time@timestamp`), '%Y-%m-%d'))              FROM parammachine_saka.`" +
+      area +
+      "`              WHERE DATE_FORMAT(FROM_UNIXTIME(`time@timestamp`), '%Y-%m-%d') > DATE_FORMAT(FROM_UNIXTIME(p1.`time@timestamp`), '%Y-%m-%d')          )  ) AS subquery  WHERE      MONTH(label) >= " +
       start +
-      " AND MONTH(p1.date) <= " +
+      "      AND MONTH(label) <= " +
       finish +
-      "  GROUP BY    MONTH(p1.date)  ORDER BY    MONTH(p1.date);";
+      "  GROUP BY      MONTH(label)  ORDER BY      MONTH(label);  ";
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });
