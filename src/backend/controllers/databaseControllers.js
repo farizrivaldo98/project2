@@ -604,8 +604,6 @@ module.exports = {
       finish +
       "'";
 
-    console.log(queryData);
-
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });
@@ -630,6 +628,8 @@ module.exports = {
       "      AND MONTH(label) <= " +
       finish +
       "  GROUP BY      MONTH(label)  ORDER BY      MONTH(label);  ";
+
+    console.log(queryData);
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });
