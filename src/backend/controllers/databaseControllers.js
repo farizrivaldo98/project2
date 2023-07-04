@@ -629,7 +629,7 @@ module.exports = {
       finish +
       "  GROUP BY      MONTH(label)  ORDER BY      MONTH(label);  ";
 
-    console.log(queryData);
+  
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });

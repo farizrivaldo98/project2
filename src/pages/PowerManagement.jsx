@@ -84,7 +84,7 @@ export default function PowerManagement() {
     if (powerArea === "cMT-Gedung-UTY_MVMDP_data") {
       var multipliedData = response.data.map((data) => ({
         label: data.label,
-        y: data.y * 1000000,
+        y: data.y ,
         x: data.x,
       }));
     } else if (
@@ -94,7 +94,7 @@ export default function PowerManagement() {
     ) {
       var multipliedData = response.data.map((data) => ({
         label: data.label,
-        y: data.y * 1000,
+        y: data.y ,
         x: data.x,
       }));
     } else {
@@ -129,7 +129,7 @@ export default function PowerManagement() {
     if (areaMonth === "cMT-Gedung-UTY_MVMDP_data") {
       var multipliedData1 = response.data.map((data) => ({
         label: data.label,
-        y: data.y * 1000000,
+        y: data.y ,
       }));
     } else if (
       areaMonth === "cMT-Gedung-UTY_LVMDP1_data" ||
@@ -138,7 +138,7 @@ export default function PowerManagement() {
     ) {
       var multipliedData1 = response.data.map((data) => ({
         label: data.label,
-        y: data.y * 1000,
+        y: data.y ,
       }));
     } else {
       var multipliedData1 = response.data.map((data) => ({
