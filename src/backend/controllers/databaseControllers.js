@@ -289,7 +289,7 @@ module.exports = {
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
-
+      console.log(req.body);
       const isEmailExist = await query(
         `SELECT * FROM users WHERE email = ${db.escape(email)}`
       );
@@ -313,7 +313,7 @@ module.exports = {
       };
       //const token = jwt.sign(payload, "khaerul", { expiresIn: "8h" });
       const token = jwt.sign(payload, "khaerul");
-
+      console.log(token);
       delete isEmailExist[0].password;
       return res.status(200).send({
         token,
@@ -321,7 +321,8 @@ module.exports = {
         data: isEmailExist[0],
       });
     } catch (error) {
-      // res.status(error.status || 500).send(error);
+       res.status(error.status || 500).send(error);
+       console.log("gagalloin");
     }
   },
   fetchAlluser: async (req, res) => {
