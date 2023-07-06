@@ -41,6 +41,7 @@ module.exports = {
       "and" +
       " " +
       request.query.finish;
+    console.log(fetchQuerry);
 
     db.query(fetchQuerry, (err, result) => {
       return response.status(200).send(result);
@@ -313,7 +314,7 @@ module.exports = {
       };
       //const token = jwt.sign(payload, "khaerul", { expiresIn: "8h" });
       // const token = jwt.sign(payload, "khaerul");
-      const token = jwt.sign(payload, "khaerul", { expiresIn: 600 }); // 5 menit 
+      const token = jwt.sign(payload, "khaerul", { expiresIn: 600 }); // 5 menit
 
       console.log(token);
       delete isEmailExist[0].password;
@@ -323,8 +324,8 @@ module.exports = {
         data: isEmailExist[0],
       });
     } catch (error) {
-       res.status(error.status || 500).send(error);
-       console.log("gagalloin");
+      res.status(error.status || 500).send(error);
+      console.log("gagalloin");
     }
   },
   fetchAlluser: async (req, res) => {
@@ -632,7 +633,6 @@ module.exports = {
       finish +
       "  GROUP BY      MONTH(label)  ORDER BY      MONTH(label);  ";
 
-  
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });
