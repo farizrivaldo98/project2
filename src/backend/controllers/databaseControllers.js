@@ -314,7 +314,7 @@ module.exports = {
         imagePath: isEmailExist[0].imagePath,
       };
       //const token = jwt.sign(payload, "khaerul", { expiresIn: "8h" });
-       const token = jwt.sign(payload, "khaerul");
+         const token = jwt.sign(payload, "khaerul");
       //const token = jwt.sign(payload, "khaerul", { expiresIn: 600 }); // 5 menit
 
       console.log(token);
