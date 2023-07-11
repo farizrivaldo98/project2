@@ -13,8 +13,6 @@ import {
   Select,
 } from "@chakra-ui/react";
 
-
-
 function Admin() {
   const [userData, setUserData] = useState([]);
   const [levelSelect, setLevelSelect] = useState();
