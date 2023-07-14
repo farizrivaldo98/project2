@@ -126,7 +126,17 @@ function Instrument() {
           <Td>{instrument.date}</Td>
           <Td>{instrument.time}</Td>
           <Td>{instrument.notest}</Td>
-          <Td>{instrument.thickness}</Td>
+          <Td
+            className={
+              Number(instrument.thickness) <
+                Number(instrument.R_thickness_min) ||
+              Number(instrument.thickness) > Number(instrument.R_thickness_max)
+                ? "bg-red-500"
+                : ""
+            }
+          >
+            {instrument.thickness}
+          </Td>
           <Td>{instrument.diameter}</Td>
           <Td>{instrument.hardness}</Td>
           <Td>{instrument.R_thickness_min}</Td>
