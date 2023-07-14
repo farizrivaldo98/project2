@@ -35,6 +35,7 @@ function Instrument() {
   const fetchData = async () => {
     let response = await Axios.get("http://10.126.15.124:8002/part/instrument");
     setDataInstrument(response.data);
+    console.log(response.data);
   };
 
   useEffect(() => {
