@@ -131,14 +131,31 @@ function Instrument() {
               Number(instrument.thickness) <
                 Number(instrument.R_thickness_min) ||
               Number(instrument.thickness) > Number(instrument.R_thickness_max)
-                ? "bg-red-500"
+                ? "bg-red-400"
                 : ""
             }
           >
             {instrument.thickness}
           </Td>
-          <Td>{instrument.diameter}</Td>
-          <Td>{instrument.hardness}</Td>
+          <Td
+            className={
+              Number(instrument.diameter) > Number(instrument.R_diameter_min)
+                ? "bg-red-400"
+                : ""
+            }
+          >
+            {instrument.diameter}
+          </Td>
+          <Td
+            className={
+              Number(instrument.hardness) < Number(instrument.R_hardness_min) ||
+              Number(instrument.hardness) > Number(instrument.R_hardness_max)
+                ? "bg-red-400"
+                : ""
+            }
+          >
+            {instrument.hardness}
+          </Td>
           <Td>{instrument.R_thickness_min}</Td>
           <Td>{instrument.R_thickness_max}</Td>
           <Td>{instrument.R_diameter_min}</Td>
