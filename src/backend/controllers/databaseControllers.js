@@ -8,7 +8,7 @@ const { log } = require("util");
 module.exports = {
   fetchOee: async (request, response) => {
     let fetchQuerry =
-      " SELECT`data_index` as 'id', `time@timestamp` as 'time',`data_format_0` as 'avability',`data_format_1` as 'performance',`data_format_2` as 'quality' ,`data_format_3` as 'oee',`data_format_4` as 'output',`data_format_5` as 'runTime',`data_format_6` as 'stopTime', `data_format_7` as 'idleTime' FROM" +
+      " SELECT`data_index` as 'id', `time@timestamp` as 'time',COALESCE(`data_format_0`, 0) AS 'avability',  COALESCE(`data_format_1`, 0) AS 'performance',  COALESCE(`data_format_2`, 0) AS 'quality',  COALESCE(`data_format_3`, 0) AS 'oee',  COALESCE(`data_format_4`, 0) AS 'output',  COALESCE(`data_format_5`, 0) AS 'runTime',  COALESCE(`data_format_6`, 0) AS 'stopTime',COALESCE(`data_format_7`, 0) AS 'idleTime' FROM "+
       " " +
       "`" +
       request.query.machine +
@@ -20,6 +20,8 @@ module.exports = {
       "and" +
       " " +
       request.query.finish;
+
+    
 
     db.query(fetchQuerry, (err, result) => {
       return response.status(200).send(result);
