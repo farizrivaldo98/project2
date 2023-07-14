@@ -35,7 +35,6 @@ function Instrument() {
   const fetchData = async () => {
     let response = await Axios.get("http://10.126.15.124:8002/part/instrument");
     setDataInstrument(response.data);
-    console.log(response.data);
   };
 
   useEffect(() => {
@@ -121,8 +120,8 @@ function Instrument() {
     return filterData.map((instrument) => {
       return (
         <Tr>
-          <Td>null</Td>
-          <Td>null</Td>
+          <Td>{instrument.operator}</Td>
+          <Td>{instrument.produk}</Td>
           <Td>{instrument.nobatch}</Td>
           <Td>{instrument.date}</Td>
           <Td>{instrument.time}</Td>
@@ -130,12 +129,11 @@ function Instrument() {
           <Td>{instrument.thickness}</Td>
           <Td>{instrument.diameter}</Td>
           <Td>{instrument.hardness}</Td>
-          <Td>{instrument.R_thickness}</Td>
-          <Td>null</Td>
-          <Td>{instrument.R_diameter}</Td>
-          <Td>null</Td>
-          <Td>{instrument.R_hardness}</Td>
-          <Td>null</Td>
+          <Td>{instrument.R_thickness_min}</Td>
+          <Td>{instrument.R_thickness_max}</Td>
+          <Td>{instrument.R_diameter_min}</Td>
+          <Td>{instrument.R_hardness_min}</Td>
+          <Td>{instrument.R_hardness_max}</Td>
         </Tr>
       );
     });
@@ -246,8 +244,7 @@ function Instrument() {
               <Th>Hardness</Th>
               <Th>Ref. Thickness min</Th>
               <Th>Ref. Thickness max</Th>
-              <Th>Ref. Diameter min</Th>
-              <Th>Ref. Diameter max</Th>
+              <Th>Ref. Diameter </Th>
               <Th>Ref. Hardness min</Th>
               <Th>Ref. Hardness max</Th>
             </Tr>
