@@ -42,6 +42,7 @@ export function loginData(data) {
       "http://10.126.15.124:8002/part/login",
       data
     );
+    console.log(respons.data.token);
     dispatch(setUser(respons.data.data));
     localStorage.setItem("user_token", respons.data.token);
     if (respons) {

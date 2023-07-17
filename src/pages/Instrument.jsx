@@ -131,27 +131,27 @@ function Instrument() {
               Number(instrument.thickness) <
                 Number(instrument.R_thickness_min) ||
               Number(instrument.thickness) > Number(instrument.R_thickness_max)
-                ? "bg-red-400"
-                : ""
+                ? "bg-red-200"
+                : "bg-blue-200"
             }
           >
             {instrument.thickness}
           </Td>
           <Td
             className={
-              Number(instrument.diameter) > Number(instrument.R_diameter_min)
-                ? "bg-red-400"
-                : ""
+              Number(instrument.diameter) < Number(instrument.R_diameter_min)
+                ? "bg-red-200"
+                : "bg-blue-200"
             }
           >
             {instrument.diameter}
           </Td>
           <Td
             className={
-              Number(instrument.hardness) < Number(instrument.R_hardness_min) ||
-              Number(instrument.hardness) > Number(instrument.R_hardness_max)
-                ? "bg-red-400"
-                : ""
+              Number(instrument.hardness) < Number(instrument.R_hardness_max) ||
+              Number(instrument.hardness) > Number(instrument.R_hardness_min)
+                ? "bg-red-200"
+                : "bg-blue-200"
             }
           >
             {instrument.hardness}
@@ -159,8 +159,10 @@ function Instrument() {
           <Td>{instrument.R_thickness_min}</Td>
           <Td>{instrument.R_thickness_max}</Td>
           <Td>{instrument.R_diameter_min}</Td>
-          <Td>{instrument.R_hardness_min}</Td>
           <Td>{instrument.R_hardness_max}</Td>
+          <Td>{instrument.R_hardness_min}</Td>
+
+          {/* IIni masih kebalik antara mix dan max dari hardness */}
         </Tr>
       );
     });
