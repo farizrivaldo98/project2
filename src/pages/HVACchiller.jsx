@@ -14,6 +14,7 @@ import {
   Flex,
   Box,
 } from "@chakra-ui/react";
+import axios from "axios";
 
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -22,7 +23,7 @@ function HVACchiller() {
   const [activeChiller, setActiveChiller] = useState(null);
   const [activeCompressor, setActiveCompressor] = useState(null);
   const [startDate, setStartDate] = useState(null);
-  const [finishDate, setFinishDate] = useState();
+  const [finishDate, setFinishDate] = useState(null);
   const [dataOnClick, setOnClick] = useState(null);
 
   const handleChillerClick = (chillerId) => {
@@ -42,22 +43,37 @@ function HVACchiller() {
     setFinishDate(e.target.value);
   };
 
-  function showContent(element) {
-    const content = element.innerHTML;
-    setOnClick(content);
-    const scrollHeight =
-      document.documentElement.scrollHeight - window.innerHeight;
-    window.scrollTo({ top: scrollHeight, behavior: "smooth" });
-  }
+  const submitData = async () => {
+    function showContent(element) {
+      const content = element.innerHTML;
+      setOnClick(content);
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      window.scrollTo({ top: scrollHeight, behavior: "smooth" });
+    }
 
-  const thElements = document.getElementsByTagName("Th");
-  for (let i = 0; i < thElements.length; i++) {
-    const th = thElements[i];
-    th.style.cursor = "pointer";
-    th.addEventListener("click", function () {
-      showContent(this);
-    });
-  }
+    const thElements = document.getElementsByTagName("Th");
+    for (let i = 0; i < thElements.length; i++) {
+      const th = thElements[i];
+      th.style.cursor = "pointer";
+      th.addEventListener("click", function () {
+        showContent(this);
+      });
+    }
+
+    let response = await axios.get(
+      "http://10.126.15.124:8002/part/getChillerData",
+      {
+        params: {
+          chiller: "CH1",
+          kompresor: "K1",
+          start: startDate,
+          finish: finishDate,
+        },
+      }
+    );
+    console.log(response.data);
+  };
 
   //=======================dumy================================
 
@@ -71,11 +87,6 @@ function HVACchiller() {
     const data = { label, y, x };
     data_array.push(data);
   }
-
-  // Menampilkan array hasil
-  data_array.forEach((data) => {
-    console.log(data);
-  });
 
   //======================================================
 
@@ -285,12 +296,21 @@ function HVACchiller() {
               type="date"
             />
           </div>
+          <div>
+            <Button
+              className="ml-4 mt-3"
+              colorScheme="gray"
+              onClick={() => submitData()}
+            >
+              Submit
+            </Button>
+          </div>
         </div>
       ) : (
         <div></div>
       )}
 
-      {activeCompressor !== null ? (
+      {startDate && finishDate !== null ? (
         <div>
           <Box overflowX="auto">
             <Table variant="simple " minWidth="100%">
