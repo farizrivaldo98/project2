@@ -55,4 +55,6 @@ routers.get("/getPowerSec", databaseControllers.getPowerSec);
 routers.get("/getRangeSet", databaseControllers.getRangeSet);
 routers.get("/getavgpower", databaseControllers.getAvgPower);
 
+routers.get("/getChillerData", databaseControllers.getChillerData);
+
 module.exports = routers;
