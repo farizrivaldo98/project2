@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CanvasJSReact from "../canvasjs.react";
 import {
   Button,
   Input,
@@ -14,12 +15,15 @@ import {
   Box,
 } from "@chakra-ui/react";
 
+var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 function HVACchiller() {
   const [activeChiller, setActiveChiller] = useState(null);
   const [activeCompressor, setActiveCompressor] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [finishDate, setFinishDate] = useState();
-  const [dataOnClick, setOnClick] = useState();
+  const [dataOnClick, setOnClick] = useState(null);
 
   const handleChillerClick = (chillerId) => {
     setActiveChiller(chillerId);
@@ -54,6 +58,52 @@ function HVACchiller() {
       showContent(this);
     });
   }
+
+  //=======================dumy================================
+
+  const data_array = [];
+
+  for (let i = 0; i < 30; i++) {
+    const label = new Date().toISOString();
+    const y = Math.floor(Math.random() * 1001);
+    const x = i + 1;
+
+    const data = { label, y, x };
+    data_array.push(data);
+  }
+
+  // Menampilkan array hasil
+  data_array.forEach((data) => {
+    console.log(data);
+  });
+
+  //======================================================
+
+  const options = {
+    theme: "light1",
+
+    subtitles: [
+      {
+        text: "Data chiller",
+      },
+    ],
+    axisY: {
+      prefix: "",
+    },
+    toolTip: {
+      shared: true,
+    },
+    data: [
+      {
+        type: "splineArea",
+        name: "Kwh",
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: data_array,
+      },
+    ],
+  };
 
   return (
     <div>
@@ -994,9 +1044,15 @@ function HVACchiller() {
         <div></div>
       )}
 
-      <div className="flex justify-center mt-7">
+      <div className="flex justify-center mt-14 mb-4">
         <h2 className=" text-4xl font-bold">{dataOnClick}</h2>
       </div>
+
+      {dataOnClick != null ? (
+        <CanvasJSChart className="" options={options} />
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }
