@@ -44,6 +44,17 @@ function HVACchiller() {
 
   const dateFinish = async (e) => {
     setFinishDate(e.target.value);
+   
+  };
+
+  const submitData = async () => {
+    function showContent(element) {
+      const content = element.innerHTML;
+      setOnClick(content);
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      window.scrollTo({ top: scrollHeight, behavior: "smooth" });
+    }
     var setChiller = "";
     var setCompresor = "";
     if (activeChiller == "chiller1") {
@@ -80,16 +91,6 @@ function HVACchiller() {
       }
     );
     setGetTableData(response.data);
-  };
-
-  const submitData = () => {
-    function showContent(element) {
-      const content = element.innerHTML;
-      setOnClick(content);
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      window.scrollTo({ top: scrollHeight, behavior: "smooth" });
-    }
   };
 
   const renderTable = () => {
