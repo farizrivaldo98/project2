@@ -99,8 +99,8 @@ function HVACchiller() {
   };
 
   const renderActiveSetpoint = (indexData) => {
-    return getTableData.map((myData, indexData) => {
-      return <Td>{myData.indexData}</Td>;
+    return getTableData.map((myData) => {
+      return <Td>{myData[indexData]}</Td>;
     });
   };
 
@@ -356,17 +356,7 @@ function HVACchiller() {
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">Alarm</Th>
-                  <Td>567</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Alarm")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
