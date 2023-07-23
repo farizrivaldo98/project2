@@ -90,6 +90,7 @@ function HVACchiller() {
       }
     );
     setGetTableData(response.data);
+    console.log(getTableData);
   };
 
   const renderTable = () => {
@@ -356,7 +357,7 @@ function HVACchiller() {
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">Alarm</Th>
-                  {renderActiveSetpoint("Alarm")}
+                  {renderActiveSetpoint("Alarm Chiller")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
