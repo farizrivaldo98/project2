@@ -363,677 +363,247 @@ function HVACchiller() {
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Body Chiller
                   </Th>
-                  <Td>235</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Kisi-Kisi Kondensor
                   </Th>
-                  <Td>966</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Fan Kondensor
                   </Th>
-                  <Td>574</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Active Setpoint
                   </Th>
-                  <Td>678</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Active Setpoint")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">Evap LWT</Th>
-                  <Td>506</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("EvapLWT")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">Evap EWT</Th>
-                  <Td>343</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("EvapEWT")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Unit Capacity
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Unit Capacity")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Status Kompresor
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Status Kompresor")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     UnitCapacity
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Unit Capacity")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Evap Presure
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Evap Presure")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Cond Presure
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Cond Presure")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Evap sat Temprature
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Evap sat Temperature")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Cond sat Tempraturre
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Cond sat Temperature")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Suction Temperature
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Suction Temperature")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Discharge Temperature
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Discarge Temperature")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Evap Apporach
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Evap Aproach")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Cond Approach
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Cond Approach")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Oil Presure
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Oil Presure")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     EXV position
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("EXV Position")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Run Hour Kompressor
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Run Hour Kompressor")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Ampere Kompresor
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("Ampere Kompressor")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     No. Of Start
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderActiveSetpoint("No of Start")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Level Oil sight glass atas
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Level Oil sight glass bawah
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Jalur Sight glass Exp valve
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Total Fan ON
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Tekanan Return Chiller
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Tekanan Supplay Chiller
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Inlet Soft water
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Pompa CHWS 1
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    Suhu sebelum pompa{" "}
+                    Suhu sebelum pompa
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    Suhu sesudah pompa{" "}
+                    Suhu sesudah pompa
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    Tekanan Sebelum pompa{" "}
+                    Tekanan Sebelum pompa
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    Tekanan Sesudah pompa{" "}
+                    Tekanan Sesudah pompa
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    Tegangan R-S{" "}
+                    Tegangan R-S
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    Tegangan S-T{" "}
+                    Tegangan S-T
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    Tegangan T-R{" "}
+                    Tegangan T-R
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">Ampere R-S</Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">Ampere S-T</Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">Ampere T-R</Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Grounding Ampere
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Jam monitoring
                   </Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">Operator</Th>
-                  <Td>133</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  <Td>Null</Td>
                 </Tr>
               </Tbody>
             </Table>
