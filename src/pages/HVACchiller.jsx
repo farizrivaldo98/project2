@@ -20,8 +20,11 @@ var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function HVACchiller() {
+  const [getTableData, setGetTableData] = useState([]);
   const [activeChiller, setActiveChiller] = useState(null);
   const [activeCompressor, setActiveCompressor] = useState(null);
+  //const [chiller, setChiller] = useState(null);
+  //const [compresor, setCompresor] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [finishDate, setFinishDate] = useState(null);
   const [dataOnClick, setOnClick] = useState(null);
@@ -39,11 +42,47 @@ function HVACchiller() {
     setStartDate(e.target.value);
   };
 
-  const dateFinish = (e) => {
+  const dateFinish = async (e) => {
     setFinishDate(e.target.value);
+    var setChiller = "";
+    var setCompresor = "";
+    if (activeChiller == "chiller1") {
+      setChiller = "CH1";
+    } else if (activeChiller == "chiller2") {
+      setChiller = "CH2";
+    } else if (activeChiller == "chiller3") {
+      setChiller = "CH3";
+    }
+
+    if (activeCompressor == "compresor1") {
+      setCompresor = "K1";
+    } else if (activeCompressor == "compresor2") {
+      setCompresor = "K2";
+    } else if (activeCompressor == "compresor3") {
+      setCompresor = "K1";
+    } else if (activeCompressor == "compresor4") {
+      setCompresor = "K2";
+    } else if (activeCompressor == "compresor5") {
+      setCompresor = "K1";
+    } else if (activeCompressor == "compresor6") {
+      setCompresor = "K1";
+    }
+
+    let response = await axios.get(
+      "http://10.126.15.124:8002/part/getChillerData",
+      {
+        params: {
+          chiller: setChiller,
+          kompresor: setCompresor,
+          start: startDate,
+          finish: finishDate,
+        },
+      }
+    );
+    setGetTableData(response.data);
   };
 
-  const submitData = async () => {
+  const submitData = () => {
     function showContent(element) {
       const content = element.innerHTML;
       setOnClick(content);
@@ -51,28 +90,12 @@ function HVACchiller() {
         document.documentElement.scrollHeight - window.innerHeight;
       window.scrollTo({ top: scrollHeight, behavior: "smooth" });
     }
+  };
 
-    const thElements = document.getElementsByTagName("Th");
-    for (let i = 0; i < thElements.length; i++) {
-      const th = thElements[i];
-      th.style.cursor = "pointer";
-      th.addEventListener("click", function () {
-        showContent(this);
-      });
-    }
-
-    let response = await axios.get(
-      "http://10.126.15.124:8002/part/getChillerData",
-      {
-        params: {
-          chiller: "CH1",
-          kompresor: "K1",
-          start: startDate,
-          finish: finishDate,
-        },
-      }
-    );
-    console.log(response.data);
+  const renderTable = () => {
+    return getTableData.map((myData, index) => {
+      return <Td>{myData.time}</Td>;
+    });
   };
 
   //=======================dumy================================
@@ -111,7 +134,7 @@ function HVACchiller() {
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: data_array,
+        dataPoints: [],
       },
     ],
   };
@@ -317,38 +340,7 @@ function HVACchiller() {
               <Tbody>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">Time</Th>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>324</Td>
-                  <Td>232</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
-                  <Td>567</Td>
-                  <Td>235</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
-                  <Td>966</Td>
-                  <Td>574</Td>
-                  <Td>678</Td>
-                  <Td>506</Td>
-                  <Td>343</Td>
-                  <Td>133</Td>
+                  {renderTable("time")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
