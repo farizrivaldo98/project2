@@ -133,7 +133,7 @@ function HVACchiller() {
       "Ampere Kompressor",
       "No of Start",
     ];
-    if (activeSetpointArray.includes(indexData)) {
+    if (activeSetpointNames.includes(indexData)) {
       return getTableData.map((myData) => {
         return <Td>{Number(myData[indexData]) / 10}</Td>;
       });
