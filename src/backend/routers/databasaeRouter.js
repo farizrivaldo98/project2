@@ -56,5 +56,6 @@ routers.get("/getRangeSet", databaseControllers.getRangeSet);
 routers.get("/getavgpower", databaseControllers.getAvgPower);
 
 routers.get("/getChillerData", databaseControllers.getChillerData);
+routers.get("/getGraphChiller", databaseControllers.getGraphChiller);
 
 module.exports = routers;

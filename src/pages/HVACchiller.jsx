@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CanvasJSReact from "../canvasjs.react";
 import {
   Button,
@@ -21,6 +21,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function HVACchiller() {
   const [getTableData, setGetTableData] = useState([]);
+  const [getGraphData, setGetGraphData] = useState([]);
   const [activeChiller, setActiveChiller] = useState(null);
   const [activeCompressor, setActiveCompressor] = useState(null);
   //const [chiller, setChiller] = useState(null);
@@ -46,6 +47,23 @@ function HVACchiller() {
   const dateFinish = async (e) => {
     setFinishDate(e.target.value);
   };
+
+  useEffect(async () => {
+    let response = await axios.get(
+      "http://10.126.15.124:8002/part/getGraphChiller",
+      {
+        params: {
+          area: dataOnClick,
+          chiller: setChiller,
+          kompresor: setCompresor,
+          start: startDate,
+          finish: finishDate,
+        },
+      }
+    );
+    setGetGraphData(response.data);
+    console.log(response.data);
+  }, [dataOnClick]);
 
   const submitData = async () => {
     setClickSubmit(true);
@@ -111,7 +129,6 @@ function HVACchiller() {
 
   const renderActiveSetpoint = (indexData) => {
     const activeSetpointNames = [
-     
       "Alarm Chiller",
       "Active Setpoint",
       "EvapLWT",
@@ -129,7 +146,6 @@ function HVACchiller() {
       "Cond Approach",
       "Oil Presure",
       "Ampere Kompressor",
-
     ];
     if (activeSetpointNames.includes(indexData)) {
       return getTableData.map((myData) => {
