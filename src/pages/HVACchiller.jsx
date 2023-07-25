@@ -110,9 +110,38 @@ function HVACchiller() {
   };
 
   const renderActiveSetpoint = (indexData) => {
-    return getTableData.map((myData) => {
-      return <Td>{myData[indexData]}</Td>;
-    });
+    const activeSetpointNames = [
+      "Status Chiller",
+      "Alarm Chiller",
+      "Active Setpoint",
+      "EvapLWT",
+      "EvapEWT",
+      "Unit Capacity",
+      "Status Kompresor",
+      "Unit Capacity",
+      "Evap Presure",
+      "Cond Presure",
+      "Evap sat Temperature",
+      "Cond sat Temperature",
+      "Suction Temperature",
+      "Discharge Temperature",
+      "Evap Approach",
+      "Cond Approach",
+      "Oil Presure",
+      "EXV Position",
+      "Run Hour Kompressor",
+      "Ampere Kompressor",
+      "No of Start",
+    ];
+    if (activeSetpointArray.includes(indexData)) {
+      return getTableData.map((myData) => {
+        return <Td>{Number(myData[indexData]) / 10}</Td>;
+      });
+    } else {
+      return getTableData.map((myData) => {
+        return <Td>{myData[indexData]}</Td>;
+      });
+    }
   };
 
   //=======================dumy================================
