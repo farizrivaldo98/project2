@@ -28,6 +28,7 @@ function HVACchiller() {
   const [startDate, setStartDate] = useState(null);
   const [finishDate, setFinishDate] = useState(null);
   const [dataOnClick, setOnClick] = useState(null);
+  const [clickSubmit, setClickSubmit] = useState(false)
 
   const handleChillerClick = (chillerId) => {
     setActiveChiller(chillerId);
@@ -47,6 +48,7 @@ function HVACchiller() {
   };
 
   const submitData = async () => {
+    setClickSubmit(true)
     function showContent(element) {
       const content = element.innerHTML;
       setOnClick(content);
@@ -54,6 +56,15 @@ function HVACchiller() {
         document.documentElement.scrollHeight - window.innerHeight;
       window.scrollTo({ top: scrollHeight, behavior: "smooth" });
     }
+    const thElements = document.getElementsByTagName("th");
+for (let i = 0; i < thElements.length; i++) {
+  const th = thElements[i];
+  th.style.cursor = "pointer"; // Mengubah kursor menjadi pointer
+  th.addEventListener("click", function() {
+    showContent(this);
+  });
+}
+
     var setChiller = "";
     var setCompresor = "";
     if (activeChiller == "chiller1") {
@@ -90,7 +101,7 @@ function HVACchiller() {
       }
     );
     setGetTableData(response.data);
-    console.log(getTableData);
+
   };
 
   const renderTable = () => {
@@ -340,7 +351,7 @@ function HVACchiller() {
         <div></div>
       )}
 
-      {startDate && finishDate !== null ? (
+      {clickSubmit == true ? (
         <div>
           <Box overflowX="auto">
             <Table variant="simple " minWidth="100%">
@@ -443,13 +454,13 @@ function HVACchiller() {
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Discharge Temperature
                   </Th>
-                  {renderActiveSetpoint("Discarge Temperature")}
+                  {renderActiveSetpoint("Discharge Temperature")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
                     Evap Apporach
                   </Th>
-                  {renderActiveSetpoint("Evap Aproach")}
+                  {renderActiveSetpoint("Evap Approach")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
