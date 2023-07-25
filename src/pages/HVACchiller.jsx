@@ -24,12 +24,14 @@ function HVACchiller() {
   const [getGraphData, setGetGraphData] = useState([]);
   const [activeChiller, setActiveChiller] = useState(null);
   const [activeCompressor, setActiveCompressor] = useState(null);
-  //const [chiller, setChiller] = useState(null);
-  //const [compresor, setCompresor] = useState(null);
+  const [chiller, setChiller] = useState(null);
+  const [compresor, setCompresor] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [finishDate, setFinishDate] = useState(null);
   const [dataOnClick, setOnClick] = useState(null);
   const [clickSubmit, setClickSubmit] = useState(false);
+  const [isFirstRender, setIsFirstRender] = useState(true);
+
 
   const handleChillerClick = (chillerId) => {
     setActiveChiller(chillerId);
@@ -48,22 +50,73 @@ function HVACchiller() {
     setFinishDate(e.target.value);
   };
 
-  useEffect(async () => {
-    let response = await axios.get(
-      "http://10.126.15.124:8002/part/getGraphChiller",
-      {
-        params: {
-          area: dataOnClick,
-          chiller: setChiller,
-          kompresor: setCompresor,
-          start: startDate,
-          finish: finishDate,
-        },
-      }
-    );
-    setGetGraphData(response.data);
-    console.log(response.data);
+  const graphValue = () => {
+
+
+    const activeSetpointNames = [
+      "Alarm Chiller",
+      "Active Setpoint",
+      "EvapLWT",
+      "EvapEWT",
+      "Unit Capacity",
+      "Status Kompresor",
+      "Unit Capacity",
+      "Evap Presure",
+      "Cond Presure",
+      "Evap sat Temperature",
+      "Cond sat Temperature",
+      "Suction Temperature",
+      "Discharge Temperature",
+      "Evap Approach",
+      "Cond Approach",
+      "Oil Presure",
+      "Ampere Kompressor",
+    ];
+
+    if (activeSetpointNames.includes(dataOnClick)) {
+    
+      let statusKompresorArray = getTableData.map((data, index) => {
+        return {
+          label: data.time,
+          x: index + 1, 
+          y: Number (data[dataOnClick])/10
+        };
+      });
+      setGetGraphData(statusKompresorArray);
+  
+    } else {
+  
+      let statusKompresorArray = getTableData.map((data, index) => {
+        return {
+          label: data.time,
+          x: index + 1, 
+          y: data[dataOnClick]
+        };
+      });
+      setGetGraphData(statusKompresorArray);
+  
+    }
+
+
+
+
+  } 
+  
+
+
+
+  useEffect(() => {
+    // Fungsi untuk mengambil data dari server
+  
+  
+    // Hanya eksekusi fetchData saat clickSubmit berubah (bukan saat render pertama)
+    if (!isFirstRender) {
+      graphValue();
+    } else {
+      setIsFirstRender(false);
+    }
   }, [dataOnClick]);
+  
 
   const submitData = async () => {
     setClickSubmit(true);
@@ -83,42 +136,49 @@ function HVACchiller() {
       });
     }
 
-    var setChiller = "";
-    var setCompresor = "";
+
+
+    var setChiller1 = "";
+    var setCompresor1 = "";
     if (activeChiller == "chiller1") {
-      setChiller = "CH1";
+      setChiller1 = "CH1";
     } else if (activeChiller == "chiller2") {
-      setChiller = "CH2";
+      setChiller1 = "CH2";
     } else if (activeChiller == "chiller3") {
-      setChiller = "CH3";
+      setChiller1 = "CH3";
     }
 
     if (activeCompressor == "compresor1") {
-      setCompresor = "K1";
+      setCompresor1 = "K1";
     } else if (activeCompressor == "compresor2") {
-      setCompresor = "K2";
+      setCompresor1 = "K2";
     } else if (activeCompressor == "compresor3") {
-      setCompresor = "K1";
+      setCompresor1 = "K1";
     } else if (activeCompressor == "compresor4") {
-      setCompresor = "K2";
+      setCompresor1 = "K2";
     } else if (activeCompressor == "compresor5") {
-      setCompresor = "K1";
+      setCompresor1 = "K1";
     } else if (activeCompressor == "compresor6") {
-      setCompresor = "K1";
+      setCompresor1 = "K1";
     }
+
+    setChiller(setChiller1)
+    setCompresor(setCompresor1)
 
     let response = await axios.get(
       "http://10.126.15.124:8002/part/getChillerData",
       {
         params: {
-          chiller: setChiller,
-          kompresor: setCompresor,
+          chiller: setChiller1,
+          kompresor: setCompresor1,
           start: startDate,
           finish: finishDate,
         },
       }
     );
     setGetTableData(response.data);
+
+   
   };
 
   const renderTable = () => {
@@ -160,18 +220,8 @@ function HVACchiller() {
 
   //=======================dumy================================
 
-  const data_array = [];
 
-  for (let i = 0; i < 30; i++) {
-    const label = new Date().toISOString();
-    const y = Math.floor(Math.random() * 1001);
-    const x = i + 1;
 
-    const data = { label, y, x };
-    data_array.push(data);
-  }
-
-  //======================================================
 
   const options = {
     theme: "light1",
@@ -190,11 +240,11 @@ function HVACchiller() {
     data: [
       {
         type: "splineArea",
-        name: "Kwh",
+        name: "data chiller",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: [],
+        dataPoints: getGraphData,
       },
     ],
   };
