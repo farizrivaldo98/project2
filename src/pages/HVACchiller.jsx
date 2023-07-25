@@ -28,7 +28,7 @@ function HVACchiller() {
   const [startDate, setStartDate] = useState(null);
   const [finishDate, setFinishDate] = useState(null);
   const [dataOnClick, setOnClick] = useState(null);
-  const [clickSubmit, setClickSubmit] = useState(false)
+  const [clickSubmit, setClickSubmit] = useState(false);
 
   const handleChillerClick = (chillerId) => {
     setActiveChiller(chillerId);
@@ -48,7 +48,7 @@ function HVACchiller() {
   };
 
   const submitData = async () => {
-    setClickSubmit(true)
+    setClickSubmit(true);
     function showContent(element) {
       const content = element.innerHTML;
       setOnClick(content);
@@ -57,13 +57,13 @@ function HVACchiller() {
       window.scrollTo({ top: scrollHeight, behavior: "smooth" });
     }
     const thElements = document.getElementsByTagName("th");
-for (let i = 0; i < thElements.length; i++) {
-  const th = thElements[i];
-  th.style.cursor = "pointer"; // Mengubah kursor menjadi pointer
-  th.addEventListener("click", function() {
-    showContent(this);
-  });
-}
+    for (let i = 0; i < thElements.length; i++) {
+      const th = thElements[i];
+      th.style.cursor = "pointer"; // Mengubah kursor menjadi pointer
+      th.addEventListener("click", function () {
+        showContent(this);
+      });
+    }
 
     var setChiller = "";
     var setCompresor = "";
@@ -101,7 +101,6 @@ for (let i = 0; i < thElements.length; i++) {
       }
     );
     setGetTableData(response.data);
-
   };
 
   const renderTable = () => {
@@ -367,7 +366,9 @@ for (let i = 0; i < thElements.length; i++) {
                   {renderActiveSetpoint("Status Chiller")}
                 </Tr>
                 <Tr>
-                  <Th className="sticky left-0 z-10 bg-blue-200">Alarm</Th>
+                  <Th className="sticky left-0 z-10 bg-blue-200">
+                    Alarm Chiller
+                  </Th>
                   {renderActiveSetpoint("Alarm Chiller")}
                 </Tr>
                 <Tr>
@@ -395,11 +396,11 @@ for (let i = 0; i < thElements.length; i++) {
                   {renderActiveSetpoint("Active Setpoint")}
                 </Tr>
                 <Tr>
-                  <Th className="sticky left-0 z-10 bg-blue-200">Evap LWT</Th>
+                  <Th className="sticky left-0 z-10 bg-blue-200">EvapLWT</Th>
                   {renderActiveSetpoint("EvapLWT")}
                 </Tr>
                 <Tr>
-                  <Th className="sticky left-0 z-10 bg-blue-200">Evap EWT</Th>
+                  <Th className="sticky left-0 z-10 bg-blue-200">EvapEWT</Th>
                   {renderActiveSetpoint("EvapEWT")}
                 </Tr>
                 <Tr>
@@ -416,7 +417,7 @@ for (let i = 0; i < thElements.length; i++) {
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    UnitCapacity
+                    Unit Capacity
                   </Th>
                   {renderActiveSetpoint("Unit Capacity")}
                 </Tr>
@@ -434,13 +435,13 @@ for (let i = 0; i < thElements.length; i++) {
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    Evap sat Temprature
+                    Evap sat Temperature
                   </Th>
                   {renderActiveSetpoint("Evap sat Temperature")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    Cond sat Tempraturre
+                    Cond sat Temperature
                   </Th>
                   {renderActiveSetpoint("Cond sat Temperature")}
                 </Tr>
@@ -458,7 +459,7 @@ for (let i = 0; i < thElements.length; i++) {
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    Evap Apporach
+                    Evap Approach
                   </Th>
                   {renderActiveSetpoint("Evap Approach")}
                 </Tr>
@@ -488,13 +489,13 @@ for (let i = 0; i < thElements.length; i++) {
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    Ampere Kompresor
+                    Ampere Kompressor
                   </Th>
                   {renderActiveSetpoint("Ampere Kompressor")}
                 </Tr>
                 <Tr>
                   <Th className="sticky left-0 z-10 bg-blue-200">
-                    No. Of Start
+                    No of Start
                   </Th>
                   {renderActiveSetpoint("No of Start")}
                 </Tr>
