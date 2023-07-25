@@ -111,7 +111,7 @@ function HVACchiller() {
 
   const renderActiveSetpoint = (indexData) => {
     const activeSetpointNames = [
-      "Status Chiller",
+     
       "Alarm Chiller",
       "Active Setpoint",
       "EvapLWT",
@@ -128,10 +128,8 @@ function HVACchiller() {
       "Evap Approach",
       "Cond Approach",
       "Oil Presure",
-      "EXV Position",
-      "Run Hour Kompressor",
       "Ampere Kompressor",
-      "No of Start",
+
     ];
     if (activeSetpointNames.includes(indexData)) {
       return getTableData.map((myData) => {
