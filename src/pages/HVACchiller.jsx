@@ -10,8 +10,12 @@ import {
   Th,
   Td,
   TableCaption,
+  Select,
   TableContainer,
+  FormLabel,
   Flex,
+  Switch,
+  Stack,
   Box,
 } from "@chakra-ui/react";
 import axios from "axios";
@@ -31,6 +35,31 @@ function HVACchiller() {
   const [dataOnClick, setOnClick] = useState(null);
   const [clickSubmit, setClickSubmit] = useState(false);
   const [isFirstRender, setIsFirstRender] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
+  const [arrayParam, setArrayParam] = useState([
+    "Status Chiller",
+    "Alarm Chiller",
+    "Active Setpoint",
+    "EvapLWT",
+    "EvapEWT",
+    "Unit Capacity",
+    "Status Kompresor",
+    "Unit Capacity",
+    "Evap Presure",
+    "Cond Presure",
+    "Evap sat Temperature",
+    "Cond sat Temperature",
+    "Suction Temperature",
+    "Discharge Temperature",
+    "Evap Approach",
+    "Cond Approach",
+    "Oil Presure",
+    "EXV Position",
+    "Run Hour Kompressor",
+    "Ampere Kompressor",
+    "No of Start",
+  ])
+
 
 
   const handleChillerClick = (chillerId) => {
@@ -49,6 +78,8 @@ function HVACchiller() {
   const dateFinish = async (e) => {
     setFinishDate(e.target.value);
   };
+
+
 
   const graphValue = () => {
 
@@ -219,7 +250,10 @@ function HVACchiller() {
   };
 
   //=======================dumy================================
-
+  const handleSwitchChange = () => {
+    setIsChecked(!isChecked); // Mengubah nilai state menjadi kebalikan dari nilai sebelumnya
+    console.log(isChecked);
+  };
 
 
 
@@ -245,6 +279,14 @@ function HVACchiller() {
         xValueFormatString: "",
         yValueFormatString: "",
         dataPoints: getGraphData,
+      },
+      {
+        type: "splineArea",
+        name: "data chiller",
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: [],
       },
     ],
   };
@@ -717,13 +759,58 @@ function HVACchiller() {
       ) : (
         <div></div>
       )}
-
-      <div className="flex justify-center mt-14 mb-4">
-        <h2 className=" text-4xl font-bold">{dataOnClick}</h2>
-      </div>
+  
 
       {dataOnClick != null ? (
-        <CanvasJSChart className="" options={options} />
+     <div>
+        <Stack
+        className="flex flex-row justify-center  "
+        direction="row"
+        spacing={4}
+        align="center"
+      >
+
+        <div className="flex flex-row justify-center mt-10">
+          <div className="flex flex-col">
+
+            
+            <h1></h1>
+            <Stack align='center' direction='row'>
+            <FormLabel htmlFor='isChecked'>Multi Line :</FormLabel>
+              <Switch size='lg' isChecked={isChecked} onChange={handleSwitchChange}/>
+            </Stack>
+          </div>
+            <Select placeholder="Select Machine" >
+              {arrayParam.map((setpoint) => (
+                <option  value={setpoint}>{setpoint}</option>
+                ))}
+            </Select>
+            <Select placeholder="Select Machine" >
+                {arrayParam.map((setpoint) => (
+                  <option  value={setpoint}>{setpoint}</option>
+                ))}
+            </Select>
+            <Select placeholder="Select Machine" >
+                {arrayParam.map((setpoint) => (
+                  <option  value={setpoint}>{setpoint}</option>
+                  ))}
+            </Select>
+            <Select placeholder="Select Machine" >
+                {arrayParam.map((setpoint) => (
+                  <option  value={setpoint}>{setpoint}</option>
+                  ))}
+            </Select>
+            
+          </div>
+          </Stack>
+            <div className="flex justify-center mt-14 mb-4">
+              <h2 className=" text-4xl font-bold">{dataOnClick}</h2>
+            </div>
+           
+            <CanvasJSChart className="" options={options} />
+             
+           </div>
+           
       ) : (
         <div></div>
       )}
