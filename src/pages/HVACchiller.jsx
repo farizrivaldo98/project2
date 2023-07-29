@@ -69,6 +69,8 @@ function HVACchiller() {
 
   const handleCompressorClick = (compressorId) => {
     setActiveCompressor(compressorId);
+
+
   };
 
   const dateStart = (e) => {
@@ -169,10 +171,10 @@ function HVACchiller() {
 
 
 
-    var setChiller1 = "";
-    var setCompresor1 = "";
+
+
     if (activeChiller == "chiller1") {
-      setChiller1 = "CH1";
+      var setChiller1 = "CH1";
     } else if (activeChiller == "chiller2") {
       setChiller1 = "CH2";
     } else if (activeChiller == "chiller3") {
@@ -180,7 +182,7 @@ function HVACchiller() {
     }
 
     if (activeCompressor == "compresor1") {
-      setCompresor1 = "K1";
+      var setCompresor1 = "K1";
     } else if (activeCompressor == "compresor2") {
       setCompresor1 = "K2";
     } else if (activeCompressor == "compresor3") {
@@ -207,6 +209,7 @@ function HVACchiller() {
         },
       }
     );
+    console.log(setChiller1,setCompresor1,startDate,finishDate);
     setGetTableData(response.data);
 
    
@@ -460,6 +463,7 @@ function HVACchiller() {
               placeholder="Select Date and Time"
               size="md"
               type="date"
+              
             />
           </div>
           <div>
@@ -469,6 +473,7 @@ function HVACchiller() {
               placeholder="Select Date and Time"
               size="md"
               type="date"
+              
             />
           </div>
           <div>
@@ -771,15 +776,20 @@ function HVACchiller() {
       >
 
         <div className="flex flex-row justify-center mt-10">
-          <div className="flex flex-col">
-
-            
-            <h1></h1>
+          <div className="flex flex-row w-full mr-4.">
             <Stack align='center' direction='row'>
             <FormLabel htmlFor='isChecked'>Multi Line :</FormLabel>
               <Switch size='lg' isChecked={isChecked} onChange={handleSwitchChange}/>
             </Stack>
           </div>
+          <Select placeholder="number of lines" className="mr-4" >
+             
+                <option  value ={1}>1</option>
+                <option  value ={2}>2</option>
+                <option  value ={3}>3</option>
+                <option  value ={4}>4</option>
+          </Select>
+
             <Select placeholder="Select Machine" >
               {arrayParam.map((setpoint) => (
                 <option  value={setpoint}>{setpoint}</option>
