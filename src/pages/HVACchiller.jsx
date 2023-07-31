@@ -58,9 +58,17 @@ function HVACchiller() {
     "Run Hour Kompressor",
     "Ampere Kompressor",
     "No of Start",
-  ])
+  ]);
+  const [dataArea1, setDataArea1] = useState(null);
+  const [dataArea2, setDataArea2] = useState(null);
+  const [dataArea3, setDataArea3] = useState(null);
+  const [dataArea4, setDataArea4] = useState(null);
+  const [graphArea1, setGraphArea1] = useState([]);
+  const [graphArea2, setGraphArea2] = useState([]);
+  const [graphArea3, setGraphArea3] = useState([]);
+  const [graphArea4, setGraphArea4] = useState([]);
 
-
+  const [arrayMultiLine, setArrayMultiLine] = useState([]);
 
   const handleChillerClick = (chillerId) => {
     setActiveChiller(chillerId);
@@ -69,8 +77,6 @@ function HVACchiller() {
 
   const handleCompressorClick = (compressorId) => {
     setActiveCompressor(compressorId);
-
-
   };
 
   const dateStart = (e) => {
@@ -81,11 +87,93 @@ function HVACchiller() {
     setFinishDate(e.target.value);
   };
 
+  const selectLine = (e) => {
+    if (e.target.value == "1") {
+      setArrayMultiLine([1]);
+    } else if (e.target.value == "2") {
+      setArrayMultiLine([1, 2]);
+    } else if (e.target.value == "3") {
+      setArrayMultiLine([1, 2, 3]);
+    } else if (e.target.value == "4") {
+      setArrayMultiLine([1, 2, 3, 4]);
+    }
+  };
 
+  // const selectArea1 = (e) => {
+  //   setDataArea1(e.target.value);
+  // };
+  // const selectArea2 = (e) => {
+  //   setDataArea4(e.target.value);
+  // };
+  // const selectArea3 = (e) => {
+  //   setDataArea3(e.target.value);
+  // };
+  // const selectArea4 = (e) => {
+  //   setDataArea4(e.target.value);
+  // };
+
+  const loopSelect = () => {
+    const selectArea = {
+      1: (e) => setDataArea1(e.target.value),
+      2: (e) => setDataArea2(e.target.value),
+      3: (e) => setDataArea3(e.target.value),
+      4: (e) => setDataArea4(e.target.value),
+    };
+
+    return arrayMultiLine.map((data, index) => {
+      const areaNumber = index + 1;
+      return (
+        <Select
+          placeholder="Select Area"
+          onChange={(e) => selectArea[areaNumber](e)}
+        >
+          {arrayParam.map((setpoint) => (
+            <option value={setpoint}>{setpoint}</option>
+          ))}
+        </Select>
+      );
+    });
+  };
+
+  const submitData2 = () => {
+    let graphData1 = getTableData.map((data, index) => {
+      return {
+        label: data.time,
+        x: index + 1,
+        y: Number(data[dataArea1]) / 10,
+      };
+    });
+    setGraphArea1(graphData1);
+
+    let graphData2 = getTableData.map((data, index) => {
+      return {
+        label: data.time,
+        x: index + 1,
+        y: Number(data[dataArea2]) / 10,
+      };
+    });
+    setGraphArea2(graphData2);
+
+    let graphData3 = getTableData.map((data, index) => {
+      return {
+        label: data.time,
+        x: index + 1,
+        y: Number(data[dataArea3]) / 10,
+      };
+    });
+    setGraphArea3(graphData3);
+
+    let graphData4 = getTableData.map((data, index) => {
+      return {
+        label: data.time,
+        x: index + 1,
+        y: Number(data[dataArea4]) / 10,
+      };
+    });
+    setGraphArea4(graphData4);
+  };
 
   const graphValue = () => {
-
-
     const activeSetpointNames = [
       "Alarm Chiller",
       "Active Setpoint",
@@ -107,41 +195,29 @@ function HVACchiller() {
     ];
 
     if (activeSetpointNames.includes(dataOnClick)) {
-    
       let statusKompresorArray = getTableData.map((data, index) => {
         return {
           label: data.time,
-          x: index + 1, 
-          y: Number (data[dataOnClick])/10
+          x: index + 1,
+          y: Number(data[dataOnClick]) / 10,
         };
       });
       setGetGraphData(statusKompresorArray);
-  
     } else {
-  
       let statusKompresorArray = getTableData.map((data, index) => {
         return {
           label: data.time,
-          x: index + 1, 
-          y: data[dataOnClick]
+          x: index + 1,
+          y: data[dataOnClick],
         };
       });
       setGetGraphData(statusKompresorArray);
-  
     }
-
-
-
-
-  } 
-  
-
-
+  };
 
   useEffect(() => {
     // Fungsi untuk mengambil data dari server
-  
-  
+
     // Hanya eksekusi fetchData saat clickSubmit berubah (bukan saat render pertama)
     if (!isFirstRender) {
       graphValue();
@@ -149,7 +225,6 @@ function HVACchiller() {
       setIsFirstRender(false);
     }
   }, [dataOnClick]);
-  
 
   const submitData = async () => {
     setClickSubmit(true);
@@ -168,10 +243,6 @@ function HVACchiller() {
         showContent(this);
       });
     }
-
-
-
-
 
     if (activeChiller == "chiller1") {
       var setChiller1 = "CH1";
@@ -195,8 +266,8 @@ function HVACchiller() {
       setCompresor1 = "K1";
     }
 
-    setChiller(setChiller1)
-    setCompresor(setCompresor1)
+    setChiller(setChiller1);
+    setCompresor(setCompresor1);
 
     let response = await axios.get(
       "http://10.126.15.124:8002/part/getChillerData",
@@ -209,10 +280,8 @@ function HVACchiller() {
         },
       }
     );
-    console.log(setChiller1,setCompresor1,startDate,finishDate);
+    console.log(setChiller1, setCompresor1, startDate, finishDate);
     setGetTableData(response.data);
-
-   
   };
 
   const renderTable = () => {
@@ -258,8 +327,6 @@ function HVACchiller() {
     console.log(isChecked);
   };
 
-
-
   const options = {
     theme: "light1",
 
@@ -276,20 +343,44 @@ function HVACchiller() {
     },
     data: [
       {
-        type: "splineArea",
-        name: "data chiller",
+        type: "line",
+        name: dataOnClick,
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
         dataPoints: getGraphData,
       },
       {
-        type: "splineArea",
-        name: "data chiller",
+        type: "line",
+        name: dataArea1,
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: [],
+        dataPoints: graphArea1,
+      },
+      {
+        type: "line",
+        name: dataArea2,
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: graphArea2,
+      },
+      {
+        type: "line",
+        name: dataArea3,
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: graphArea3,
+      },
+      {
+        type: "line",
+        name: dataArea4,
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: graphArea4,
       },
     ],
   };
@@ -463,7 +554,6 @@ function HVACchiller() {
               placeholder="Select Date and Time"
               size="md"
               type="date"
-              
             />
           </div>
           <div>
@@ -473,7 +563,6 @@ function HVACchiller() {
               placeholder="Select Date and Time"
               size="md"
               type="date"
-              
             />
           </div>
           <div>
@@ -764,63 +853,63 @@ function HVACchiller() {
       ) : (
         <div></div>
       )}
-  
 
       {dataOnClick != null ? (
-     <div>
-        <Stack
-        className="flex flex-row justify-center  "
-        direction="row"
-        spacing={4}
-        align="center"
-      >
+        <div>
+          <Stack
+            className="flex flex-row justify-center  "
+            direction="row"
+            spacing={4}
+            align="center"
+          >
+            <div className="flex flex-row justify-center mt-10">
+              <div className="flex flex-row w-full">
+                <Stack align="center" direction="row">
+                  <FormLabel htmlFor="isChecked">Multi Line :</FormLabel>
+                  <Switch
+                    size="lg"
+                    isChecked={isChecked}
+                    onChange={handleSwitchChange}
+                  />
+                </Stack>
+              </div>
 
-        <div className="flex flex-row justify-center mt-10">
-          <div className="flex flex-row w-full mr-4.">
-            <Stack align='center' direction='row'>
-            <FormLabel htmlFor='isChecked'>Multi Line :</FormLabel>
-              <Switch size='lg' isChecked={isChecked} onChange={handleSwitchChange}/>
-            </Stack>
-          </div>
-          <Select placeholder="number of lines" className="mr-4" >
-             
-                <option  value ={1}>1</option>
-                <option  value ={2}>2</option>
-                <option  value ={3}>3</option>
-                <option  value ={4}>4</option>
-          </Select>
+              {isChecked == true ? (
+                <>
+                  <div className="w-96 mr-3">
+                    <Select placeholder="Number" onChange={selectLine}>
+                      <option value={1}>1</option>
+                      <option value={2}>2</option>
+                      <option value={3}>3</option>
+                      <option value={4}>4</option>
+                    </Select>
+                  </div>
 
-            <Select placeholder="Select Machine" >
-              {arrayParam.map((setpoint) => (
-                <option  value={setpoint}>{setpoint}</option>
-                ))}
-            </Select>
-            <Select placeholder="Select Machine" >
-                {arrayParam.map((setpoint) => (
-                  <option  value={setpoint}>{setpoint}</option>
-                ))}
-            </Select>
-            <Select placeholder="Select Machine" >
-                {arrayParam.map((setpoint) => (
-                  <option  value={setpoint}>{setpoint}</option>
-                  ))}
-            </Select>
-            <Select placeholder="Select Machine" >
-                {arrayParam.map((setpoint) => (
-                  <option  value={setpoint}>{setpoint}</option>
-                  ))}
-            </Select>
-            
-          </div>
-          </Stack>
-            <div className="flex justify-center mt-14 mb-4">
-              <h2 className=" text-4xl font-bold">{dataOnClick}</h2>
+                  {loopSelect()}
+
+                  <div>
+                    <Button
+                      className="ml-4 "
+                      colorScheme="gray"
+                      onClick={() => {
+                        submitData2();
+                      }}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <div></div>
+              )}
             </div>
-           
-            <CanvasJSChart className="" options={options} />
-             
-           </div>
-           
+          </Stack>
+          <div className="flex justify-center mt-14 mb-4">
+            <h2 className=" text-4xl font-bold">{dataOnClick}</h2>
+          </div>
+
+          <CanvasJSChart className="" options={options} />
+        </div>
       ) : (
         <div></div>
       )}
