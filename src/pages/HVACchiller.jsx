@@ -281,6 +281,17 @@ function HVACchiller() {
       }
     );
     console.log(setChiller1, setCompresor1, startDate, finishDate);
+
+
+    const compareTime = (a, b) => {
+      const timeA = new Date(a.time);
+      const timeB = new Date(b.time);
+      return timeA - timeB;
+    };
+   
+    response.data.short(compareTime)
+    
+   
     setGetTableData(response.data);
   };
 
