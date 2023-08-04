@@ -289,7 +289,7 @@ function HVACchiller() {
       return timeA - timeB;
     };
    
-    response.data.short(compareTime)
+    response.data.sort(compareTime)
     
    
     setGetTableData(response.data);
