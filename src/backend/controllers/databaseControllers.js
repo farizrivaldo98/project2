@@ -41,7 +41,7 @@ module.exports = {
       "and" +
       " " +
       request.query.finish;
-    console.log(fetchQuerry);
+
 
     db.query(fetchQuerry, (err, result) => {
       return response.status(200).send(result);
@@ -457,7 +457,7 @@ module.exports = {
       // `${db.escape(date)}` +
       " ORDER BY y DESC;";
 
-    console.log(query);
+    
     db2.query(query, (err, result) => {
       return response.status(200).send(result);
     });
@@ -682,7 +682,7 @@ module.exports = {
 
   getChillerData: async (request, response) => {
     const { chiller, kompresor, start, finish } = request.query;
-
+  
     let queryData = `
     SELECT 
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)- INTERVAL 7 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
@@ -800,6 +800,7 @@ module.exports = {
 
   getGraphChiller: async (request, response) => {
     const { area, chiller, kompresor, start, finish } = request.query;
+
     const queryData = `
     SELECT
         DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)- INTERVAL 7 HOUR, '%Y-%m-%d %H:%i:%s') AS label,

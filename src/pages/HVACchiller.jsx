@@ -36,6 +36,7 @@ function HVACchiller() {
   const [clickSubmit, setClickSubmit] = useState(false);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
+  const [isChecked2, setIsChecked2] = useState(false);
   const [arrayParam, setArrayParam] = useState([
     "Status Chiller",
     "Alarm Chiller",
@@ -281,7 +282,7 @@ function HVACchiller() {
       }
     );
     console.log(setChiller1, setCompresor1, startDate, finishDate);
-
+   
 
     const compareTime = (a, b) => {
       const timeA = new Date(a.time);
@@ -291,7 +292,7 @@ function HVACchiller() {
    
     response.data.sort(compareTime)
     
-   
+
     setGetTableData(response.data);
   };
 
@@ -337,6 +338,11 @@ function HVACchiller() {
     setIsChecked(!isChecked); // Mengubah nilai state menjadi kebalikan dari nilai sebelumnya
     console.log(isChecked);
   };
+
+  const handleSwitchChange2 = () =>{
+    setIsChecked2(!isChecked2); // Mengubah nilai state menjadi kebalikan dari nilai sebelumnya
+  }
+
 
   const options = {
     theme: "light1",
@@ -393,6 +399,41 @@ function HVACchiller() {
         yValueFormatString: "",
         dataPoints: graphArea4,
       },
+    ],
+  };
+  
+
+  const options2 = {
+    theme: "light1",
+
+    subtitles: [
+      {
+        // text: "Data chiller",
+      },
+    ],
+    axisY: {
+      prefix: "",
+    },
+    toolTip: {
+      shared: true,
+    },
+    data: [
+      {
+        type: "line",
+        name: dataOnClick,
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: getGraphData
+      },
+      {
+        type: "line",
+        name: dataArea1,
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: [],
+      }
     ],
   };
 
@@ -920,10 +961,63 @@ function HVACchiller() {
           </div>
 
           <CanvasJSChart className="" options={options} />
+
+
+
+          <div className="flex flex-row justify-center  ">
+
+              <Stack
+                className="flex flex-row justify-center  "
+                direction="row"
+                spacing={4}
+                align="center"
+                >
+                
+
+                  <div className="flex flex-row mt-20 w-full">
+                    <Stack align="center" direction="row">
+                      <FormLabel htmlFor="isChecked">Compare Line :</FormLabel>
+                      <Switch
+                        size="lg"
+                        //isChecked={isChecked}
+                        onChange={handleSwitchChange2}
+                        />
+                    </Stack>
+                    { isChecked2 == true ? 
+                      <>
+                      <div className="w-96 ml-4">
+                        <Select placeholder="Chiller" >
+                          <option value={1}>Chiller 1</option>
+                          <option value={2}>Chiller 2</option>
+                          <option value={3}>Chiller 3</option>
+                        </Select>
+                      </div>
+                      <div className="w-96 ml-4">
+                        <Select placeholder="Compresor" >
+                          <option value={1}>Compressor 1</option>
+                          <option value={2}>Compressor 2</option>
+
+                        </Select>
+                      </div>
+                     
+                      </>:
+                      <div></div>
+                      }
+                  </div>
+              </Stack>
+
+              
+            </div>
+            { isChecked2 == true ?  <CanvasJSChart className="" options={options2} /> : <div></div>
+
+            }
+
         </div>
       ) : (
         <div></div>
       )}
+
+              
     </div>
   );
 }
