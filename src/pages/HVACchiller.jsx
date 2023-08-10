@@ -28,8 +28,10 @@ function HVACchiller() {
   const [getGraphData, setGetGraphData] = useState([]);
   const [activeChiller, setActiveChiller] = useState(null);
   const [activeCompressor, setActiveCompressor] = useState(null);
-  const [chiller, setChiller] = useState(null);
-  const [compresor, setCompresor] = useState(null);
+  const [chiller2, setChiller] = useState(null);
+  const [compresor2, setCompresor] = useState(null);
+  const [compresorCompair, setCompresorCompair] = useState(null);
+  const [chillerCompair, setChillerCompair] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [finishDate, setFinishDate] = useState(null);
   const [dataOnClick, setOnClick] = useState(null);
@@ -227,6 +229,30 @@ function HVACchiller() {
     }
   }, [dataOnClick]);
 
+  const hendleChillerCompare = (e) => {
+    setChillerCompair(e.target.value);
+  };
+
+  const hendleKompresorCompare = (e) => {
+    setChillerCompair(e.target.value);
+  };
+
+  const submitDataCompare = async () => {
+    let response = await axios.get(
+      "http://10.126.15.124:8002/part/getChillerData",
+      {
+        params: {
+          chiller: chillerCompair,
+          kompresor: compresorCompair,
+          start: startDate,
+          finishDate: finishDate,
+        },
+      }
+    );
+
+    console.log(response.data);
+  };
+
   const submitData = async () => {
     setClickSubmit(true);
     function showContent(element) {
@@ -282,16 +308,14 @@ function HVACchiller() {
       }
     );
     console.log(setChiller1, setCompresor1, startDate, finishDate);
-   
 
     const compareTime = (a, b) => {
       const timeA = new Date(a.time);
       const timeB = new Date(b.time);
       return timeA - timeB;
     };
-   
-    response.data.sort(compareTime)
-    
+
+    response.data.sort(compareTime);
 
     setGetTableData(response.data);
   };
@@ -339,10 +363,9 @@ function HVACchiller() {
     console.log(isChecked);
   };
 
-  const handleSwitchChange2 = () =>{
+  const handleSwitchChange2 = () => {
     setIsChecked2(!isChecked2); // Mengubah nilai state menjadi kebalikan dari nilai sebelumnya
-  }
-
+  };
 
   const options = {
     theme: "light1",
@@ -401,7 +424,6 @@ function HVACchiller() {
       },
     ],
   };
-  
 
   const options2 = {
     theme: "light1",
@@ -424,7 +446,7 @@ function HVACchiller() {
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: getGraphData
+        dataPoints: getGraphData,
       },
       {
         type: "line",
@@ -433,7 +455,7 @@ function HVACchiller() {
         xValueFormatString: "",
         yValueFormatString: "",
         dataPoints: [],
-      }
+      },
     ],
   };
 
@@ -962,73 +984,70 @@ function HVACchiller() {
 
           <CanvasJSChart className="" options={options} />
 
-
-
           <div className="flex flex-row justify-center  ">
-
-              <Stack
-                className="flex flex-row justify-center  "
-                direction="row"
-                spacing={4}
-                align="center"
-                >
-                
-
-                  <div className="flex flex-row mt-20 w-full mb-4">
-                    <Stack align="center" direction="row">
-                      <FormLabel htmlFor="isChecked">Compare Line :</FormLabel>
-                      <Switch
-                        size="lg"
-                        //isChecked={isChecked}
-                        onChange={handleSwitchChange2}
-                        />
-                    </Stack>
-                    { isChecked2 == true ? 
-                      <>
-                      <div className="w-96 ml-4">
-                        <Select placeholder="Chiller" >
-                          <option value={1}>Chiller 1</option>
-                          <option value={2}>Chiller 2</option>
-                          <option value={3}>Chiller 3</option>
-                        </Select>
-                      </div>
-                      <div className="w-96 ml-4">
-                        <Select placeholder="Compresor" >
-                          <option value={1}>Compressor 1</option>
-                          <option value={2}>Compressor 2</option>
-
-                        </Select>
-                      </div>
-                      <div>
-                    <Button
-                      className="ml-4 "
-                      colorScheme="gray"
-                      // onClick={() => {
-                      //   submitData2();
-                      // }}
+            <Stack
+              className="flex flex-row justify-center  "
+              direction="row"
+              spacing={4}
+              align="center"
+            >
+              <div className="flex flex-row mt-20 w-full mb-4">
+                <Stack align="center" direction="row">
+                  <FormLabel htmlFor="isChecked">Compare Line :</FormLabel>
+                  <Switch
+                    size="lg"
+                    //isChecked={isChecked}
+                    onChange={handleSwitchChange2}
+                  />
+                </Stack>
+                {isChecked2 == true ? (
+                  <>
+                    <div
+                      className="w-96 ml-4"
+                      onChange={hendleChillerCompare()}
                     >
-                      Submit
-                    </Button>
-                  </div>
-                     
-                      </>:
-                      <div></div>
-                      }
-                  </div>
-              </Stack>
-
-              
-            </div>
-            { isChecked2 == true ?  <CanvasJSChart className="" options={options2} /> : <div></div>
-
-            }
-
+                      <Select placeholder="Chiller">
+                        <option value="C1">Chiller 1</option>
+                        <option value="C2">Chiller 2</option>
+                        <option value="C3">Chiller 3</option>
+                      </Select>
+                    </div>
+                    <div className="w-96 ml-4">
+                      <Select
+                        placeholder="Compresor"
+                        onChange={hendleKompresorCompare()}
+                      >
+                        <option value="K1">Compressor 1</option>
+                        <option value="K2">Compressor 2</option>
+                      </Select>
+                    </div>
+                    <div>
+                      <Button
+                        className="ml-4 "
+                        colorScheme="gray"
+                        onClick={() => {
+                          submitDataCompare();
+                        }}
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <div></div>
+                )}
+              </div>
+            </Stack>
+          </div>
+          {isChecked2 == true ? (
+            <CanvasJSChart className="" options={options2} />
+          ) : (
+            <div></div>
+          )}
         </div>
       ) : (
         <div></div>
       )}
-
-              
     </div>
   );
 }
