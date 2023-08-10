@@ -1006,7 +1006,7 @@ function HVACchiller() {
                       className="w-96 ml-4"
                       onChange={hendleChillerCompare()}
                     >
-                      <Select placeholder="Chiller">
+                      <Select>
                         <option value="C1">Chiller 1</option>
                         <option value="C2">Chiller 2</option>
                         <option value="C3">Chiller 3</option>
@@ -1014,7 +1014,7 @@ function HVACchiller() {
                     </div>
                     <div className="w-96 ml-4">
                       <Select
-                        placeholder="Compresor"
+                        //placeholder="Compresor"
                         onChange={hendleKompresorCompare()}
                       >
                         <option value="K1">Compressor 1</option>
