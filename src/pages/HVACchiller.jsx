@@ -974,7 +974,7 @@ function HVACchiller() {
                 >
                 
 
-                  <div className="flex flex-row mt-20 w-full">
+                  <div className="flex flex-row mt-20 w-full mb-4">
                     <Stack align="center" direction="row">
                       <FormLabel htmlFor="isChecked">Compare Line :</FormLabel>
                       <Switch
@@ -999,6 +999,17 @@ function HVACchiller() {
 
                         </Select>
                       </div>
+                      <div>
+                    <Button
+                      className="ml-4 "
+                      colorScheme="gray"
+                      // onClick={() => {
+                      //   submitData2();
+                      // }}
+                    >
+                      Submit
+                    </Button>
+                  </div>
                      
                       </>:
                       <div></div>
