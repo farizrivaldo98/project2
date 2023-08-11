@@ -254,7 +254,7 @@ function HVACchiller() {
 
     setGetCompareData(response1.data);
 
-    const activeSetpointNames = [
+    const activeSetpointNames1 = [
       "Alarm Chiller",
       "Active Setpoint",
       "EvapLWT",
@@ -274,7 +274,7 @@ function HVACchiller() {
       "Ampere Kompressor",
     ];
 
-    if (activeSetpointNames.includes(dataOnClick)) {
+    if (activeSetpointNames1.includes(dataOnClick)) {
       let statusKompresorArray = getTableData.map((data, index) => {
         return {
           label: data.time,
