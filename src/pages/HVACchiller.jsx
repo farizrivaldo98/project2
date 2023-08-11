@@ -275,23 +275,23 @@ function HVACchiller() {
     ];
 
     if (activeSetpointNames1.includes(dataOnClick)) {
-      let statusKompresorArray = getTableData.map((data, index) => {
+      let statusKompresorArray1 = getTableData.map((data, index) => {
         return {
           label: data.time,
           x: index + 1,
           y: Number(data[dataOnClick]) / 10,
         };
       });
-      setGetGraphCompare(statusKompresorArray);
+      setGetGraphCompare(statusKompresorArray1);
     } else {
-      let statusKompresorArray = getTableData.map((data, index) => {
+      let statusKompresorArray1 = getTableData.map((data, index) => {
         return {
           label: data.time,
           x: index + 1,
           y: data[dataOnClick],
         };
       });
-      setGetGraphCompare(statusKompresorArray);
+      setGetGraphCompare(statusKompresorArray1);
     }
   };
 
