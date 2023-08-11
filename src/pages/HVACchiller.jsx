@@ -25,7 +25,9 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function HVACchiller() {
   const [getTableData, setGetTableData] = useState([]);
+  const [getTableCompareData, setGetCompareData] = useState([]);
   const [getGraphData, setGetGraphData] = useState([]);
+  const [getGraphCompare, setGetGraphCompare] = useState([]);
   const [activeChiller, setActiveChiller] = useState(null);
   const [activeCompressor, setActiveCompressor] = useState(null);
   const [chiller2, setChiller] = useState(null);
@@ -198,7 +200,7 @@ function HVACchiller() {
     ];
 
     if (activeSetpointNames.includes(dataOnClick)) {
-      let statusKompresorArray = getTableData.map((data, index) => {
+      let statusKompresorArray = getTableCompareData.map((data, index) => {
         return {
           label: data.time,
           x: index + 1,
@@ -207,7 +209,7 @@ function HVACchiller() {
       });
       setGetGraphData(statusKompresorArray);
     } else {
-      let statusKompresorArray = getTableData.map((data, index) => {
+      let statusKompresorArray = getTableCompareData.map((data, index) => {
         return {
           label: data.time,
           x: index + 1,
@@ -250,9 +252,47 @@ function HVACchiller() {
       }
     );
 
-    console.log(chillerCompair, compresorCompair, startDate, finishDate);
+    setGetCompareData(response1.data);
 
-    console.log(response1.data);
+    const activeSetpointNames = [
+      "Alarm Chiller",
+      "Active Setpoint",
+      "EvapLWT",
+      "EvapEWT",
+      "Unit Capacity",
+      "Status Kompresor",
+      "Unit Capacity",
+      "Evap Presure",
+      "Cond Presure",
+      "Evap sat Temperature",
+      "Cond sat Temperature",
+      "Suction Temperature",
+      "Discharge Temperature",
+      "Evap Approach",
+      "Cond Approach",
+      "Oil Presure",
+      "Ampere Kompressor",
+    ];
+
+    if (activeSetpointNames.includes(dataOnClick)) {
+      let statusKompresorArray = getTableData.map((data, index) => {
+        return {
+          label: data.time,
+          x: index + 1,
+          y: Number(data[dataOnClick]) / 10,
+        };
+      });
+      setGetGraphCompare(statusKompresorArray);
+    } else {
+      let statusKompresorArray = getTableData.map((data, index) => {
+        return {
+          label: data.time,
+          x: index + 1,
+          y: data[dataOnClick],
+        };
+      });
+      setGetGraphCompare(statusKompresorArray);
+    }
   };
 
   const submitData = async () => {
@@ -456,7 +496,7 @@ function HVACchiller() {
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: [],
+        dataPoints: getGraphCompare,
       },
     ],
   };
@@ -1004,11 +1044,8 @@ function HVACchiller() {
                 </Stack>
                 {isChecked2 == true ? (
                   <>
-                    <div
-                      className="w-96 ml-4"
-                      onChange={hendleChillerCompare}
-                    >
-                      <Select   placeholder="Chiller">
+                    <div className="w-96 ml-4" onChange={hendleChillerCompare}>
+                      <Select placeholder="Chiller">
                         <option value="CH1">Chiller 1</option>
                         <option value="CH2">Chiller 2</option>
                         <option value="CH3">Chiller 3</option>
