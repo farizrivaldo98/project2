@@ -234,23 +234,25 @@ function HVACchiller() {
   };
 
   const hendleKompresorCompare = (e) => {
-    setChillerCompair(e.target.value);
+    setCompresorCompair(e.target.value);
   };
 
   const submitDataCompare = async () => {
-    let response = await axios.get(
+    let response1 = await axios.get(
       "http://10.126.15.124:8002/part/getChillerData",
       {
         params: {
           chiller: chillerCompair,
           kompresor: compresorCompair,
           start: startDate,
-          finishDate: finishDate,
+          finish: finishDate,
         },
       }
     );
 
-    console.log(response.data);
+    console.log(chillerCompair, compresorCompair, startDate, finishDate);
+
+    console.log(response1.data);
   };
 
   const submitData = async () => {
@@ -1004,18 +1006,18 @@ function HVACchiller() {
                   <>
                     <div
                       className="w-96 ml-4"
-                      onChange={hendleChillerCompare()}
+                      onChange={hendleChillerCompare}
                     >
-                      <Select>
-                        <option value="C1">Chiller 1</option>
-                        <option value="C2">Chiller 2</option>
-                        <option value="C3">Chiller 3</option>
+                      <Select   placeholder="Chiller">
+                        <option value="CH1">Chiller 1</option>
+                        <option value="CH2">Chiller 2</option>
+                        <option value="CH3">Chiller 3</option>
                       </Select>
                     </div>
                     <div className="w-96 ml-4">
                       <Select
-                        //placeholder="Compresor"
-                        onChange={hendleKompresorCompare()}
+                        placeholder="Compresor"
+                        onChange={hendleKompresorCompare}
                       >
                         <option value="K1">Compressor 1</option>
                         <option value="K2">Compressor 2</option>
