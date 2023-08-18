@@ -42,7 +42,6 @@ module.exports = {
       " " +
       request.query.finish;
 
-
     db.query(fetchQuerry, (err, result) => {
       return response.status(200).send(result);
     });
@@ -312,8 +311,8 @@ module.exports = {
         level: isEmailExist[0].level,
         imagePath: isEmailExist[0].imagePath,
       };
-      //const token = jwt.sign(payload, "khaerul", { expiresIn: "8h" });
-      const token = jwt.sign(payload, "khaerul");
+      const token = jwt.sign(payload, "khaerul", { expiresIn: "1h" });
+      // const token = jwt.sign(payload, "khaerul");
       //const token = jwt.sign(payload, "khaerul", { expiresIn: 600 }); // 5 menit
 
       console.log(token);
@@ -457,7 +456,6 @@ module.exports = {
       // `${db.escape(date)}` +
       " ORDER BY y DESC;";
 
-    
     db2.query(query, (err, result) => {
       return response.status(200).send(result);
     });
@@ -682,7 +680,7 @@ module.exports = {
 
   getChillerData: async (request, response) => {
     const { chiller, kompresor, start, finish } = request.query;
-  
+
     let queryData = `
     SELECT 
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)- INTERVAL 7 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
