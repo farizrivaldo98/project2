@@ -200,7 +200,7 @@ function HVACchiller() {
     ];
 
     if (activeSetpointNames.includes(dataOnClick)) {
-      let statusKompresorArray = getTableCompareData.map((data, index) => {
+      let statusKompresorArray = getTableData.map((data, index) => {
         return {
           label: data.time,
           x: index + 1,
@@ -209,7 +209,7 @@ function HVACchiller() {
       });
       setGetGraphData(statusKompresorArray);
     } else {
-      let statusKompresorArray = getTableCompareData.map((data, index) => {
+      let statusKompresorArray = getTableData.map((data, index) => {
         return {
           label: data.time,
           x: index + 1,
@@ -238,6 +238,8 @@ function HVACchiller() {
   const hendleKompresorCompare = (e) => {
     setCompresorCompair(e.target.value);
   };
+
+  //=====================COMPARE============================================================================
 
   const submitDataCompare = async () => {
     let response1 = await axios.get(
@@ -275,7 +277,7 @@ function HVACchiller() {
     ];
 
     if (activeSetpointNames1.includes(dataOnClick)) {
-      let statusKompresorArray1 = getTableData.map((data, index) => {
+      let statusKompresorArray1 = getTableCompareData.map((data, index) => {
         return {
           label: data.time,
           x: index + 1,
@@ -284,7 +286,7 @@ function HVACchiller() {
       });
       setGetGraphCompare(statusKompresorArray1);
     } else {
-      let statusKompresorArray1 = getTableData.map((data, index) => {
+      let statusKompresorArray1 = getTableCompareData.map((data, index) => {
         return {
           label: data.time,
           x: index + 1,
@@ -492,7 +494,7 @@ function HVACchiller() {
       },
       {
         type: "line",
-        name: dataArea1,
+        name: dataOnClick,
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",

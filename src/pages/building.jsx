@@ -8,6 +8,8 @@ import {
   Card,
   CardBody,
 } from "@chakra-ui/react";
+import BuildingBAS from "./buildingBAS";
+import BuildingEMS from "./buildingEMS";
 
 function building() {
   return (
@@ -21,10 +23,10 @@ function building() {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <h1>EMS</h1>
+                <BuildingEMS />
               </TabPanel>
               <TabPanel>
-                <h1>BAS</h1>
+                <BuildingBAS />
               </TabPanel>
             </TabPanels>
           </Tabs>
