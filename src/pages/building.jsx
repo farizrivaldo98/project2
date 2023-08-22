@@ -11,7 +11,7 @@ import {
 import BuildingBAS from "./buildingBAS";
 import BuildingEMS from "./buildingEMS";
 
-function building() {
+function Building() {
   return (
     <div>
       <Card>
@@ -36,4 +36,4 @@ function building() {
   );
 }
 
-export default building;
+export default Building;

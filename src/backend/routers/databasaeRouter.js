@@ -58,4 +58,8 @@ routers.get("/getavgpower", databaseControllers.getAvgPower);
 routers.get("/getChillerData", databaseControllers.getChillerData);
 routers.get("/getGraphChiller", databaseControllers.getGraphChiller);
 
+routers.get("/getTabelEMS", databaseControllers.getTableEMS);
+routers.get("/getTempChart", databaseControllers.getTempChart);
+routers.get("/getAllDataEMS", databaseControllers.getAllDataEMS);
+
 module.exports = routers;

@@ -1,88 +1,145 @@
 import React, { useState, useEffect } from "react";
-import { Select, Input, Button } from "@chakra-ui/react";
+import {
+  Select,
+  Input,
+  Button,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+} from "@chakra-ui/react";
 import CanvasJSReact from "../canvasjs.react";
+import axios from "axios";
 
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-function buildingEMS() {
-  //const [dropData, setDropData] = useState([]);
-  //   const [arrayRuangan, setArrayRuangan] = useState([
-  //     "N33",
-  //     "P10",
-  //     "W25AF1",
-  //     "WH1",
-  //     "GBAC1_H1",
-  //     "Packing_F_Line1",
-  //     "Packing_F_Line2",
-  //     "Packing_F_Line3",
-  //     "R._GAC_WH2",
-  //     "R._K27",
-  //     "R._K30",
-  //     "R._K31",
-  //     "R._K32",
-  //     "R._K33",
-  //     "R._K34",
-  //     "R._K35",
-  //     "R._K36",
-  //     "R._N10",
-  //     "R._N11",
-  //     "R._N13",
-  //     "R._N14",
-  //     "R._N15",
-  //     "R._N16",
-  //     "R._N18",
-  //     "R._N20",
-  //     "R._N28",
-  //     "R._N3",
-  //   ]);
+function BuildingEMS() {
+  const [dataListTable, setDataListTable] = useState([]);
+  const [allDataTable, setAllDataTable] = useState([]);
+  const [tempChartData, setTempChartData] = useState([]);
+  const [dpChartData, setDpChartData] = useState([]);
+  const [rhChartData, setRhChartData] = useState([]);
+  const [areaPicker, setAreaPicker] = useState();
+  const [datePickerStart, setDatePickerStart] = useState();
+  const [datePickerFinish, setDatePickerFinish] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let response = await axios.get(
+        "http://10.126.15.124:8002/part/getTabelEMS"
+      );
+      setDataListTable(response.data);
+    };
+    fetchData();
+  }, []);
 
   const renderDropDownArea = () => {
-    const myArray = [
-      "N33",
-      "P10",
-      "W25AF1",
-      "WH1",
-      "GBAC1_H1",
-      "Packing_F_Line1",
-      "Packing_F_Line2",
-      "Packing_F_Line3",
-      "R._GAC_WH2",
-      "R._K27",
-      "R._K30",
-      "R._K31",
-      "R._K32",
-      "R._K33",
-      "R._K34",
-      "R._K35",
-      "R._K36",
-      "R._N10",
-      "R._N11",
-      "R._N13",
-      "R._N14",
-      "R._N15",
-      "R._N16",
-      "R._N18",
-      "R._N20",
-      "R._N28",
-      "R._N3",
-    ];
-
-    return myArray.map((data1) => {
+    return dataListTable.map((entry) => {
+      const tableName = entry.TABLE_NAME;
+      const cleanedName = tableName
+        .replace("cMT-PMWorkshop_", "")
+        .replace("_data", "");
       return (
         <>
-          <option value={data1}>{data1}</option>;
+          <option value={tableName}>{cleanedName}</option>;
         </>
       );
     });
   };
 
-  const options = {
-    theme: "light1",
+  const getSubmit = async () => {
+    const response1 = await axios.get(
+      "http://10.126.15.124:8002/part/getTempChart",
+      {
+        params: {
+          area: areaPicker,
+          start: datePickerStart,
+          finish: datePickerFinish,
+          format: 0,
+        },
+      }
+    );
+    const response2 = await axios.get(
+      "http://10.126.15.124:8002/part/getTempChart",
+      {
+        params: {
+          area: areaPicker,
+          start: datePickerStart,
+          finish: datePickerFinish,
+          format: 1,
+        },
+      }
+    );
+    const response3 = await axios.get(
+      "http://10.126.15.124:8002/part/getTempChart",
+      {
+        params: {
+          area: areaPicker,
+          start: datePickerStart,
+          finish: datePickerFinish,
+          format: 2,
+        },
+      }
+    );
+    const response4 = await axios.get(
+      "http://10.126.15.124:8002/part/getAllDataEMS",
+      {
+        params: {
+          area: areaPicker,
+          start: datePickerStart,
+          finish: datePickerFinish,
+        },
+      }
+    );
 
+    setTempChartData(response1.data);
+    setRhChartData(response2.data);
+    setDpChartData(response3.data);
+    setAllDataTable(response4.data);
+  };
+
+  const renderTable = () => {
+    return allDataTable.map((data) => {
+      return (
+        <Tr>
+          <Td>{data.id}</Td>
+          <Td>{data.date}</Td>
+          <Td>{data.temp}</Td>
+          <Td>{data.RH}</Td>
+          <Td>{data.DP}</Td>
+        </Tr>
+      );
+    });
+  };
+
+  const emsAreaPick = (e) => {
+    var dataInput = e.target.value;
+    setAreaPicker(dataInput);
+    console.log(dataInput);
+  };
+
+  const datePickStart = (e) => {
+    var dataInput = e.target.value;
+    setDatePickerStart(dataInput);
+  };
+  const datePickFinish = (e) => {
+    var dataInput = e.target.value;
+    setDatePickerFinish(dataInput);
+  };
+
+  const options = {
+    theme: "light2",
+    title: {
+      text: "Enviroment Room",
+    },
     subtitles: [
       {
-        // text: "Data chiller",
+        text: "Enviroment Management System",
       },
     ],
     axisY: {
@@ -94,11 +151,27 @@ function buildingEMS() {
     data: [
       {
         type: "line",
-        name: "test",
+        name: "Temperature",
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
-        dataPoints: [],
+        dataPoints: tempChartData,
+      },
+      {
+        type: "line",
+        name: "RH",
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: rhChartData,
+      },
+      {
+        type: "line",
+        name: "DP",
+        showInLegend: true,
+        xValueFormatString: "",
+        yValueFormatString: "",
+        dataPoints: dpChartData,
       },
     ],
   };
@@ -107,22 +180,54 @@ function buildingEMS() {
     <>
       <div className="flex flex-row justify-center mt-8 mb-8">
         <div className="w-96 ml-4">
-          <Select placeholder="Ruangan">{renderDropDownArea()}</Select>
+          <Select onChange={emsAreaPick} placeholder="Ruangan">
+            {renderDropDownArea()}
+          </Select>
         </div>
         <div className="ml-4  ">
-          <Input placeholder="Select Date and Time" size="md" type="date" />
+          <Input
+            onChange={datePickStart}
+            placeholder="Start Date"
+            size="md"
+            type="date"
+          />
         </div>
         <div className="ml-4  ">
-          <Input placeholder="Select Date and Time" size="md" type="date" />
+          <Input
+            onChange={datePickFinish}
+            placeholder="Finish Date"
+            size="md"
+            type="date"
+          />
         </div>
         <div className="ml-4  ">
-          <Button colorScheme="gray">Submit</Button>
+          <Button onClick={() => getSubmit()} colorScheme="gray">
+            Submit
+          </Button>
         </div>
       </div>
-
-      <CanvasJSChart className="" options={options} />
+      <div>
+        <CanvasJSChart className="" options={options} />
+      </div>
+      <div className="mt-20 mx-20">
+        <TableContainer>
+          <Table variant="simple">
+            <TableCaption>Machine Performance</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>id</Th>
+                <Th>Date Time</Th>
+                <Th>Temperature</Th>
+                <Th>Relative Humidity (RH)</Th>
+                <Th>Differential Presure (DP)</Th>
+              </Tr>
+            </Thead>
+            <Tbody>{renderTable()}</Tbody>
+          </Table>
+        </TableContainer>
+      </div>
     </>
   );
 }
 
-export default buildingEMS;
+export default BuildingEMS;

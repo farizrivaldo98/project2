@@ -44,7 +44,6 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 
   res.status(200).send({ filepath });
 
-
   let fetchQuerry = `UPDATE parammachine_saka.users SET imagePath = ${db.escape(
     filepath
   )} WHERE id_users = ${db.escape(data.id)}`;

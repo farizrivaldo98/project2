@@ -796,7 +796,7 @@ module.exports = {
     });
   },
 
-  getGraphChiller: async (request, response) => {
+  getGraphChiller: async (request) => {
     const { area, chiller, kompresor, start, finish } = request.query;
 
     const queryData = `
@@ -812,6 +812,65 @@ module.exports = {
     ORDER BY
         \`time@timestamp\`;
   `;
+    db.query(queryData, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+
+  //=====================EMS Backend====================================
+
+  getTableEMS: async (request, response) => {
+    const queryData = `SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE (TABLE_NAME LIKE '%cMT-PMWorkshop%' OR TABLE_NAME LIKE '_data') AND TABLE_NAME NOT LIKE '%_data_format' AND TABLE_NAME NOT LIKE '%_data_section';`;
+
+    db.query(queryData, (err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+
+  getTempChart: async (request, response) => {
+    const { area, start, finish, format } = request.query;
+    const queryData = `
+      SELECT
+        DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 7 HOUR, '%Y-%m-%d %H:%i:%s') AS label,
+        data_index AS x,
+        data_format_${format} AS y
+      FROM \`${area}\`
+      WHERE
+      DATE(FROM_UNIXTIME(\`time@timestamp\`)- INTERVAL 7 HOUR) BETWEEN '${start}' AND '${finish}'
+  ORDER BY
+      \`time@timestamp\`;
+    `;
+
+    db.query(queryData, (err, result) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        return response.status(500).send("Internal Server Error");
+      }
+
+      // Mengonversi data y ke tipe data angka pecahan (float)
+      const parsedResult = result.map((entry) => ({
+        ...entry,
+        y: parseFloat(entry.y) / 10,
+      }));
+
+      return response.status(200).send(parsedResult);
+    });
+  },
+
+  getAllDataEMS: async (request, response) => {
+    const { area, start, finish } = request.query;
+    const queryData = `SELECT
+    data_index AS id,
+    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 7 HOUR, '%Y-%m-%d %H:%i:%s') AS date,
+    ROUND(data_format_0/10, 2) AS temp,
+    ROUND(data_format_1/10, 2) AS RH,
+    ROUND(data_format_2/10, 2) AS DP
+    FROM \`${area}\`
+    WHERE
+      DATE(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 7 HOUR) BETWEEN '${start}' AND '${finish}'
+    ORDER BY
+      \`time@timestamp\``;
+
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });

@@ -1,7 +1,7 @@
 import React from "react";
 
-function buildingBAS() {
+function BuildingBAS() {
   return <div>buildingBAS</div>;
 }
 
-export default buildingBAS;
+export default BuildingBAS;
