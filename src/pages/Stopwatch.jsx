@@ -1,8 +1,10 @@
-import React, { useState, useRef,useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
+import { Select } from "@chakra-ui/react";
 
 const Stopwatch = () => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [isTen, setTen] = useState();
   const intervalRef = useRef(null);
 
   const formatTime = (milliseconds) => {
@@ -11,7 +13,9 @@ const Stopwatch = () => {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
     const millis = totalMilliseconds % 1000;
-    return `${minutes.toString().padStart(2, '0')}.${seconds.toString().padStart(2, '0')}.${millis.toString().padStart(3, '0')}`;
+    return `${minutes.toString().padStart(2, "0")}.${seconds
+      .toString()
+      .padStart(2, "0")}.${millis.toString().padStart(3, "0")}`;
   };
 
   const startStopwatch = () => {
@@ -21,24 +25,38 @@ const Stopwatch = () => {
     }, 10);
   };
 
-  useEffect(() => {
-    if (time >= 60000) {
-      // Jika waktu mencapai 1 menit (60000 milisekon), maka ubah latar belakang menjadi kuning.
-      document.body.style.backgroundColor = 'yellow';
-    }
-  }, [time]);
+  const selectMinuits = (e) => {
+    setTen(e.target.value);
+  };
 
   useEffect(() => {
-    if (time >= 120000) {
-      // Jika waktu mencapai 1 menit (60000 milisekon), maka ubah latar belakang menjadi kuning.
-      document.body.style.backgroundColor = 'red';
+    if (isTen == 2) {
+      if (time >= 60000) {
+        document.body.style.backgroundColor = "yellow";
+      }
+      if (time >= 120000) {
+        document.body.style.backgroundColor = "red";
+      }
+    } else if (isTen == 10) {
+      if (time >= 480000) {
+        document.body.style.backgroundColor = "yellow";
+      }
+      if (time >= 600000) {
+        document.body.style.backgroundColor = "red";
+      }
+    } else if (isTen == 15) {
+      if (time >= 600000) {
+        document.body.style.backgroundColor = "yellow";
+      }
+      if (time >= 900000) {
+        document.body.style.backgroundColor = "red";
+      }
     }
   }, [time]);
 
   useEffect(() => {
     if (time == 0) {
-      // Jika waktu mencapai 1 menit (60000 milisekon), maka ubah latar belakang menjadi kuning.
-      document.body.style.backgroundColor = 'white';
+      document.body.style.backgroundColor = "white";
     }
   }, [time]);
 
@@ -77,6 +95,13 @@ const Stopwatch = () => {
           onClick={resetStopwatch}
         >
           Reset
+        </button>
+        <button>
+          <Select placeholder="Select Min" onChange={selectMinuits}>
+            <option value={2}>2 Menit</option>
+            <option value={10}>10 Menit</option>
+            <option value={15}>15 Menit</option>
+          </Select>
         </button>
       </div>
     </div>
