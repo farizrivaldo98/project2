@@ -23,6 +23,7 @@ import Admin from "./pages/Admin";
 import Sidebar from "./components/Sidebar";
 import OEEline from "./pages/OEEline";
 import Utility from "./pages/Utility";
+import Stopwatch from "./pages/Stopwatch";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +73,7 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/oeeLine" element={<OEEline />} />
           <Route path="/Utility" element={<Utility />} />
+          <Route path="/Stopwatch" element={<Stopwatch />} />
         </Routes>
       </div>
     );
