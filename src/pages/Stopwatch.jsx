@@ -1,15 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const Stopwatch = () => {
-  const [time, setTime] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [milliseconds, setMilliseconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
 
   useEffect(() => {
     if (isRunning) {
       intervalRef.current = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
-      }, 1000);
+        setMilliseconds((prevMilliseconds) => {
+          if (prevMilliseconds === 999) {
+            setSeconds((prevSeconds) => {
+              if (prevSeconds === 59) {
+                setMinutes((prevMinutes) => prevMinutes + 1);
+                return 0;
+              }
+              return prevSeconds + 1;
+            });
+            return 0;
+          }
+          return prevMilliseconds + 1;
+        });
+      }, 1);
     } else {
       clearInterval(intervalRef.current);
     }
@@ -26,12 +40,18 @@ const Stopwatch = () => {
   const handleReset = () => {
     clearInterval(intervalRef.current);
     setIsRunning(false);
-    setTime(0);
+    setMinutes(0);
+    setSeconds(0);
+    setMilliseconds(0);
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-8xl font-bold">{time}s</h1>
+      <h1 className="text-6xl font-bold">
+        {minutes.toString().padStart(2, "0")}.
+        {seconds.toString().padStart(2, "0")}.
+        {milliseconds.toString().padStart(3, "0")}
+      </h1>
       <div className="space-x-4">
         <button
           className={`bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded ${
