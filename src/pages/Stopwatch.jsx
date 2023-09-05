@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const Stopwatch = () => {
   const [time, setTime] = useState(0);
@@ -19,20 +19,24 @@ const Stopwatch = () => {
 
   const updateElapsedTime = () => {
     const currentTime = Date.now();
-    const elapsedTime = isRunning
-      ? time + (currentTime - startTimeRef.current)
-      : time;
+    const elapsedTime = isRunning ? currentTime - startTimeRef.current : 0;
     setTime(elapsedTime);
-    startTimeRef.current = currentTime;
   };
 
-  const handleStartPause = () => {
-    if (!isRunning) {
+  useEffect(() => {
+    if (isRunning) {
       startTimeRef.current = Date.now() - time;
       intervalRef.current = setInterval(updateElapsedTime, 10);
     } else {
       clearInterval(intervalRef.current);
     }
+
+    return () => {
+      clearInterval(intervalRef.current);
+    };
+  }, [isRunning, time]);
+
+  const handleStartPause = () => {
     setIsRunning((prevState) => !prevState);
   };
 
