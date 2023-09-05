@@ -19,8 +19,11 @@ const Stopwatch = () => {
 
   const updateElapsedTime = () => {
     const currentTime = Date.now();
-    const elapsedTime = isRunning ? currentTime - startTimeRef.current : 0;
+    const elapsedTime = isRunning
+      ? currentTime - startTimeRef.current + time
+      : time;
     setTime(elapsedTime);
+    startTimeRef.current = currentTime;
   };
 
   useEffect(() => {
