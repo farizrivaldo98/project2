@@ -11,7 +11,7 @@ const Stopwatch = () => {
     if (isRunning) {
       intervalRef.current = setInterval(() => {
         setMilliseconds((prevMilliseconds) => {
-          if (prevMilliseconds === 999) {
+          if (prevMilliseconds === 99) {
             setSeconds((prevSeconds) => {
               if (prevSeconds === 59) {
                 setMinutes((prevMinutes) => prevMinutes + 1);
