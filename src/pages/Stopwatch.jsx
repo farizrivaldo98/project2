@@ -7,10 +7,11 @@ const Stopwatch = () => {
   const startTimeRef = useRef(0);
 
   const formatTime = (milliseconds) => {
-    const totalSeconds = Math.floor(milliseconds / 1000);
+    const totalMilliseconds = Math.floor(milliseconds);
+    const totalSeconds = Math.floor(totalMilliseconds / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-    const millis = milliseconds % 1000;
+    const millis = totalMilliseconds % 1000;
     return `${minutes.toString().padStart(2, "0")}.${seconds
       .toString()
       .padStart(2, "0")}.${millis.toString().padStart(3, "0")}`;
@@ -27,7 +28,10 @@ const Stopwatch = () => {
 
   const handleStartPause = () => {
     if (!isRunning) {
-      startTimeRef.current = Date.now();
+      startTimeRef.current = Date.now() - time;
+      intervalRef.current = setInterval(updateElapsedTime, 10);
+    } else {
+      clearInterval(intervalRef.current);
     }
     setIsRunning((prevState) => !prevState);
   };
