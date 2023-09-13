@@ -33,7 +33,7 @@ const Stopwatch = () => {
     if (isTen == 2) {
       if (time >= 1000 && time < 60000) {
         document.body.style.backgroundColor = "green";
-      } else if (time >= 60000) {
+      } else if (time >= 60000 && time < 120000) {
         document.body.style.backgroundColor = "yellow";
       } else if (time >= 120000) {
         document.body.style.backgroundColor = "red";
