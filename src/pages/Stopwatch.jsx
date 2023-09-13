@@ -30,26 +30,28 @@ const Stopwatch = () => {
   };
 
   useEffect(() => {
-    if (isTen == 2) {
-      if (time >= 1000 && time < 60000) {
+    if (isTen == 20) {
+      if (time >= 1000 && time < 1020000) {
         document.body.style.backgroundColor = "green";
-      } else if (time >= 60000 && time < 120000) {
+      } else if (time >= 1020000 && time < 1200000) {
         document.body.style.backgroundColor = "yellow";
-      } else if (time >= 120000) {
+      } else if (time >= 1200000) {
         document.body.style.backgroundColor = "red";
       }
     } else if (isTen == 10) {
-      if (time >= 480000) {
+      if (time >= 1000 && time < 420000) {
+        document.body.style.backgroundColor = "green";
+      } else if (time >= 420000 && time < 600000) {
         document.body.style.backgroundColor = "yellow";
-      }
-      if (time >= 600000) {
+      } else if (time >= 600000) {
         document.body.style.backgroundColor = "red";
       }
     } else if (isTen == 15) {
-      if (time >= 600000) {
+      if (time >= 1000 && time < 720000) {
+        document.body.style.backgroundColor = "green";
+      } else if (time >= 720000 && time < 900000) {
         document.body.style.backgroundColor = "yellow";
-      }
-      if (time >= 900000) {
+      } else if (time >= 900000) {
         document.body.style.backgroundColor = "red";
       }
     }
@@ -99,9 +101,9 @@ const Stopwatch = () => {
         </button>
         <button>
           <Select placeholder="Select Min" onChange={selectMinuits}>
-            <option value={2}>2 Menit</option>
             <option value={10}>10 Menit</option>
             <option value={15}>15 Menit</option>
+            <option value={20}>20 Menit</option>
           </Select>
         </button>
       </div>
