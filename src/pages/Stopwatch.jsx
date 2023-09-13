@@ -31,13 +31,11 @@ const Stopwatch = () => {
 
   useEffect(() => {
     if (isTen == 2) {
-      if (time >= 1000 && time <= 60000) {
+      if (time >= 1000 && time < 60000) {
         document.body.style.backgroundColor = "green";
-      }
-      if (time >= 60000) {
+      } else if (time >= 60000) {
         document.body.style.backgroundColor = "yellow";
-      }
-      if (time >= 120000) {
+      } else if (time >= 120000) {
         document.body.style.backgroundColor = "red";
       }
     } else if (isTen == 10) {
