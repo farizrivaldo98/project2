@@ -43,7 +43,7 @@ function App() {
     keepLogin();
   }, []);
 
-  if (userGlobal) {
+  if (true) {
     return (
       <div>
         <div>
