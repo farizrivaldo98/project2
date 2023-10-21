@@ -72,6 +72,7 @@ function Instrument() {
     }
 
     setHardnessData(result1);
+    
 
     let thickness = await Axios.post(
       "http://10.126.15.124:8002/part/thickness",
@@ -87,6 +88,7 @@ function Instrument() {
     }
 
     setThicknessData(result2);
+
 
     let diameter = await Axios.post(
       "http://10.126.15.124:8002/part/diameter",
@@ -116,7 +118,7 @@ function Instrument() {
         return el.nobatch.includes(submitText);
       }
     });
-
+    console.log(filterData);
     return filterData.map((instrument) => {
       return (
         <Tr>
