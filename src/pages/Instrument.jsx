@@ -27,7 +27,7 @@ function Instrument() {
   const [inputText, setInputText] = useState("");
   const [submitText, setSubmitText] = useState("");
   const [switchAllData, setSwitchAllData] = useState(false);
-
+  const [dataToFilter, setDataToFilter] = useState([]);
   const [hardnessData, setHardnessData] = useState([]);
   const [thicknessData, setThicknessData] = useState([]);
   const [diameterData, setDiameterData] = useState([]);
@@ -72,7 +72,6 @@ function Instrument() {
     }
 
     setHardnessData(result1);
-    
 
     let thickness = await Axios.post(
       "http://10.126.15.124:8002/part/thickness",
@@ -88,7 +87,6 @@ function Instrument() {
     }
 
     setThicknessData(result2);
-
 
     let diameter = await Axios.post(
       "http://10.126.15.124:8002/part/diameter",
@@ -118,7 +116,7 @@ function Instrument() {
         return el.nobatch.includes(submitText);
       }
     });
-    console.log(filterData);
+    setDataToFilter(filterData);
     return filterData.map((instrument) => {
       return (
         <Tr>
@@ -169,6 +167,104 @@ function Instrument() {
       );
     });
   };
+
+  //==============================DISITION MAKING=============================================
+
+  const makeDecision = (record) => {
+    const hardnessParse = parseFloat(record.hardness);
+    const thicknessParse = parseFloat(record.thickness);
+
+    const hardness_minParse = parseFloat(record.R_hardness_min);
+    const thickness_minParse = parseFloat(record.R_thickness_min);
+
+    const hardness_maxParse = parseFloat(record.R_hardness_max);
+    const thickness_maxParse = parseFloat(record.thickness_max);
+
+    let decision = "Data memenuhi syarat referensi";
+
+    if (hardnessParse < hardness_maxParse) {
+      decision =
+        "Data tidak memenuhi syarat referensi: Hardness terlalu rendah.";
+    } else if (hardness > hardness_min) {
+      decision =
+        "Data tidak memenuhi syarat referensi: Hardness terlalu tinggi.";
+    }
+
+    if (thicknessParse < thickness_minParse) {
+      decision =
+        "Data tidak memenuhi syarat referensi: Thickness terlalu kecil.";
+    } else if (thicknessParse > thickness_maxParse) {
+      decision =
+        "Data tidak memenuhi syarat referensi: Thickness terlalu besar.";
+    }
+
+    return decision;
+  };
+
+  const penyimpanganCounts = {
+    "Hardness terlalu rendah": 0,
+    "Hardness terlalu tinggi": 0,
+    "Thickness terlalu kecil": 0,
+    "Thickness terlalu besar": 0,
+  };
+
+  const keputusanData = [];
+
+  const hardnessValues = [];
+  const thicknessValues = [];
+
+  dataToFilter.forEach((record) => {
+    const decision = makeDecision(record);
+    keputusanData.push({ id: record.id, decision });
+
+    // Memeriksa alasan penyimpangan dan meningkatkan hitungan yang sesuai
+    Object.keys(penyimpanganCounts).forEach((reason) => {
+      if (decision.includes(reason)) {
+        penyimpanganCounts[reason] += 1;
+      }
+    });
+
+    // Menambahkan nilai hardness dan thickness yang memenuhi syarat
+    if (!decision.includes("Hardness terlalu rendah")) {
+      hardnessValues.push(parseFloat(record.hardness));
+    }
+    if (!decision.includes("Thickness terlalu kecil")) {
+      thicknessValues.push(parseFloat(record.thickness));
+    }
+  });
+
+  const totalTablet = dataToFilter.length;
+  const presentasePenyimpangan =
+    (Object.values(penyimpanganCounts).reduce((acc, val) => acc + val, 0) /
+      totalTablet) *
+    100;
+  const describe = {
+    hardness: statistics.mean(hardnessValues),
+    thickness: statistics.mean(thicknessValues),
+  };
+  console.log(describe);
+  console.log(
+    `Total tablet yang tidak memenuhi syarat: ${Object.values(
+      penyimpanganCounts
+    ).reduce((acc, val) => acc + val, 0)}`
+  );
+  console.log(`Presentase penyimpangan: ${presentasePenyimpangan.toFixed(2)}%`);
+
+  const mostCommonReason = Object.keys(penyimpanganCounts).reduce((a, b) =>
+    penyimpanganCounts[a] > penyimpanganCounts[b] ? a : b
+  );
+
+  if (
+    Object.values(penyimpanganCounts).reduce((acc, val) => acc + val, 0) === 0
+  ) {
+    console.log("Semua data memenuhi syarat.");
+  } else {
+    console.log(
+      `Parameter yang paling banyak menyebabkan penyimpangan: ${mostCommonReason}`
+    );
+  }
+
+  //=============================////////////////=============================================
 
   const options = {
     theme: "light2",
