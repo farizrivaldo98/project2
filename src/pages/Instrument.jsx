@@ -185,7 +185,7 @@ function Instrument() {
     if (hardnessParse < hardness_maxParse) {
       decision =
         "Data tidak memenuhi syarat referensi: Hardness terlalu rendah.";
-    } else if (hardness > hardness_min) {
+    } else if (hardnessParse > hardness_minParse) {
       decision =
         "Data tidak memenuhi syarat referensi: Hardness terlalu tinggi.";
     }
@@ -238,9 +238,16 @@ function Instrument() {
     (Object.values(penyimpanganCounts).reduce((acc, val) => acc + val, 0) /
       totalTablet) *
     100;
+
+  function calculateMean(arr) {
+    const sum = arr.reduce((acc, current) => acc + current, 0);
+
+    return sum / arr.length;
+  }
+
   const describe = {
-    hardness: statistics.mean(hardnessValues),
-    thickness: statistics.mean(thicknessValues),
+    hardness: calculateMean(hardnessValues),
+    thickness: calculateMean(thicknessValues),
   };
   console.log(describe);
   console.log(
