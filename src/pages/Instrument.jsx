@@ -31,6 +31,12 @@ function Instrument() {
   const [hardnessData, setHardnessData] = useState([]);
   const [thicknessData, setThicknessData] = useState([]);
   const [diameterData, setDiameterData] = useState([]);
+  const [stringData1, setStringData1new] = useState("")
+  const [stringData2, setStringData2new] = useState("")
+  const [stringData3,setStringData3new] = useState("")
+  const [stringData4, setStringData4new] = useState("")
+  const [stringData5, setStringData5new] = useState("")
+
 
   const fetchData = async () => {
     let response = await Axios.get("http://10.126.15.124:8002/part/instrument");
@@ -114,7 +120,7 @@ function Instrument() {
       }
     });
     setDataToFilter(filterData1)
-
+    console.log(filterData1);
   }
 
 
@@ -131,7 +137,7 @@ function Instrument() {
         return el.nobatch.includes(submitText);
       }
     });
-    
+    console.log(filterData);
     return filterData.map((instrument) => {
       return (
         <Tr>
@@ -185,10 +191,26 @@ function Instrument() {
    
   };
 
+  useEffect(() => {
+ 
+
+    const fetchDataFilter = async () => {
+      await   fetchData();
+      backeupFilter()
+    }
+    fetchDataFilter()
+
+    RenderDisition()
+  
+  
+  }, [dataToFilter]);
   //==============================DISITION MAKING=============================================
+
+const RenderDisition = async() => {
 
 
   const makeDecision = (record) => {
+    console.log(record);
     const hardnessParse = parseFloat(record.hardness);
     const thicknessParse = parseFloat(record.thickness);
 
@@ -230,24 +252,33 @@ function Instrument() {
 
   const hardnessValues = [];
   const thicknessValues = [];
+  const diameterValues =[]
 
+  const ambildataDesetin = (data) => {
+    setStringData5new(data)
+  }
+
+console.log(dataToFilter);
   dataToFilter.forEach((record) => {
     const decision = makeDecision(record);
     keputusanData.push({ id: record.id, decision });
-
+    ambildataDesetin(decision)
     // Memeriksa alasan penyimpangan dan meningkatkan hitungan yang sesuai
     Object.keys(penyimpanganCounts).forEach((reason) => {
       if (decision.includes(reason)) {
         penyimpanganCounts[reason] += 1;
       }
     });
+  
 
     // Menambahkan nilai hardness dan thickness yang memenuhi syarat
     if (!decision.includes("Hardness terlalu rendah")) {
       hardnessValues.push(parseFloat(record.hardness));
+      diameterValues.push(parseFloat(record.diameter))
     }
     if (!decision.includes("Thickness terlalu kecil")) {
       thicknessValues.push(parseFloat(record.thickness));
+      diameterValues.push(parseFloat(record.diameter))
     }
   });
 
@@ -263,18 +294,31 @@ function Instrument() {
     return sum / arr.length;
   }
 
-  const describe = {
-    "hardness": calculateMean(hardnessValues),
-    "thickness": calculateMean(thicknessValues),
-  };
-  console.log(describe);
-  console.log(
-    `Total tablet yang tidak memenuhi syarat: ${Object.values(
-      penyimpanganCounts
-    ).reduce((acc, val) => acc + val, 0)}`
-  );
-  console.log(`Presentase penyimpangan: ${presentasePenyimpangan.toFixed(2)}%`);
 
+  const dataPushDesicition = (data1,data2,data3,data4) => {
+    setStringData1new(data1)
+    setStringData2new(data2)
+    setStringData3new(data3)
+    setStringData4new(data4)
+
+  }
+
+  const describe = {
+    "Avarage hardness": calculateMean(hardnessValues).toFixed(2),
+    "Avarage thickness": calculateMean(thicknessValues).toFixed(2),
+    "Avarage diameter" : calculateMean(diameterValues).toFixed(2),
+  };
+
+
+
+  var string1data = JSON.stringify(describe)
+  var sring2data = `Total tablet yang tidak memenuhi syarat: ${Object.values(
+    penyimpanganCounts
+  ).reduce((acc, val) => acc + val, 0)}`
+  var string3data = `Presentase penyimpangan: ${presentasePenyimpangan.toFixed(2)}%`
+  var string4data = ""
+
+  dataPushDesicition(string1data,sring2data,string3data,string4data)
   const mostCommonReason = Object.keys(penyimpanganCounts).reduce((a, b) =>
     penyimpanganCounts[a] > penyimpanganCounts[b] ? a : b
   );
@@ -282,20 +326,20 @@ function Instrument() {
   if (
     Object.values(penyimpanganCounts).reduce((acc, val) => acc + val, 0) === 0
   ) {
-    console.log("Semua data memenuhi syarat.");
+    string4data = "Semua data memenuhi syarat.";
   } else {
-    console.log(
+    string4data =
       `Parameter yang paling banyak menyebabkan penyimpangan: ${mostCommonReason}`
-    );
+    
   }
+
+}
+ 
+
+
   
   //=============================////////////////=============================================
 
-  
-  useEffect(() => {
-    fetchData();
-    backeupFilter()
-  }, []);
 
   const options = {
     theme: "light2",
@@ -376,7 +420,9 @@ function Instrument() {
           </Button>
         </div>
       </div>
-      <div>
+      <div className="flex flex-row ml-4 ">
+        <div className="flex-1 mt-20">
+        <div>
         <br />
         <Button className="ml-4" colorScheme="blue" onClick={() => switchAll()}>
           Show All Data
@@ -385,6 +431,44 @@ function Instrument() {
           Hiden All Data
         </Button>
       </div>
+        </div>
+        {stringData5 ? (
+  stringData5 === "Data memenuhi syarat referensi" ? (
+    <div className="inline-block p-3 bg-green-100 rounded-md mr-4">
+      <p className="text-2xl font-bold">Machine Learning Analytical</p>
+      <br />
+      <p>{stringData1}</p>
+      <p>{stringData2}</p>
+      <p>{stringData3}</p>
+      <p>{stringData4}</p>
+      <p className="font-bold">"Tablet lolos" {stringData5}</p>
+     
+    </div>
+  ) : (
+    <div className="inline-block p-3 bg-red-100 rounded-md mr-4">
+      <p className="text-2xl font-bold">Machine Learning Analytical</p>
+      <br />
+      <p>{stringData1}</p>
+      <p>{stringData2}</p>
+      <p>{stringData3}</p>
+      <p>{stringData4}</p>
+      <p>{stringData5}</p>
+      <p className="font-bold">Untuk tindak lanjut Hubungi EXT. 401, atau pastikan parameter mesin</p>
+    </div>
+  )
+) : (
+  <div className="inline-block p-2 bg-green-100 mb-12 mr-10">
+    <p className="text-2xl font-bold">Machine Learning Analytical</p>
+    <p>Saya siap menganalisa data anda</p>
+  </div>
+)}
+
+    
+        
+      </div>
+
+      
+      
 
       <TableContainer>
         <Table variant="simple">
