@@ -37,9 +37,6 @@ function Instrument() {
     setDataInstrument(response.data);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   let switchAll = (e) => {
     alert("Membuka Semua data mengakibatkan web menjadi lambat");
@@ -104,7 +101,25 @@ function Instrument() {
     setDiameterData(result3);
   };
 
+  const backeupFilter = () => {
+    const filterData1 = dataInstrument.filter((el) => {
+      if (submitText == "" && switchAllData == false) {
+        return null;
+      }
+      if (switchAllData == true && submitText == "") {
+        return el;
+      }
+      if (switchAllData == true && !submitText == "") {
+        return el.nobatch.includes(submitText);
+      }
+    });
+    setDataToFilter(filterData1)
+
+  }
+
+
   const renderInstrumentList = () => {
+
     const filterData = dataInstrument.filter((el) => {
       if (submitText == "" && switchAllData == false) {
         return null;
@@ -116,7 +131,7 @@ function Instrument() {
         return el.nobatch.includes(submitText);
       }
     });
-    setDataToFilter(filterData);
+    
     return filterData.map((instrument) => {
       return (
         <Tr>
@@ -166,9 +181,12 @@ function Instrument() {
         </Tr>
       );
     });
+
+   
   };
 
   //==============================DISITION MAKING=============================================
+
 
   const makeDecision = (record) => {
     const hardnessParse = parseFloat(record.hardness);
@@ -246,8 +264,8 @@ function Instrument() {
   }
 
   const describe = {
-    hardness: calculateMean(hardnessValues),
-    thickness: calculateMean(thicknessValues),
+    "hardness": calculateMean(hardnessValues),
+    "thickness": calculateMean(thicknessValues),
   };
   console.log(describe);
   console.log(
@@ -270,8 +288,14 @@ function Instrument() {
       `Parameter yang paling banyak menyebabkan penyimpangan: ${mostCommonReason}`
     );
   }
-
+  
   //=============================////////////////=============================================
+
+  
+  useEffect(() => {
+    fetchData();
+    backeupFilter()
+  }, []);
 
   const options = {
     theme: "light2",
