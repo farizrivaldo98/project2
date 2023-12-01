@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import PowerManagement from "./PowerManagement";
 import HVAC from "./HVAC";
+import WaterManagement from "./WaterManagement";
 
 function Utility() {
   return (
@@ -32,7 +33,7 @@ function Utility() {
                 <PowerManagement />
               </TabPanel>
               <TabPanel>
-                <div>Water Management</div>
+                <WaterManagement />
               </TabPanel>
               <TabPanel>
                 <p>Waste Water Management</p>
