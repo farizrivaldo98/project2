@@ -52,10 +52,12 @@ export default function WaterManagement() {
   };
   let dateStart = (e) =>{
       var dataInput = e.target.value;
+      console.log(dataInput);
       setStartDate(dataInput);
   };
   let dateFinish = (e) =>{
       var dataInput = e.target.value;
+      console.log(dataInput);
       setFinishDate(dataInput);
   };
   let getWaterArea = (e) =>{
