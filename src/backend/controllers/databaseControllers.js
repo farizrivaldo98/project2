@@ -884,7 +884,7 @@ module.exports = {
       data_format_0) AS y
       FROM \`${area}\`
       WHERE
-      DATE(FROM_UNIXTIME(\`time@timestamp\`) BETWEEN '${start}' AND '${finish}'
+      DATE(FROM_UNIXTIME(\`time@timestamp\`)- INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}'
       ORDER BY
       \`time@timestamp\`;
       `;
