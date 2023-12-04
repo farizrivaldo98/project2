@@ -14,7 +14,7 @@ export default function WaterManagement() {
 
   const fetchWaterDaily = async () => {
       let response = await axios.get(
-          "http://10.126.15.124:8002/part/getWaterSystem",
+          "http://10.126.15.124:8002/part/waterSystem",
           {
               params: {
                   area: WaterArea,
