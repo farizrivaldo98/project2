@@ -12,8 +12,6 @@ export default function WaterManagement() {
   const [finishDate, setFinishDate] = useState();
   const [WaterArea, setWaterArea] = useState();
 
-  console.log(startDate);
-  console.log(finishDate);
 
   const fetchWaterDaily = async () => {
       let response = await axios.get(
@@ -27,7 +25,7 @@ export default function WaterManagement() {
           }
 
       );
-          console.log(response);
+
           if (WaterArea === "cMT-BWT_PDAM_Sehari_data"){
               var multipliedData = response.data.map((data) => ({
                   label: data.label,
@@ -55,12 +53,10 @@ export default function WaterManagement() {
   };
   let dateStart = (e) =>{
       var dataInput = e.target.value;
-      console.log(dataInput);
       setStartDate(dataInput);
   };
   let dateFinish = (e) =>{
       var dataInput = e.target.value;
-      console.log(dataInput);
       setFinishDate(dataInput);
   };
   let getWaterArea = (e) =>{
