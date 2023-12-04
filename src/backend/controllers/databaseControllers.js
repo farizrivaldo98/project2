@@ -887,7 +887,7 @@ module.exports = {
         DATE(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}'
       ORDER BY
       \`time@timestamp\``;
-    console.log(queryGet);
+
     db.query(queryGet,(err, result) => {
       return response.status(200).send(result);
     });
