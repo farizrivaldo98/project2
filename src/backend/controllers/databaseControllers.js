@@ -875,4 +875,13 @@ module.exports = {
       return response.status(200).send(result);
     });
   },
+
+  waterSystem : async (request, response) => {
+    const queryGet = "SELECT * FROM parammachine_saka.`cMT-BWT_AirMancur_Sehari_data`;"
+    console.log(queryGet);
+    db.query(queryGet,(err, result) => {
+      return response.status(200).send(result);
+    })
+  }
+  
 };
