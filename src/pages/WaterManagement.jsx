@@ -2,6 +2,7 @@ import React, { useEffect, Component, useState } from "react";
 import CanvasJSReact from "../canvasjs.react";
 import { Button, ButtonGroup, Stack, Input, Select } from "@chakra-ui/react";
 import axios from "axios";
+import { Chart } from "react-google-charts";
 
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -11,7 +12,22 @@ export default function WaterManagement() {
   const [startDate, setStartDate] = useState();
   const [finishDate, setFinishDate] = useState();
   const [WaterArea, setWaterArea] = useState();
+  const [WaterSankey, setWaterSankey] = useState([]);
+  const [startSankey, setStartSankey] = useState();
+  const [finishSankey, setFinishSankey] = useState();
 
+  const fetchWaterSankey = async () => {
+      let response1 = await axios.get(
+        "http://10.126.15.124:8002/part/waterSankey",
+        {
+          params: {
+            start: startSankey,
+            finish: finishSankey,
+          }
+        }
+      );
+      console.log(response1.data);
+  }
 
   const fetchWaterDaily = async () => {
       let response = await axios.get(
@@ -64,6 +80,14 @@ export default function WaterManagement() {
       setWaterArea(dataInput);
   };
 
+  let sankeyStart = (e) =>{
+      var dataInput = e.target.value;
+      setStartSankey(dataInput);
+  };
+  let sankeyFinish = (e) =>{
+      var dataInput = e.target.value;
+      setFinishSankey(dataInput);
+  };
   const options = {
       theme: "light1",
       title: {
@@ -99,7 +123,7 @@ export default function WaterManagement() {
           direction="row"
           spacing={4}
           align="center"
-      >
+        >
           <div>
               <h2>Flow Meter</h2>
               <Select placeholder="Select Flow Meter" onChange={getWaterArea}>
@@ -155,6 +179,40 @@ export default function WaterManagement() {
       <div className="flex flex-row justify-center mx-12 pb-10">
           <CanvasJSChart className="" options={options} />
       </div>
+      <Stack
+          className="flex flex-row justify-center mb-4  "
+          direction="row"
+          spacing={4}
+          align="center">
+          
+          <div>
+          <h2>Start Time</h2>
+          <Input
+              onChange={sankeyStart}
+              placeholder="Select Date and Time"
+              size="md"
+              type="date"
+          />
+          </div>
+          <div>Finish Time
+          <Input
+              onChange={sankeyFinish}
+              placeholder="Select Date and Time"
+              size="md"
+              type="date"
+          />
+          </div>
+          <div>
+              <br />
+              <Button
+                  className="m1-4"
+                  colorScheme="gray"
+                  onClick={() => fetchWaterSankey()}
+              >
+                  Submit
+              </Button>
+          </div>
+        </Stack>
       </div>
     );
 }
