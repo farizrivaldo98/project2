@@ -2,7 +2,7 @@ import React, { useEffect, Component, useState } from "react";
 import CanvasJSReact from "../canvasjs.react";
 import { Button, ButtonGroup, Stack, Input, Select } from "@chakra-ui/react";
 import axios from "axios";
-
+import { Chart } from "react-google-charts";
 
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -12,13 +12,29 @@ export default function WaterManagement() {
   const [startDate, setStartDate] = useState();
   const [finishDate, setFinishDate] = useState();
   const [WaterArea, setWaterArea] = useState();
-  const [WaterSankey, setWaterSankey] = useState([]);
+  const [SumberPDAM, setSumberPDAM] = useState([]);
+  const [PDAMDom, setPDAMDom] = useState([]);
+  const [DomWorkshop, setDomWork] = useState([]);
+  const [DomQC, setDomQC] = useState([]);
+  const [DomToilet, setDomToilet] = useState([]);
+  const [PDAMIP, setPDAMIP] = useState([]);
+  const [IPOP, setIPOP] = useState([]);
+  const [OPOsmo, setOPOsmo] = useState([]);
+  const [OsmoCIP, setOsmoCIP] = useState([]);
+  const [OsmoPDAM, setOsmoPDAM] = useState([]);
+  const [OPSoftwater, setOPSoftwater] = useState([]);
+  const [SoftLab, setSoftLab] = useState([]);
+  const [SoftChill, setSoftChill] = useState([]);
+  const [SoftHot, setSoftHot] = useState([]);
+  const [PDAMBoiler, setPDAMBoiler] = useState([]);
+  const [PDAMTaman, setPDAMTaman] = useState([]);
+  const [TamanAirMancur, setTamanAirMancur] = useState([]);
   const [startSankey, setStartSankey] = useState();
   const [finishSankey, setFinishSankey] = useState();
-
+  
   const fetchWaterSankey = async () => {
       let response1 = await axios.get(
-        "http://10.126.15.124:8002/part/waterSankey",
+        "http://10.126.15.240:8002/part/waterSankey",
         {
           params: {
             start: startSankey,
@@ -26,9 +42,147 @@ export default function WaterManagement() {
           }
         }
       );
-      console.log(response1.data);
-  }
+      
+      var PDAMtoDOM = ["PDAM","Domestik"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].Domestik.toFixed(2))
+        
+        PDAMtoDOM.push(data);
+      }
+      setPDAMDom(PDAMtoDOM);
 
+      var PDAMtoIP = ["PDAM","Inlet PreTreatment"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].InletPretreatment.toFixed(2))
+        
+        PDAMtoIP.push(data);
+      }
+      setPDAMIP(PDAMtoIP);
+
+      var PDAMtoBoiler = ["PDAM","Boiler"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].Boiler.toFixed(2))
+        
+        PDAMtoBoiler.push(data);
+      }
+      setPDAMBoiler(PDAMtoBoiler);
+
+      var SumbertoPDAM = ["Sumber","PDAM"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].Pdam.toFixed(2))
+        
+        SumbertoPDAM.push(data);
+      }
+      setSumberPDAM(SumbertoPDAM);
+
+      var DomtoWorkshop = ["Domestik","Workshop"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].Workshop.toFixed(2))
+        
+        DomtoWorkshop.push(data);
+      }
+      setDomWork(DomtoWorkshop);
+
+      var DomtoQC = ["Domestik","Atas Lab QC"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].AtasLabQC.toFixed(2))
+        
+        DomtoQC.push(data);
+      }
+      setDomQC(DomtoQC);
+
+      var DomtoToilet = ["Domestik","Atas Toilet Lt.2"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].AtasToiletLt2.toFixed(2))
+        
+        DomtoToilet.push(data);
+      }
+      setDomToilet(DomtoToilet);
+
+      var IPtoOP = ["Inlet Pretreatment","Outlet Pretreatment"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].OutletPretreatment.toFixed(2))
+        
+        IPtoOP.push(data);
+      }
+      setIPOP(IPtoOP);
+
+      var OPtoOsmo = ["Outlet Pretreatment","Osmotron"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var OP = Number(response1.data[i].OutletPretreatment.toFixed(2))
+        var Soft = Number(response1.data[i].Softwater.toFixed(2))
+        var data = OP - Soft
+        OPtoOsmo.push(data);
+      }
+      setOPOsmo(OPtoOsmo);
+
+      
+
+      var OsmotoCIP = ["Osmotron","CIP"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].Cip.toFixed(2))
+
+        OsmotoCIP.push(data);
+      }
+      setOsmoCIP(OsmotoCIP);
+
+      var OsmotoPDAM = ["PDAM","Osmotron"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].RejectOsmotron.toFixed(2))
+
+        OsmotoPDAM.push(data);
+      }
+      setOsmoPDAM(OsmotoPDAM);
+
+      var OPtoSoft = ["Outlet Pretreatment","Softwater"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].Softwater.toFixed(2))
+
+        OPtoSoft.push(data);
+      }
+      setOPSoftwater(OPtoSoft);
+
+      var TamantoAirMancur = ["Taman & Pos Jaga","Air Mancur"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].AirMancur.toFixed(2))
+
+        TamantoAirMancur.push(data);
+      }
+      setTamanAirMancur(TamantoAirMancur);
+
+      var SofttoLab = ["Softwater","Lab"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].Lab.toFixed(2))
+
+        SofttoLab.push(data);
+      }
+      setSoftLab(SofttoLab);
+
+      var SofttoChill = ["Softwater","Chiller"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].Chiller.toFixed(2))
+
+        SofttoChill.push(data);
+      }
+      setSoftChill(SofttoChill);
+
+      var SofttoHot = ["Softwater","Hotwater"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].Hotwater.toFixed(2))
+
+        SofttoHot.push(data);
+      }
+      setSoftHot(SofttoHot);
+
+      var PDAMtoTaman = ["PDAM","Taman & Pos Jaga"];
+      for (var i = 0; i < response1.data.length; i++) {
+        var data = Number(response1.data[i].Taman.toFixed(2))
+
+        PDAMtoTaman.push(data);
+      }
+      setPDAMTaman(PDAMtoTaman);
+  }
+  
   const fetchWaterDaily = async () => {
       let response = await axios.get(
           "http://10.126.15.124:8002/part/waterSystem",
@@ -66,6 +220,7 @@ export default function WaterManagement() {
               }));
             }
             setWaterDaily(multipliedData);
+            
   };
   let dateStart = (e) =>{
       var dataInput = e.target.value;
@@ -88,6 +243,26 @@ export default function WaterManagement() {
       var dataInput = e.target.value;
       setFinishSankey(dataInput);
   };
+  const colors = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f',
+  '#cab2d6', '#ffff99', '#1f78b4', '#33a02c'];
+
+  const options1 = {
+      sankey: {
+        link: {
+          colorMode: 'gradient',
+          colors: colors
+        },
+        label: {
+           fontName: 'Times-Roman',
+           fontSize: 14,
+           color: '#871b47',
+           bold: true,
+           italic: true 
+        },
+        
+      }
+  };
+
   const options = {
       theme: "light1",
       title: {
@@ -116,6 +291,25 @@ export default function WaterManagement() {
       ],
     };
 
+    const data = [
+      ["From", "To", "Consumption"],
+      SumberPDAM,
+      PDAMDom,
+      PDAMBoiler,
+      PDAMIP,
+      OPOsmo,
+      OPSoftwater,
+      OsmoCIP,
+      DomQC,
+      DomWorkshop,
+      DomToilet,
+      IPOP,
+      SoftLab,
+      TamanAirMancur,
+      SoftHot,
+      SoftChill,
+      PDAMTaman,
+    ]; 
     return(
       <div>
         <Stack
@@ -213,6 +407,15 @@ export default function WaterManagement() {
               </Button>
           </div>
         </Stack>
+        <div className="flex flex-row justify-center mx-12 pb-10">
+        <Chart
+          chartType="Sankey"
+          width= "100%"
+          height="1000px"
+          data={data}
+          options={options1}>
+        </Chart>
+        </div>
       </div>
     );
 }
