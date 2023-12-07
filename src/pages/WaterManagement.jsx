@@ -41,7 +41,7 @@ export default function WaterManagement() {
             finish: finishSankey,
           }
         }
-      );
+      );console.log(response1.data);
       
       var PDAMtoDOM = ["PDAM","Domestik"];
       for (var i = 0; i < response1.data.length; i++) {
