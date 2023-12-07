@@ -41,7 +41,7 @@ export default function WaterManagement() {
             finish: finishSankey,
           }
         }
-      );console.log(response1.data);
+      );
       
       var PDAMtoDOM = ["PDAM","Domestik"];
       for (var i = 0; i < response1.data.length; i++) {
@@ -374,7 +374,7 @@ export default function WaterManagement() {
               </Button>
           </div>
       </Stack>
-      <div className="flex flex-row justify-center mx-12 pb-10">
+      <div align="center" className="flex flex-row justify-center mx-12 pb-10">
           <CanvasJSChart className="" options={options} />
       </div>
       <Stack
@@ -411,6 +411,8 @@ export default function WaterManagement() {
               </Button>
           </div>
         </Stack>
+        <div align="center"><h1 style={{ fontSize: "2rem"}}><b>Water Distribution</b></h1></div>
+        <div align="center"><h2><b>Meter Cubic</b></h2></div>
         <div className="flex flex-row justify-center mx-auto pb-auto">
         <Chart
           chartType="Sankey"
