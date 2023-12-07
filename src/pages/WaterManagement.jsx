@@ -34,7 +34,7 @@ export default function WaterManagement() {
   
   const fetchWaterSankey = async () => {
       let response1 = await axios.get(
-        "http://10.126.15.1:8002/part/waterSankey",
+        "http://10.126.15.124:8002/part/waterSankey",
         {
           params: {
             start: startSankey,
