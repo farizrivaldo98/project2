@@ -34,7 +34,7 @@ export default function WaterManagement() {
   
   const fetchWaterSankey = async () => {
       let response1 = await axios.get(
-        "http://10.126.15.124:8002/part/waterSankey",
+        "http://10.126.15.1:8002/part/waterSankey",
         {
           params: {
             start: startSankey,
@@ -51,7 +51,7 @@ export default function WaterManagement() {
       }
       setPDAMDom(PDAMtoDOM);
 
-      var PDAMtoIP = ["PDAM","Inlet PreTreatment"];
+      var PDAMtoIP = ["PDAM","Inlet Pretreatment"];
       for (var i = 0; i < response1.data.length; i++) {
         var data = Number(response1.data[i].InletPretreatment.toFixed(2))
         
@@ -72,8 +72,9 @@ export default function WaterManagement() {
         var data = Number(response1.data[i].Pdam.toFixed(2))
         
         SumbertoPDAM.push(data);
+        
       }
-      setSumberPDAM(SumbertoPDAM);
+      setSumberPDAM(SumbertoPDAM); 
 
       var DomtoWorkshop = ["Domestik","Workshop"];
       for (var i = 0; i < response1.data.length; i++) {
@@ -126,7 +127,7 @@ export default function WaterManagement() {
       }
       setOsmoCIP(OsmotoCIP);
 
-      var OsmotoPDAM = ["PDAM","Osmotron"];
+      var OsmotoPDAM = ["Osmotron","Reject Osmotron"];
       for (var i = 0; i < response1.data.length; i++) {
         var data = Number(response1.data[i].RejectOsmotron.toFixed(2))
 
@@ -185,7 +186,7 @@ export default function WaterManagement() {
   
   const fetchWaterDaily = async () => {
       let response = await axios.get(
-          "http://10.126.15.124:8002/part/waterSystem",
+          "http://10.126.15.1:8002/part/waterSystem",
           {
               params: {
                   area: WaterArea,
@@ -248,6 +249,9 @@ export default function WaterManagement() {
 
   const options1 = {
       sankey: {
+        node: { nodePadding: 50,
+               },
+
         link: {
           colorMode: 'gradient',
           colors: colors
@@ -290,25 +294,25 @@ export default function WaterManagement() {
         },
       ],
     };
-
+    
     const data = [
       ["From", "To", "Consumption"],
       SumberPDAM,
       PDAMDom,
       PDAMBoiler,
       PDAMIP,
+      PDAMTaman,
+      DomQC,
+      DomToilet,
+      DomWorkshop,
+      IPOP,
       OPOsmo,
       OPSoftwater,
       OsmoCIP,
-      DomQC,
-      DomWorkshop,
-      DomToilet,
-      IPOP,
+      OsmoPDAM,
       SoftLab,
-      TamanAirMancur,
       SoftHot,
       SoftChill,
-      PDAMTaman,
     ]; 
     return(
       <div>
@@ -407,10 +411,10 @@ export default function WaterManagement() {
               </Button>
           </div>
         </Stack>
-        <div className="flex flex-row justify-center mx-12 pb-10">
+        <div className="flex flex-row justify-center mx-auto pb-auto">
         <Chart
           chartType="Sankey"
-          width= "100%"
+          width= "1500px"
           height="1000px"
           data={data}
           options={options1}>
