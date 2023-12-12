@@ -66,8 +66,7 @@ export default function WaterManagement() {
             finish: finishSankey,
           }
         }
-      ); console.log(response1.data);
-      
+      ); 
       var OsmotoLoopo = 0;
       var OsmotoLoopom3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
@@ -169,7 +168,7 @@ export default function WaterManagement() {
         SumbertoPDAM = pdam;
         
       }
-      setSumberPDAM(SumbertoPDAM); console.log(SumberPDAM); 
+      setSumberPDAM(SumbertoPDAM);
 
       var SupplyAir = 0;
       for (var i = 0; i < response1.data.length; i++) {
@@ -708,7 +707,6 @@ export default function WaterManagement() {
       ropdam.push(OsmoPDAM)
       data1.push(ropdam)
     }
-    console.log(data1);
     
     return(
       <div>
