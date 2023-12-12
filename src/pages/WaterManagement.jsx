@@ -32,8 +32,31 @@ export default function WaterManagement() {
   const [OsmoRO, setOsmoRO] = useState([]);
   const [startSankey, setStartSankey] = useState();
   const [finishSankey, setFinishSankey] = useState();
-  const [SupplyAir, setSupllyAir]= useState ([])
+  const [SupplyAir, setSupllyAir]= useState ([]);
+  const [SoftWashing, setWashing]= useState ([]);
+  const [OsmoLoopo, setOsmoLoopo]= useState ([]);
+  const [LoopoProduksi, setLoopoProduksis]= useState ([]);
   
+  const [PDAMDomm3, setPDAMDomm3] = useState([]);
+  const [DomWorkshopm3, setDomWorkm3] = useState([]);
+  const [DomQCm3, setDomQCm3] = useState([]);
+  const [DomToiletm3, setDomToiletm3] = useState([]);
+  const [PDAMIPm3, setPDAMIPm3] = useState([]);
+  const [IPOPm3, setIPOPm3] = useState([]);
+  const [OPOsmom3, setOPOsmom3] = useState([]);
+  const [OsmoCIPm3, setOsmoCIPm3] = useState([]);
+  const [OPSoftwaterm3, setOPSoftwaterm3] = useState([]);
+  const [SoftLabm3, setSoftLabm3] = useState([]);
+  const [SoftChillm3, setSoftChillm3] = useState([]);
+  const [SoftHotm3, setSoftHotm3] = useState([]);
+  const [PDAMBoilerm3, setPDAMBoilerm3] = useState([]);
+  const [PDAMTamanm3, setPDAMTamanm3] = useState([]);
+  const [TamanAirMancurm3, setTamanAirMancurm3] = useState([]);
+  const [OsmoROm3, setOsmoROm3] = useState([]);
+  const [SoftWashingm3, setWashingm3]= useState ([]);
+  const [OsmoLoopom3, setOsmoLoopom3]= useState ([]);
+  const [LoopoProduksim3, setLoopoProduksism3]= useState ([]);
+
   const fetchWaterSankey = async () => {
       let response1 = await axios.get(
         "http://10.126.15.124:8002/part/waterSankey",
@@ -43,9 +66,45 @@ export default function WaterManagement() {
             finish: finishSankey,
           }
         }
-      ); 
+      ); console.log(response1.data);
       
-      var PDAMtoDom = ["Total Supply Air","Domestik"];
+      var OsmotoLoopo = 0;
+      var OsmotoLoopom3 = 0;
+      for (var i = 0; i < response1.data.length; i++) {
+        var OP = Number(response1.data[i].OutletPretreatment.toFixed(2))
+        var soft = Number(response1.data[i].Softwater.toFixed(2))
+        var pdam = Number(response1.data[i].Pdam.toFixed(2))
+        var ro = Number (response1.data[i].RejectOsmotron.toFixed(2))
+        var sumber = pdam + ro
+        var value = OP - ro - soft
+        var total = value/sumber*100
+        var data = Number(total.toFixed(2))
+        OsmotoLoopo = data
+        OsmotoLoopom3 = Number(value.toFixed(2))
+      }
+      setOsmoLoopo(OsmotoLoopo);
+      setOsmoLoopom3(OsmotoLoopom3)
+
+      var LoopotoProduksi = 0;
+      var LoopotoProduksim3 = 0;
+      for (var i = 0; i < response1.data.length; i++) {
+        var OP = Number(response1.data[i].OutletPretreatment.toFixed(2))
+        var soft = Number(response1.data[i].Softwater.toFixed(2))
+        var pdam = Number(response1.data[i].Pdam.toFixed(2))
+        var ro = Number (response1.data[i].RejectOsmotron.toFixed(2))
+        var CIP = Number (response1.data[i].Cip.toFixed(2))
+        var sumber = pdam + ro
+        var value = OP - ro - soft - CIP
+        var total = value/sumber*100
+        var data = Number(total.toFixed(2))
+        LoopotoProduksi = data
+        LoopotoProduksim3 = value
+      } 
+      setLoopoProduksis(LoopotoProduksi);
+      setLoopoProduksism3(LoopotoProduksim3);
+
+      var PDAMtoDom = 0;
+      var PDAMtoDomm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].Domestik.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -53,11 +112,14 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        PDAMtoDom.push(data);
+        PDAMtoDom = data
+        PDAMtoDomm3 = value
       }
       setPDAMDom(PDAMtoDom);
+      setPDAMDomm3(PDAMtoDomm3);
 
-      var OsmotoRO = ["Osmotron","Reject Osmotron"];
+      var OsmotoRO = 0;
+      var OsmotoROm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].RejectOsmotron.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -65,11 +127,14 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        OsmotoRO.push(data);
+        OsmotoRO = data;
+        OsmotoROm3 = value;
       }
       setOsmoRO(OsmotoRO);
+      setOsmoROm3(OsmotoROm3);
 
-      var PDAMtoIP = ["Total Supply Air","Inlet Pretreatment"];
+      var PDAMtoIP = 0;
+      var PDAMtoIPm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].InletPretreatment.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -77,11 +142,14 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        PDAMtoIP.push(data);
+        PDAMtoIP = data;
+        PDAMtoIPm3 = value;
       }
       setPDAMIP(PDAMtoIP);
+      setPDAMIPm3(PDAMtoIPm3);
 
-      var PDAMtoBoiler = ["Total Supply Air","Boiler"];
+      var PDAMtoBoiler = 0;
+      var PDAMtoBoilerm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].Boiler.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -89,30 +157,33 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        PDAMtoBoiler.push(data);
+        PDAMtoBoiler = data;
+        PDAMtoBoilerm3 = value;
       }
       setPDAMBoiler(PDAMtoBoiler);
+      setPDAMBoilerm3(PDAMtoBoilerm3);
 
-      var SumbertoPDAM = [];
+      var SumbertoPDAM = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
-        SumbertoPDAM.push(pdam);
+        SumbertoPDAM = pdam;
         
       }
-      setSumberPDAM(SumbertoPDAM); 
+      setSumberPDAM(SumbertoPDAM); console.log(SumberPDAM); 
 
-      var SupplyAir = [];
+      var SupplyAir = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
         var ro = Number (response1.data[i].RejectOsmotron.toFixed(2))
         var sumber = pdam + ro
         var data = Number(sumber.toFixed(2))
-        SupplyAir.push(data);
+        SupplyAir = data;
         
       }
       setSupllyAir(SupplyAir);
 
-      var DomtoWorkshop = ["Domestik","Workshop"];
+      var DomtoWorkshop = 0;
+      var DomtoWorkshopm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].Workshop.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -120,11 +191,14 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        DomtoWorkshop.push(data);
+        DomtoWorkshopm3 = value;
+        DomtoWorkshop = data;
       }
       setDomWork(DomtoWorkshop);
+      setDomWorkm3(DomtoWorkshopm3);
 
-      var DomtoQC = ["Domestik","Atas Lab QC"];
+      var DomtoQC = 0;
+      var DomtoQCm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].AtasLabQC.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -132,11 +206,14 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        DomtoQC.push(data);
+        DomtoQC = data;
+        DomtoQCm3 = value;
       }
       setDomQC(DomtoQC);
+      setDomQCm3(DomtoQCm3);
 
-      var DomtoToilet = ["Domestik","Atas Toilet Lt.2"];
+      var DomtoToilet = 0;
+      var DomtoToiletm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].AtasToiletLt2.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -144,11 +221,14 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        DomtoToilet.push(data);
+        DomtoToilet = data;
+        DomtoToiletm3 = value;
       }
       setDomToilet(DomtoToilet);
+      setDomToiletm3(DomtoToiletm3);
 
-      var IPtoOP = ["Inlet Pretreatment","Outlet Pretreatment"];
+      var IPtoOP = 0;
+      var IPtoOPm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].OutletPretreatment.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -156,11 +236,14 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        IPtoOP.push(data);
+        IPtoOP = data;
+        IPtoOPm3 = value;
       }
       setIPOP(IPtoOP);
+      setIPOPm3(IPtoOPm3);
 
-      var OPtoOsmo = ["Outlet Pretreatment","Osmotron"];
+      var OPtoOsmo = 0;
+      var OPtoOsmom3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var OP = Number(response1.data[i].OutletPretreatment.toFixed(2))
         var Soft = Number(response1.data[i].Softwater.toFixed(2))
@@ -170,13 +253,16 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        OPtoOsmo.push(data);
+        OPtoOsmo = data;
+        OPtoOsmom3 = Number(value.toFixed(2));
       }
       setOPOsmo(OPtoOsmo);
+      setOPOsmom3(OPtoOsmom3);
 
       
 
-      var OsmotoCIP = [];
+      var OsmotoCIP = 0;
+      var OsmotoCIPm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].Cip.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -184,19 +270,22 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        OsmotoCIP.push(data);
+        OsmotoCIP = data;
+        OsmotoCIPm3 = value;
       }
       setOsmoCIP(OsmotoCIP);
+      setOsmoCIPm3(OsmotoCIPm3);
 
-      var OsmotoPDAM = [];
+      var OsmotoPDAM = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var data = Number(response1.data[i].RejectOsmotron.toFixed(2))
 
-        OsmotoPDAM.push(data);
+        OsmotoPDAM = data;
       }
       setOsmoPDAM(OsmotoPDAM);
 
-      var OPtoSoft = ["Outlet Pretreatment","Softwater"];
+      var OPtoSoft = 0;
+      var OPtoSoftm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].Softwater.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -204,11 +293,14 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        OPtoSoft.push(data);
+        OPtoSoft = data;
+        OPtoSoftm3 = value;
       }
       setOPSoftwater(OPtoSoft);
+      setOPSoftwaterm3(OPtoSoftm3);
 
-      var TamantoAirMancur = [];
+      var TamantoAirMancur = 0;
+      var TamantoAirMancurm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].AirMancur.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -216,11 +308,14 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        TamantoAirMancur.push(data);
+        TamantoAirMancur = data;
+        TamantoAirMancurm3 = value;
       }
       setTamanAirMancur(TamantoAirMancur);
+      setTamanAirMancurm3(TamantoAirMancurm3);
 
-      var SofttoLab = ["Softwater","Lab"];
+      var SofttoLab = 0;
+      var SofttoLabm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].Lab.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -228,11 +323,33 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        SofttoLab.push(data);
+        SofttoLab = data;
+        SofttoLabm3 = value;
       }
       setSoftLab(SofttoLab);
+      setSoftLabm3(SofttoLabm3);
 
-      var SofttoChill = ["Softwater","Chiller"];
+      var SofttoWash = 0;
+      var SofttoWashm3 = 0;
+      for (var i = 0; i < response1.data.length; i++) {
+        var soft = Number(response1.data[i].Softwater.toFixed(2))
+        var lab1 = Number(response1.data[i].Lab.toFixed(2))
+        var hot = Number(response1.data[i].Hotwater.toFixed(2))
+        var chill = Number(response1.data[i].Chiller.toFixed(2))
+        var pdam = Number(response1.data[i].Pdam.toFixed(2))
+        var ro = Number (response1.data[i].RejectOsmotron.toFixed(2))
+        var sumber = pdam + ro
+        var value = soft-lab1-hot-chill
+        var total = value/sumber*100
+        var data = Number(total.toFixed(2))
+        SofttoWash = data;
+        SofttoWashm3 = value; 
+      }
+      setWashing(SofttoWash);
+      setWashingm3(SofttoWashm3);
+
+      var SofttoChill = 0;
+      var SofttoChillm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].Chiller.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -240,11 +357,14 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        SofttoChill.push(data);
+        SofttoChill = data;
+        SofttoChillm3 = value;
       }
       setSoftChill(SofttoChill);
+      setSoftChillm3(SofttoChillm3);
 
-      var SofttoHot = ["Softwater","Hotwater"];
+      var SofttoHot = 0;
+      var SofttoHotm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].Hotwater.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -252,11 +372,14 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        SofttoHot.push(data);
+        SofttoHot = data;
+        SofttoHotm3 = value;
       }
       setSoftHot(SofttoHot);
+      setSoftHotm3(SofttoHotm3);
 
-      var PDAMtoTaman = ["Total Supply Air","Taman & Pos Jaga"];
+      var PDAMtoTaman = 0;
+      var PDAMtoTamanm3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var value = Number(response1.data[i].Taman.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
@@ -264,9 +387,11 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = value/sumber*100
         var data = Number(total.toFixed(2))
-        PDAMtoTaman.push(data);
+        PDAMtoTaman = data;
+        PDAMtoTamanm3 = value;
       }
       setPDAMTaman(PDAMtoTaman);
+      setPDAMTamanm3(PDAMtoTamanm3);
   }
   
   const fetchWaterDaily = async () => {
@@ -281,7 +406,6 @@ export default function WaterManagement() {
           }
 
       );
-
           if (WaterArea === "cMT-BWT_PDAM_Sehari_data"){
               var multipliedData = response.data.map((data) => ({
                   label: data.label,
@@ -376,33 +500,216 @@ export default function WaterManagement() {
     };
     
     const data = [
-      ["From", "To", "Consumption (%)"],
-      PDAMDom,
-      PDAMBoiler,
-      PDAMIP,
-      PDAMTaman,
-      DomQC,
-      DomToilet,
-      DomWorkshop,
-      IPOP,
-      OPOsmo,
-      OPSoftwater,
-      SoftLab,
-      SoftHot,
-      SoftChill,
-      OsmoRO,
+      ["From", "To", "Consumption (%)"], 
     ]; 
     if (OsmoCIP >0){
-      var cip = ['Osmotron','CIP']
+      var cip = ['Loopo','CIP']
       cip.push(OsmoCIP)
       data.push(cip)
     }
+    if (OsmoLoopo >0){
+      var loopo = ['Osmotron','Loopo']
+      loopo.push(OsmoLoopo)
+      data.push(loopo)
+    } 
     if (TamanAirMancur >0){
-      var taman = ["Taman & Pos Jaga","Air Mancur"]
-      taman.push(OsmoCIP)
+      var airmancur = ["Taman & Pos Jaga","Air Mancur"]
+      airmancur.push(TamanAirMancur)
+      data.push(airmancur)
+    }
+    if (PDAMDom >0){
+      var dom = ["Total Supply Air","Domestik"]
+      dom.push(PDAMDom)
+      data.push(dom)
+    }
+    if (PDAMBoiler >0){
+      var boiler = ["Total Supply Air","Boiler"]
+      boiler.push(PDAMBoiler)
+      data.push(boiler)
+    }
+    if (PDAMIP >0){
+      var IP = ["Total Supply Air","Inlet Pretreatment"]
+      IP.push(PDAMIP)
+      data.push(IP)
+    }
+    if (PDAMTaman >0){
+      var taman = ["Total Supply Air","Taman & Pos Jaga"]
+      taman.push(PDAMTaman)
       data.push(taman)
     }
+    if (DomQC >0){
+      var QC = ["Domestik","Atas Lab QC"]
+      QC.push(DomQC)
+      data.push(QC)
+    }
+    if (DomToilet >0){
+      var toilet = ["Domestik","Atas Toilet Lt.2"]
+      toilet.push(DomToilet)
+      data.push(toilet)
+    }
+    if (DomWorkshop >0){
+      var Workshop = ["Domestik","Workshop"]
+      Workshop.push(DomWorkshop)
+      data.push(Workshop)
+    }
+    if (IPOP >0){
+      var OP = ["Inlet Pretreatment","Outlet Pretreatment"]
+      OP.push(IPOP)
+      data.push(OP)
+    }
+    if (OPOsmo >0){
+      var Osmo = ["Outlet Pretreatment","Osmotron"]
+      Osmo.push(OPOsmo)
+      data.push(Osmo)
+    }
+    if (OPSoftwater >0){
+      var soft = ["Outlet Pretreatment","Softwater"]
+      soft.push(OPSoftwater)
+      data.push(soft)
+    }
+    if (SoftLab >0){
+      var lab = ["Softwater","Lab"]
+      lab.push(SoftLab)
+      data.push(lab)
+    }
+    if (SoftHot >0){
+      var hot = ["Softwater","Hotwater"]
+      hot.push(SoftHot)
+      data.push(hot)
+    }
+    if (SoftChill >0){
+      var chill = ["Softwater","Chiller"]
+      chill.push(SoftChill)
+      data.push(chill)
+    }
+    if (SoftWashing >0){
+      var wash = ["Softwater","Washing"]
+      wash.push(SoftWashing)
+      data.push(wash)
+    }
+    if (OsmoRO >0){
+      var ro = ["Osmotron","Reject Osmotron"]
+      ro.push(OsmoRO)
+      data.push(ro)
+    }
+    
+    if (LoopoProduksi >0){
+      var produksi = ["Loopo","Washing Janitor, Lab, Produksi"]
+      produksi.push(LoopoProduksi)
+      data.push(produksi)
+    }
 
+    const data1 = [
+      ["From", "To", "Consumption (m3)"], 
+    ]; 
+    if (OsmoCIPm3 >0){
+      var cip3 = ['Loopo','CIP']
+      cip3.push(OsmoCIPm3)
+      data1.push(cip3)
+    }
+    if (OsmoLoopom3 >0){
+      var loopo3 = ['Osmotron','Loopo']
+      loopo3.push(OsmoLoopom3)
+      data1.push(loopo3)
+    } 
+    if (TamanAirMancurm3 >0){
+      var airmancur3 = ["Taman & Pos Jaga","Air Mancur"]
+      airmancur3.push(TamanAirMancurm3)
+      data1.push(airmancur3)
+    }
+    if (PDAMDomm3 >0){
+      var dom3 = ["Total Supply Air","Domestik"]
+      dom3.push(PDAMDomm3)
+      data1.push(dom3)
+    }
+    if (PDAMBoilerm3 >0){
+      var boiler3 = ["Total Supply Air","Boiler"]
+      boiler3.push(PDAMBoilerm3)
+      data1.push(boiler3)
+    }
+    if (PDAMIPm3 >0){
+      var IP3 = ["Total Supply Air","Inlet Pretreatment"]
+      IP3.push(PDAMIPm3)
+      data1.push(IP3)
+    }
+    if (PDAMTamanm3 >0){
+      var taman3 = ["Total Supply Air","Taman & Pos Jaga"]
+      taman3.push(PDAMTamanm3)
+      data1.push(taman3)
+    }
+    if (DomQCm3 >0){
+      var QC3 = ["Domestik","Atas Lab QC"]
+      QC3.push(DomQCm3)
+      data1.push(QC3)
+    }
+    if (DomToiletm3 >0){
+      var toilet3 = ["Domestik","Atas Toilet Lt.2"]
+      toilet3.push(DomToiletm3)
+      data1.push(toilet3)
+    }
+    if (DomWorkshopm3 >0){
+      var Workshop3 = ["Domestik","Workshop"]
+      Workshop3.push(DomWorkshopm3)
+      data1.push(Workshop3)
+    }
+    if (IPOPm3 >0){
+      var OP3= ["Inlet Pretreatment","Outlet Pretreatment"]
+      OP3.push(IPOPm3)
+      data1.push(OP3)
+    }
+    if (OPOsmom3 >0){
+      var Osmo3 = ["Outlet Pretreatment","Osmotron"]
+      Osmo3.push(OPOsmom3)
+      data1.push(Osmo3)
+    }
+    if (OPSoftwaterm3 >0){
+      var soft3 = ["Outlet Pretreatment","Softwater"]
+      soft3.push(OPSoftwaterm3)
+      data1.push(soft3)
+    }
+    if (SoftLabm3 >0){
+      var lab3 = ["Softwater","Lab"]
+      lab3.push(SoftLabm3)
+      data1.push(lab3)
+    }
+    if (SoftHotm3 >0){
+      var hot3 = ["Softwater","Hotwater"]
+      hot3.push(SoftHotm3)
+      data1.push(hot3)
+    }
+    if (SoftChillm3 >0){
+      var chill3 = ["Softwater","Chiller"]
+      chill3.push(SoftChillm3)
+      data1.push(chill3)
+    }
+    if (SoftWashingm3 >0){
+      var wash3 = ["Softwater","Washing"]
+      wash3.push(SoftWashingm3)
+      data1.push(wash3)
+    }
+    if (OsmoROm3 >0){
+      var ro3 = ["Osmotron","Reject Osmotron"]
+      ro3.push(OsmoROm3)
+      data1.push(ro3)
+    }
+    
+    if (LoopoProduksim3 >0){
+      var produksi3 = ["Loopo","Washing Janitor, Lab, Produksi"]
+      produksi3.push(LoopoProduksim3)
+      data1.push(produksi3)
+    }
+    if (SumberPDAM >0){
+      var pdam3 = ["PDAM","Total Supply Air"]
+      pdam3.push(SumberPDAM)
+      data1.push(pdam3)
+    }
+    if (OsmoPDAM >0){
+      var ropdam = ["RO","Total Supply Air"]
+      ropdam.push(OsmoPDAM)
+      data1.push(ropdam)
+    }
+    console.log(data1);
+    
     return(
       <div>
         <Stack
@@ -500,7 +807,7 @@ export default function WaterManagement() {
               </Button>
           </div>
         </Stack>
-        <div align="center"><h1 style={{ fontSize: "2rem"}}><b>Water Sankey Diagram</b></h1></div>
+        <div align="center"><h1 style={{ fontSize: "2rem"}}><b>Water Sankey Diagram (%)</b></h1></div>
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>PDAM : {SumberPDAM} Meter Cubic</b></h3></div>
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>Reject Osmotron : {OsmoPDAM} Meter Cubic</b></h3></div>
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>Total Supply Air (PDAM+RO) : {SupplyAir} Meter Cubic</b></h3></div>
@@ -510,6 +817,18 @@ export default function WaterManagement() {
           width= "1500px"
           height="1000px"
           data={data}
+          options={options1}>
+        </Chart>
+        </div>
+
+        <div align="center"><h1 style={{ fontSize: "2rem"}}><b>Water Sankey Diagram </b></h1></div>
+        <div align="center"><h3 style={{ fontSize: "1rem"}}><b>Meter Cubic</b></h3></div>
+        <div className="flex flex-row justify-center mx-auto pb-auto">
+        <Chart
+          chartType="Sankey"
+          width= "1500px"
+          height="1000px"
+          data={data1}
           options={options1}>
         </Chart>
         </div>
