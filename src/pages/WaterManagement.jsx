@@ -56,6 +56,8 @@ export default function WaterManagement() {
   const [SoftWashingm3, setWashingm3]= useState ([]);
   const [OsmoLoopom3, setOsmoLoopom3]= useState ([]);
   const [LoopoProduksim3, setLoopoProduksism3]= useState ([]);
+  const [OsmoPDAM1, setOsmoPDAM1] = useState([]);
+  const [SumberPDAM1, setSumberPDAM1] = useState([]);
 
   const fetchWaterSankey = async () => {
       let response1 = await axios.get(
@@ -163,12 +165,18 @@ export default function WaterManagement() {
       setPDAMBoilerm3(PDAMtoBoilerm3);
 
       var SumbertoPDAM = 0;
+      var SumbertoPDAM1 =0;
       for (var i = 0; i < response1.data.length; i++) {
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
         SumbertoPDAM = pdam;
-        
+        var ro = Number (response1.data[i].RejectOsmotron.toFixed(2))
+        var sumber = pdam + ro
+        var total = pdam/sumber*100
+        var data = Number(total.toFixed(2))
+        SumbertoPDAM1 = data;
       }
       setSumberPDAM(SumbertoPDAM);
+      setSumberPDAM1(SumbertoPDAM1);
 
       var SupplyAir = 0;
       for (var i = 0; i < response1.data.length; i++) {
@@ -277,11 +285,15 @@ export default function WaterManagement() {
 
       var OsmotoPDAM = 0;
       for (var i = 0; i < response1.data.length; i++) {
-        var data = Number(response1.data[i].RejectOsmotron.toFixed(2))
-
-        OsmotoPDAM = data;
+        var ro = Number(response1.data[i].RejectOsmotron.toFixed(2))
+        var pdam = Number(response1.data[i].Pdam.toFixed(2))
+        OsmotoPDAM = ro;
+        var sumber = pdam + ro
+        var total = ro/sumber*100
+        var data = Number(total.toFixed(2))
       }
       setOsmoPDAM(OsmotoPDAM);
+      setOsmoPDAM1(OsmotoPDAM1);
 
       var OPtoSoft = 0;
       var OPtoSoftm3 = 0;
@@ -596,6 +608,16 @@ export default function WaterManagement() {
       var produksi = ["Loopo","Washing Janitor, Lab, Produksi"]
       produksi.push(LoopoProduksi)
       data.push(produksi)
+    }
+    if (SumberPDAM1 >0){
+      var pdam1 = ["PDAM","Total Supply Air"]
+      pdam1.push(SumberPDAM)
+      data.push(pdam1)
+    }
+    if (OsmoPDAM1 >0){
+      var ropdam1 = ["RO","Total Supply Air"]
+      ropdam1.push(OsmoPDAM1)
+      data.push(ropdam1)
     }
 
     const data1 = [
