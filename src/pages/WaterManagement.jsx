@@ -292,6 +292,7 @@ export default function WaterManagement() {
         var sumber = pdam + ro
         var total = ro/sumber*100
         var data = Number(total.toFixed(2))
+        OsmotoPDAM1 = data;
       }
       setOsmoPDAM(OsmotoPDAM);
       setOsmoPDAM1(OsmotoPDAM1);
@@ -612,7 +613,7 @@ export default function WaterManagement() {
     }
     if (SumberPDAM1 >0){
       var pdam1 = ["PDAM","Total Supply Air"]
-      pdam1.push(SumberPDAM)
+      pdam1.push(SumberPDAM1)
       data.push(pdam1)
     }
     if (OsmoPDAM1 >0){
