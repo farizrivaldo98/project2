@@ -284,6 +284,7 @@ export default function WaterManagement() {
       setOsmoCIPm3(OsmotoCIPm3);
 
       var OsmotoPDAM = 0;
+      var OsmotoPDAM1 = 0;
       for (var i = 0; i < response1.data.length; i++) {
         var ro = Number(response1.data[i].RejectOsmotron.toFixed(2))
         var pdam = Number(response1.data[i].Pdam.toFixed(2))
