@@ -36,6 +36,7 @@ export default function WaterManagement() {
   const [SoftWashing, setWashing]= useState ([]);
   const [OsmoLoopo, setOsmoLoopo]= useState ([]);
   const [LoopoProduksi, setLoopoProduksis]= useState ([]);
+  const [Lantai1, setlantai1]= useState ([]);
   
   const [PDAMDomm3, setPDAMDomm3] = useState([]);
   const [DomWorkshopm3, setDomWorkm3] = useState([]);
@@ -58,6 +59,7 @@ export default function WaterManagement() {
   const [LoopoProduksim3, setLoopoProduksism3]= useState ([]);
   const [OsmoPDAM1, setOsmoPDAM1] = useState([]);
   const [SumberPDAM1, setSumberPDAM1] = useState([]);
+  const [Lantai1m3, setlantai1m3]= useState ([]);
 
   const fetchWaterSankey = async () => {
       let response1 = await axios.get(
@@ -85,6 +87,25 @@ export default function WaterManagement() {
       }
       setOsmoLoopo(OsmotoLoopo);
       setOsmoLoopom3(OsmotoLoopom3)
+
+      var domtolt1 = 0;
+      var domtolt1om3 = 0;
+      for (var i = 0; i < response1.data.length; i++) {
+        var dom = Number(response1.data[i].Domestik.toFixed(2))
+        var qc = Number(response1.data[i].AtasLabQC.toFixed(2))
+        var toilet = Number(response1.data[i].AtasToiletLt2.toFixed(2))
+        var wh = Number(response1.data[i].Workshop.toFixed(2))
+        var pdam = Number(response1.data[i].Pdam.toFixed(2))
+        var ro = Number (response1.data[i].RejectOsmotron.toFixed(2))
+        var sumber = pdam + ro
+        var value = dom - qc - toilet - wh 
+        var total = value/sumber*100
+        var data = Number(total.toFixed(2))
+        domtolt1 = data
+        domtolt1om3 = Number(value.toFixed(2))
+      }
+      setlantai1(domtolt1);
+      setlantai1m3(domtolt1om3)
 
       var LoopotoProduksi = 0;
       var LoopotoProduksim3 = 0;
@@ -605,9 +626,13 @@ export default function WaterManagement() {
       ro.push(OsmoRO)
       data.push(ro)
     }
-    
+    if (Lantai1 >0){
+      var l1 = ["Domestik","Lantai 1"]
+      l1.push(Lantai1)
+      data.push(l1)
+    }
     if (LoopoProduksi >0){
-      var produksi = ["Loopo","Washing Janitor, Lab, Produksi"]
+      var produksi = ["Loopo","Lab & Produksi"]
       produksi.push(LoopoProduksi)
       data.push(produksi)
     }
@@ -715,9 +740,13 @@ export default function WaterManagement() {
       ro3.push(OsmoROm3)
       data1.push(ro3)
     }
-    
+    if (Lantai1m3 >0){
+      var l1m3 = ["Domestik","Lantai 1"]
+      l1m3.push(Lantai1m3)
+      data1.push(l1m3)
+    }
     if (LoopoProduksim3 >0){
-      var produksi3 = ["Loopo","Washing Janitor, Lab, Produksi"]
+      var produksi3 = ["Loopo","Lab & Produksi"]
       produksi3.push(LoopoProduksim3)
       data1.push(produksi3)
     }
