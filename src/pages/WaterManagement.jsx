@@ -60,6 +60,9 @@ export default function WaterManagement() {
   const [OsmoPDAM1, setOsmoPDAM1] = useState([]);
   const [SumberPDAM1, setSumberPDAM1] = useState([]);
   const [Lantai1m3, setlantai1m3]= useState ([]);
+  const [totalair, settotalair]= useState ([]);
+  const [highair, sethighair]= useState ([]);
+  const [lowair, setlowhair]= useState ([]);
 
   const fetchWaterSankey = async () => {
       let response1 = await axios.get(
@@ -71,6 +74,7 @@ export default function WaterManagement() {
           }
         }
       ); 
+
       var OsmotoLoopo = 0;
       var OsmotoLoopom3 = 0;
       for (var i = 0; i < response1.data.length; i++) {
@@ -446,6 +450,7 @@ export default function WaterManagement() {
                   y: data.y,
                   x: data.x,
               }));
+
           } else if (
               WaterArea === "cMT-BWT_Dom_sehari_data" ||
               WaterArea === "cMT-BWT_Softwater_sehari_data" ||
@@ -464,7 +469,20 @@ export default function WaterManagement() {
               }));
             }
             setWaterDaily(multipliedData);
+
+            const totalWater = multipliedData.reduce ((sum, data) => sum + data.y, 0);
+            var total = 0
+            total = Number(totalWater.toFixed(2))
+            settotalair(total);
             
+
+            const maxwater = multipliedData.reduce ((acc, data) => Math.max (acc, data.y), Number.NEGATIVE_INFINITY);
+            var max = Number(maxwater.toFixed(2))
+            sethighair(max)
+
+            const minwater = Math.min(...response.data.map((data) => data.y));
+            var min = Number(minwater.toFixed(2))
+            setlowhair(min)
   };
   let dateStart = (e) =>{
       var dataInput = e.target.value;
@@ -534,7 +552,8 @@ export default function WaterManagement() {
     };
     
     const data = [
-      ["From", "To", "Consumption (%)"], 
+      ["From", "To", "Consumption (%)"],
+      ["a","b",0] 
     ]; 
     if (OsmoCIP >0){
       var cip = ['Loopo','CIP']
@@ -648,7 +667,8 @@ export default function WaterManagement() {
     }
 
     const data1 = [
-      ["From", "To", "Consumption (m3)"], 
+      ["From", "To", "Consumption (m3)"],
+      ["a","b",0] 
     ]; 
     if (OsmoCIPm3 >0){
       var cip3 = ['Loopo','CIP']
@@ -820,6 +840,11 @@ export default function WaterManagement() {
                   Submit
               </Button>
           </div>
+          <div className="mt-3">
+          <div className="ml-16">Total = {totalair.toLocaleString()} Meter Cubic</div>
+          <div className="ml-16">Max = {highair.toLocaleString()} Meter Cubic</div>
+          <div className="ml-16">Min = {lowair.toLocaleString()} Meter Cubic</div>
+          </div>
       </Stack>
       <div align="center" className="flex flex-row justify-center mx-12 pb-10">
           <CanvasJSChart className="" options={options} />
@@ -876,7 +901,7 @@ export default function WaterManagement() {
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>Meter Cubic</b></h3></div>
         <div className="flex flex-row justify-center mx-auto pb-auto">
         <Chart
-          chartType="Sankey"
+          chartType= "Sankey"
           width= "1500px"
           height="1000px"
           data={data1}
