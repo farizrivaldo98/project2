@@ -991,7 +991,7 @@ module.exports = {
     DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl,
     data_format_0-lag(data_format_0,1) over (order by data_index) as nilai 
     from parammachine_saka.\`${area}\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}') as c
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as c
     where not (nilai <= 0)`;
 
     db.query(queryGet,(err, result) => {
