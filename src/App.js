@@ -43,7 +43,7 @@ function App() {
     keepLogin();
   }, []);
 
-  if (userGlobal) {
+  if (true) {
     return (
       <div>
         <div>
@@ -73,7 +73,7 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/oeeLine" element={<OEEline />} />
           <Route path="/Utility" element={<Utility />} />
-          <Route path="/Stopwatch" element={<Stopwatch />} />
+          <Route path="/Stopwatch" element={<Stopwatch />} />      
         </Routes>
       </div>
     );
@@ -90,7 +90,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/mail" element={<CheckMail />} />
-          <Route path="/Stopwatch" element={<Stopwatch />} />
+          <Route path="/Stopwatch" element={<Stopwatch />} />      
         </Routes>
       </div>
     );
