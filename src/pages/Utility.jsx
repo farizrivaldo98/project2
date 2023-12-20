@@ -9,6 +9,7 @@ import {
   CardBody,
 } from "@chakra-ui/react";
 import PowerManagement from "./PowerManagement";
+import PowerManagement2 from "./PowerManagement1";
 import HVAC from "./HVAC";
 import WaterManagement from "./WaterManagement";
 
@@ -20,6 +21,7 @@ function Utility() {
           <Tabs isFitted size={"lg"} variant="enclosed" class=" p-3  ">
             <TabList>
               <Tab>Power Management</Tab>
+              <Tab>Power Management 2</Tab>
               <Tab>Water Management</Tab>
               <Tab>Waste Water Management</Tab>
               <Tab>Heating Ventilating & Air Control</Tab>
@@ -31,6 +33,9 @@ function Utility() {
             <TabPanels>
               <TabPanel>
                 <PowerManagement />
+              </TabPanel>
+              <TabPanel>
+                <PowerManagement2 />
               </TabPanel>
               <TabPanel>
                 <WaterManagement />
