@@ -984,13 +984,15 @@ module.exports = {
   // Power Management 2 Backend
   PowerDaily : async (request, response) => {
     const {area, start, finish} = request.query;
-    const queryGet = `SELECT
-    data_index as x, 
-    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS label,
-    data_format_0-lag(data_format_0,1) over (order by data_index) as y 
+    const queryGet = `SELECT nom as x,
+    tgl as label,
+    nilai as y from (SELECT
+    data_index as nom, 
+    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl,
+    data_format_0-lag(data_format_0,1) over (order by data_index) as nilai 
     from parammachine_saka.\`${area}\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
-    and not (data_format_0 = 0)`;
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}') as c
+    where not (nilai <= 0)`;
 
     db.query(queryGet,(err, result) => {
       return response.status(200).send(result);
