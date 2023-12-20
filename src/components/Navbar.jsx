@@ -24,14 +24,6 @@ export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState("");
 
   const navigate = useNavigate();
-  var navigation = [
-    { name: "Maintenance", href: "#", current: false },
-    { name: "Instrument", href: "#", current: false },
-    { name: "Utility", href: "#", current: false },
-    { name: "Production", href: "#", current: false },
-    { name: "building", href: "#", current: false },
-    { name: "OPE", href: "#", current: false },
-  ];
 
   if (userGlobal.level == 1) {
     var navigation = [{ name: "Maintenance", href: "#", current: false }];
@@ -159,29 +151,33 @@ export default function Navbar() {
 
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-5">
-                    {navigation.map((item) => (
-                      <button
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.name === activeMenu
-                            ? "bg-gray-700 text-white h-12"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
-                        )}
-                        aria-current={
-                          item.name === activeMenu ? "page" : undefined
-                        }
-                        onClick={() => {
-                          setActiveMenu(item.name);
-                          navigate(`/${item.name}`);
-                        }}
-                      >
-                        {item.name}
-                      </button>
-                    ))}
-                  </div>
+                  {userGlobal.id ? (
+                    <div className="flex space-x-5">
+                      {navigation.map((item) => (
+                        <button
+                          key={item.name}
+                          href={item.href}
+                          className={classNames(
+                            item.name === activeMenu
+                              ? "bg-gray-700 text-white h-12"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "rounded-md px-3 py-2 text-sm font-medium"
+                          )}
+                          aria-current={
+                            item.name === activeMenu ? "page" : undefined
+                          }
+                          onClick={() => {
+                            setActiveMenu(item.name);
+                            navigate(`/${item.name}`);
+                          }}
+                        >
+                          {item.name}
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
               </div>
               <div>
