@@ -587,16 +587,26 @@ module.exports = {
   //=========================POWER MANAGEMENT============================================================
 
   getPowerData: async (request, response) => {
-    const {area, start, finish} = request.query;
-    const queryGet = `SELECT
-    data_index as x, 
-    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS label,
-    data_format_0-lag(data_format_0,1) over (order by data_index) as y 
-    from parammachine_saka.\`${area}\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
-    and not (data_format_0 = 0)`;
+    const { area, start, finish } = request.query;
 
-    db.query(queryGet,(err, result) => {
+    let queryData =
+      "SELECT label,  x,  y  FROM ( SELECT (@counter := @counter + 1) AS x, label, y FROM ( SELECT p1.date AS label, p1.id AS x, p2.`" +
+      area +
+      "` - p1.`" +
+      area +
+      "` AS y  FROM  parammachine_saka.power_data p1 JOIN  parammachine_saka.power_data p2 ON p2.date = ( SELECT MIN(date)   FROM parammachine_saka.power_data WHERE date > p1.date  ) UNION ALL  SELECT DATE_FORMAT(FROM_UNIXTIME(p1.`time@timestamp`), '%Y-%m-%d') AS label, p1.data_index AS x, p2.`data_format_0` - p1.`data_format_0` AS y  FROM   parammachine_saka.`" +
+      area +
+      "` p1 JOIN              parammachine_saka.`" +
+      area +
+      "` p2 ON DATE_FORMAT(FROM_UNIXTIME(p2.`time@timestamp`), '%Y-%m-%d') = ( SELECT MIN(DATE_FORMAT(FROM_UNIXTIME(`time@timestamp`), '%Y-%m-%d'))  FROM parammachine_saka.`" +
+      area +
+      "` WHERE DATE_FORMAT(FROM_UNIXTIME(`time@timestamp`), '%Y-%m-%d') > DATE_FORMAT(FROM_UNIXTIME(p1.`time@timestamp`), '%Y-%m-%d')              )      ) AS subquery      CROSS JOIN (SELECT @counter := 0) AS counter_init  ) AS result  HAVING      label >= '" +
+      start +
+      "'      AND label <= '" +
+      finish +
+      "'";
+
+    db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });
   },
@@ -866,7 +876,6 @@ module.exports = {
     });
   },
 
-  // Water Management Backend
   waterSystem : async (request, response) => {
     const {area, start, finish} = request.query;
     const queryGet = `SELECT
@@ -963,27 +972,12 @@ module.exports = {
     parammachine_saka.\`cMT-BWT_AirMancur_Sehari_data\` AS s on
     DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d')
     WHERE 
-    DATE(FROM_UNIXTIME(a.\`time@timestamp\`)- INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}'`;
+    DATE(FROM_UNIXTIME(a.\`time@timestamp\`)- INTERVAL 7 HOUR) BETWEEN '${start}' AND '${finish}'`;
         console.log(queryGet);
     db.query(queryGet,(err, result) => {
     return response.status(200).send(result);
     });
       
-  },
+  }
 
-  // Power Management 2 Backend
-  PowerDaily : async (request, response) => {
-    const {area, start, finish} = request.query;
-    const queryGet = `SELECT
-    data_index as x, 
-    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS label,
-    data_format_0-lag(data_format_0,1) over (order by data_index) as y 
-    from parammachine_saka.\`${area}\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
-    and not (data_format_0 = 0)`;
-
-    db.query(queryGet,(err, result) => {
-      return response.status(200).send(result);
-    });
-  },
 };

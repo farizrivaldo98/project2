@@ -887,7 +887,7 @@ export default function WaterManagement() {
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>PDAM : {SumberPDAM} Meter Cubic</b></h3></div>
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>Reject Osmotron : {OsmoPDAM} Meter Cubic</b></h3></div>
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>Total Supply Air (PDAM+RO) : {SupplyAir} Meter Cubic</b></h3></div>
-        <div className="flex flex-row justify-center mx-12 pb-10">
+        <div className="flex flex-row justify-center mx-auto pb-auto">
         <Chart
           chartType="Sankey"
           width= "1500px"
@@ -899,7 +899,7 @@ export default function WaterManagement() {
 
         <div align="center"><h1 style={{ fontSize: "2rem"}}><b>Water Sankey Diagram </b></h1></div>
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>Meter Cubic</b></h3></div>
-        <div className="flex flex-row justify-center mx-12 pb-10">
+        <div className="flex flex-row justify-center mx-auto pb-auto">
         <Chart
           chartType= "Sankey"
           width= "1500px"

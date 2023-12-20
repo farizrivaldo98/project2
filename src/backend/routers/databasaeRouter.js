@@ -61,10 +61,7 @@ routers.get("/getGraphChiller", databaseControllers.getGraphChiller);
 routers.get("/getTabelEMS", databaseControllers.getTableEMS);
 routers.get("/getTempChart", databaseControllers.getTempChart);
 routers.get("/getAllDataEMS", databaseControllers.getAllDataEMS);
-
 routers.get("/waterSystem", databaseControllers.waterSystem);
 routers.get("/waterSankey", databaseControllers.waterSankey);
-
-routers.get("/PowerDaily", databaseControllers.PowerDaily);
 
 module.exports = routers;
