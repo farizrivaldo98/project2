@@ -24,15 +24,7 @@ export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState("");
 
   const navigate = useNavigate();
-  var navigation = [
-    { name: "Maintenance", href: "#", current: false },
-    { name: "Instrument", href: "#", current: false },
-    { name: "Utility", href: "#", current: false },
-    { name: "Production", href: "#", current: false },
-    { name: "building", href: "#", current: false },
-    { name: "OPE", href: "#", current: false },
-  ];
-  
+
   if (userGlobal.level == 1) {
     var navigation = [{ name: "Maintenance", href: "#", current: false }];
   }
@@ -159,7 +151,7 @@ export default function Navbar() {
 
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="hidden sm:ml-6 sm:block">
-                  
+                  {userGlobal.id ? (
                     <div className="flex space-x-5">
                       {navigation.map((item) => (
                         <button
@@ -183,13 +175,15 @@ export default function Navbar() {
                         </button>
                       ))}
                     </div>
-                   
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
               </div>
               <div>
                 <p class="text-white mr-4">{currentDateTimeString}</p>
               </div>
-              
+              {userGlobal.id ? (
                 <>
                   <Menu>
                     <MenuButton className=" flex flex-2 items-end justify-end bg-gray-900 text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
@@ -213,7 +207,9 @@ export default function Navbar() {
                     </MenuList>
                   </Menu>
                 </>
-              
+              ) : (
+                <div></div>
+              )}
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"></div>
             </div>
