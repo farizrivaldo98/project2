@@ -791,6 +791,8 @@ module.exports = {
     DATE(FROM_UNIXTIME(s.\`time@timestamp\`)- INTERVAL 7 HOUR) BETWEEN '${start}' AND '${finish}';
 `;
 
+console.log(queryData);
+
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });

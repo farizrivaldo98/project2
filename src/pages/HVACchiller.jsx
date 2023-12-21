@@ -351,6 +351,7 @@ function HVACchiller() {
         },
       }
     );
+    console.log(response);
     console.log(setChiller1, setCompresor1, startDate, finishDate);
 
     const compareTime = (a, b) => {
