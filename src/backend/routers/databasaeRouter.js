@@ -66,5 +66,6 @@ routers.get("/waterSystem", databaseControllers.waterSystem);
 routers.get("/waterSankey", databaseControllers.waterSankey);
 
 routers.get("/PowerDaily", databaseControllers.PowerDaily);
+routers.get("/PowerMonthly", databaseControllers.PowerMonthly);
 
 module.exports = routers;
