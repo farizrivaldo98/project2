@@ -71,7 +71,7 @@ export default function PowerManagement() {
 
   const fetchDataDayly = async () => {
     let response = await axios.get(
-      "http://10.126.15.1:8002/part/PowerDaily",
+      "http://10.126.15.124:8002/part/PowerDaily",
       {
         params: {
           area: powerArea,
