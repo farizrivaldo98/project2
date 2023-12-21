@@ -79,8 +79,7 @@ export default function PowerManagement() {
           finish: finishDate,
         },
       }
-    );console.log(response.data);
-      console.log(response);
+    )
     if (powerArea === "cMT-Gedung-UTY_MVMDP_data") {
       var multipliedData = response.data.map((data) => ({
         label: data.label,
@@ -116,7 +115,7 @@ export default function PowerManagement() {
 
   const fetchDataMonthly = async () => {
     let response = await axios.get(
-      "http://10.126.15.124:8002/part/getpowermonthly",
+      "http://10.126.15.124:8002/part/PowerMonthly",
       {
         params: {
           area: areaMonth,
