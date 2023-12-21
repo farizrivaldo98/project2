@@ -791,7 +791,7 @@ module.exports = {
     DATE(FROM_UNIXTIME(s.\`time@timestamp\`)- INTERVAL 7 HOUR) BETWEEN '${start}' AND '${finish}';
 `;
 
-console.log(queryData);
+
 
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
@@ -976,7 +976,7 @@ console.log(queryData);
     DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d')
     WHERE 
     DATE(FROM_UNIXTIME(a.\`time@timestamp\`)- INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}'`;
-        console.log(queryGet);
+      
     db.query(queryGet,(err, result) => {
     return response.status(200).send(result);
     });
