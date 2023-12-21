@@ -12,7 +12,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { CheckLogin } from "./features/part/userSlice";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import CheckMail from "./pages/CheckMail";
 import EditProfile from "./pages/EditProfile";
 import Production from "./pages/Production";
@@ -28,22 +28,26 @@ import Stopwatch from "./pages/Stopwatch";
 function App() {
   const dispatch = useDispatch();
   const userlocalStorage = localStorage.getItem("user_token");
-  const userGlobal = useSelector((state) => state.user.user.id);
+  const userGlobal = useSelector((state) => state.user.user.level);
+  const [levelData, setLevelData] = useState();
 
   //KEEP LOGIN CHECKER
   const keepLogin = () => {
     if (userlocalStorage) {
-      // Get User Login Action Reducer
       dispatch(CheckLogin(userlocalStorage));
     }
   };
 
+
   useEffect(() => {
     // getArrival()
+    setLevelData(userGlobal)
+    console.log(levelData);
     keepLogin();
-  }, []);
+  }, [userGlobal]);
 
-  if (userGlobal) {
+
+  if (levelData >1 ) {
     return (
       <div>
         <div>
@@ -58,8 +62,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/Instrument" element={<Instrument />} />
           <Route path="/maintenance" element={<Maintenance />} />
+
+          <Route path="/Instrument" element={<Instrument />} />
+          
           <Route path="/pareto" element={<Pareto />} />
           <Route path="/createnew" element={<CreateNew />} />
           <Route path="/createedite/:id" element={<CreateEdit />} />
@@ -77,8 +83,31 @@ function App() {
         </Routes>
       </div>
     );
-  } else {
+  } else if (levelData === 1 ) {
     return (
+      <div>
+        <div>
+          <div>
+            <Navbar />
+          </div>
+          {/* <div>
+            <Sidebar />
+          </div> */}
+        </div>
+
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/maintenance" element={<Maintenance />} />
+
+        </Routes>
+      </div>
+    );
+  }
+  
+  else{
+    return (
+
       <div>
         <div>
           <div>
