@@ -588,12 +588,14 @@ module.exports = {
 
   getPowerData: async (request, response) => {
     const { area, start, finish } = request.query;
+    
+    const cleanString = area.replace(/(cMT-Gedung-UTY_|_data)/g,'')
 
     let queryData =
       "SELECT label,  x,  y  FROM ( SELECT (@counter := @counter + 1) AS x, label, y FROM ( SELECT p1.date AS label, p1.id AS x, p2.`" +
-      area +
+      cleanString +
       "` - p1.`" +
-      area +
+      cleanString +
       "` AS y  FROM  parammachine_saka.power_data p1 JOIN  parammachine_saka.power_data p2 ON p2.date = ( SELECT MIN(date)   FROM parammachine_saka.power_data WHERE date > p1.date  ) UNION ALL  SELECT DATE_FORMAT(FROM_UNIXTIME(p1.`time@timestamp`), '%Y-%m-%d') AS label, p1.data_index AS x, p2.`data_format_0` - p1.`data_format_0` AS y  FROM   parammachine_saka.`" +
       area +
       "` p1 JOIN              parammachine_saka.`" +
@@ -606,6 +608,8 @@ module.exports = {
       finish +
       "'";
 
+
+
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });
@@ -613,12 +617,13 @@ module.exports = {
 
   getPowerMonthly: async (request, response) => {
     const { area, start, finish } = request.query;
+    const cleanString = area.replace(/(cMT-Gedung-UTY_|_data)/g,'')
 
     let queryData =
       " SELECT      DATE_FORMAT(label, '%b') AS label, MONTH(label) AS x,     SUM(y) AS y  FROM (      SELECT          p1.date AS label,          p1.id AS x,          p2.`" +
-      area +
+      cleanString +
       "` - p1.`" +
-      area +
+      cleanString +
       "` AS y      FROM          parammachine_saka.power_data p1      JOIN          parammachine_saka.power_data p2 ON p2.date = (              SELECT MIN(date)              FROM parammachine_saka.power_data              WHERE date > p1.date          )      UNION ALL      SELECT          DATE_FORMAT(FROM_UNIXTIME(p1.`time@timestamp`), '%Y-%m-%d') AS label,          p1.data_index AS x,          p2.`data_format_0` - p1.`data_format_0` AS y      FROM          parammachine_saka.`" +
       area +
       "` p1      JOIN          parammachine_saka.`" +
@@ -630,7 +635,7 @@ module.exports = {
       "      AND MONTH(label) <= " +
       finish +
       "  GROUP BY      MONTH(label)  ORDER BY      MONTH(label);  ";
-
+      console.log(queryData);
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });
@@ -792,7 +797,7 @@ module.exports = {
 `;
 
 
-
+console.log(queryData);
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
     });
