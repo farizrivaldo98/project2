@@ -51,7 +51,7 @@ export default function Navbar() {
       { name: "Utility", href: "#", current: false },
       { name: "Production", href: "#", current: false },
       { name: "building", href: "#", current: false },
-      { name: "OPE", href: "#", current: false },
+
     ];
   }
   if (userGlobal.level == 5) {

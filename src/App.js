@@ -109,7 +109,7 @@ function App() {
           <Route path="/mail" element={<CheckMail />} />
           <Route path="/editprofile" element={<EditProfile />} />
           <Route path="/production" element={<Production />} />
-          <Route path="/OPE" element={<App1 />} />
+
           <Route path="/avabilityope" element={<AvabilityOPE />} />
           <Route path="/avabilitmachine" element={<AvabilityMachine />} />
           <Route path="/admin" element={<Admin />} />
