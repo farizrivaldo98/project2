@@ -47,7 +47,7 @@ function App() {
   }, [userGlobal]);
 
 
-  if (levelData >1 ) {
+  if (levelData === 5 ) {
     return (
       <div>
         <div>
@@ -83,7 +83,97 @@ function App() {
         </Routes>
       </div>
     );
-  } else if (levelData === 1 ) {
+  } else if (levelData === 4 ) {
+    return (
+      <div>
+        <div>
+          <div>
+            <Navbar />
+          </div>
+          {/* <div>
+            <Sidebar />
+          </div> */}
+        </div>
+
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/maintenance" element={<Maintenance />} />
+
+          <Route path="/Instrument" element={<Instrument />} />
+          
+          <Route path="/pareto" element={<Pareto />} />
+          <Route path="/createnew" element={<CreateNew />} />
+          <Route path="/createedite/:id" element={<CreateEdit />} />
+          <Route path="/building" element={<AppPareto />} />
+          <Route path="/mail" element={<CheckMail />} />
+          <Route path="/editprofile" element={<EditProfile />} />
+          <Route path="/production" element={<Production />} />
+          <Route path="/OPE" element={<App1 />} />
+          <Route path="/avabilityope" element={<AvabilityOPE />} />
+          <Route path="/avabilitmachine" element={<AvabilityMachine />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/oeeLine" element={<OEEline />} />
+          <Route path="/Utility" element={<Utility />} />
+          <Route path="/Stopwatch" element={<Stopwatch />} />      
+        </Routes>
+      </div>
+    );
+  }  if (levelData === 3 ) {
+    return (
+      <div>
+        <div>
+          <div>
+            <Navbar />
+          </div>
+          {/* <div>
+            <Sidebar />
+          </div> */}
+        </div>
+
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/maintenance" element={<Maintenance />} />
+          <Route path="/Instrument" element={<Instrument />} />
+          <Route path="/pareto" element={<Pareto />} />
+          <Route path="/createnew" element={<CreateNew />} />
+          <Route path="/createedite/:id" element={<CreateEdit />} />
+          <Route path="/mail" element={<CheckMail />} />
+          <Route path="/editprofile" element={<EditProfile />} />
+          <Route path="/production" element={<Production />} />
+          <Route path="/OPE" element={<App1 />} />
+          <Route path="/avabilityope" element={<AvabilityOPE />} />
+          <Route path="/avabilitmachine" element={<AvabilityMachine />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/oeeLine" element={<OEEline />} />
+          <Route path="/Utility" element={<Utility />} />
+          <Route path="/Stopwatch" element={<Stopwatch />} />      
+        </Routes>
+      </div>
+    );
+  }else if (levelData === 2 ) {
+    return (
+      <div>
+        <div>
+          <div>
+            <Navbar />
+          </div>
+          {/* <div>
+            <Sidebar />
+          </div> */}
+        </div>
+
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/maintenance" element={<Maintenance />} />
+          <Route path="/Instrument" element={<Instrument />} />
+          <Route path="/production" element={<Production />} />
+        </Routes>
+      </div>
+    );
+  }else if (levelData === 1 ) {
     return (
       <div>
         <div>
