@@ -896,7 +896,6 @@ export default function WaterManagement() {
           options={options1}>
         </Chart>
         </div>
-
         <div align="center"><h1 style={{ fontSize: "2rem"}}><b>Water Sankey Diagram </b></h1></div>
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>Meter Cubic</b></h3></div>
         <div className="flex flex-row justify-center mx-12 pb-10">

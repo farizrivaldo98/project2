@@ -67,5 +67,6 @@ routers.get("/waterSankey", databaseControllers.waterSankey);
 
 routers.get("/PowerDaily", databaseControllers.PowerDaily);
 routers.get("/PowerMonthly", databaseControllers.PowerMonthly);
+routers.get("/PowerSankey", databaseControllers.PowerSankey);
 
 module.exports = routers;

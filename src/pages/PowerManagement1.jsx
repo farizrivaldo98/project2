@@ -2,6 +2,7 @@ import React, { useEffect, Component, useState } from "react";
 import CanvasJSReact from "../canvasjs.react";
 import { Button, ButtonGroup, Stack, Input, Select } from "@chakra-ui/react";
 import axios from "axios";
+import { Chart } from "react-google-charts";
 
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -62,12 +63,191 @@ export default function PowerManagement() {
   const [datawidth, setWidth] = useState();
   const [dataheight, setHeight] = useState();
 
+  const [startSankey, setStartSankey] = useState();
+  const [finishSankey, setFinishSankey] = useState();
+  const [dataSankey, setdataSankey] = useState([])
+  const [state, setstate] = useState(0);
+  
+  const [MVMDP, setMVMDP] = useState([])
+  const [LVMDP1, setLVMDP1] = useState([])
+  const [LVMDP2, setLVMDP2] = useState([])
+  const [SolarPanel16, setSolarPanel16] = useState([])
+  const [SolarPanel712, setSolarPanel712] = useState([])
+  const [SDP1Utility, setSDP1Utility] = useState([])
+  const [PPLP1UtilityLt2, setPPLP1UtilityLt2] = useState([])
+  const [PP1Chiller, setPP1Chiller] = useState([])
+  const [PPLP1UtilityLt1, setPPLP1UtilityLt1] = useState([])
+  const [PP1Genset, setPP1Genset] = useState([])
+  const [PP1GensetPW, setPP1GensetPW] = useState([])
+  const [PP1Kompressor, setPP1Kompressor] = useState([])
+  const [PP1HWP, setPP1HWP] = useState([])
+  const [PP1PUMPS, setPP1PUMPS] = useState([])
+  const [PP1Lift, setPP1Lift] = useState([])
+  const [PP1AC11, setPP1AC11] = useState([])
+  const [PP1AC12, setPP1AC12] = useState([])
+  const [PP1AC13, setPP1AC13] = useState([])
+  const [PP1AC23, setPP1AC23] = useState([])
+  const [SDP1Produksi, setSDP1Produksi] = useState([])
+  const [SDP2Produksi, setSDP2Produksi] = useState([])
+  const [PP2Hydrant, setPP2Hydrant] = useState([])
+  const [PP2Puyer, setPP2Puyer] = useState([])
+  const [PP2Fatigon, setPP2Fatigon] = useState([])
+  const [PP2Mixagrib, setPP2Mixagrib] = useState([])
+  const [PP2LabLt2, setPP2LabLt2] = useState([])
+  const [PP2Fasilitas, setPP2Fasilitas] = useState([])
+  const [PP2PackWH, setPP2PackWH] = useState([])
+  const [LP2PRO11, setLP2PRO11] = useState([])
+  const [LP2PRO12, setLP2PRO12] = useState([])
+  const [LP2PRO13, setLP2PRO13] = useState([])
+  const [LP2PRO23, setLP2PRO23] = useState([])
+  const [LP2PRO31, setLP2PRO31] = useState([])
+  const [LP2PRO41, setLP2PRO41] = useState([])
+  const [LWP2H11, setLWP2H11] = useState([])
+  const [PPLP2Mezz11, setPPLP2Mezz11] = useState([])
+  const [PPLP1PosJaga1, setPPLP1PosJaga1] = useState([])
+  const [PPLP1PosJaga2, setPPLP1PosJaga2] = useState([])
+  const [PPLP1Workshop, setPPLP1Workshop] = useState([])
+  const [PPLP1Koperasi, setPPLP1Koperasi] = useState([])
+  const [GCPGenset, setGCPGenset] = useState([])
+  const [SDPGenset, setSDPGenset] = useState([])
+  const [PP1WWTP, setPP1WWTP] = useState([])
+  const [PP1DumbWaiter, setPP1DumbWaiter] = useState([])
+  const [PP1OfficeLt1, setPP1OfficeLt1] = useState([])
+  const [PP1PumpitUtama, setPP1PumpitUtama] = useState([])
+  const [PPChiller1, setPPChiller1] = useState([])
+  const [PPChiller2, setPPChiller2] = useState([])
+  const [PPChiller3, setPPChiller3] = useState([])
+
   useEffect(() => {
     var bodyWidth = document.body.clientWidth;
     var bodyHeight = document.body.clientHeight;
     setWidth(bodyWidth);
     setHeight(bodyHeight);
   }, []);
+
+  const fetchPowerSankey = async () => {
+    let response = await axios.get(
+      "http://10.126.15.1:8002/part/PowerSankey",
+      {
+        params: {
+          start: startSankey,
+          finish: finishSankey,
+        }
+      }
+    ); console.log(response.data);
+    const data = [];
+    for (var i = 0; i < response.data.length; i++){
+      setMVMDP (Number(response.data[i].MVMDP))
+      setLVMDP1 (Number(response.data[i].LVMDP1))
+      setLVMDP2 ( Number(response.data[i].LVMDP2))
+      setSolarPanel16(  Number(response.data[i].SolarPanel16))
+      setSolarPanel712 ( Number(response.data[i].SolarPanel712))
+      setSDP1Utility (Number(response.data[i].SDP1Utility))
+      setPPLP1UtilityLt2  (Number(response.data[i].PPLP1UtilityLt2))
+      setPP1Chiller  (Number(response.data[i].PP1Chiller))
+      setPPLP1UtilityLt1 ( Number(response.data[i].PPLP1UtilityLt1))
+      setPP1Genset  (Number(response.data[i].PP1Genset))
+      setPP1GensetPW  (Number(response.data[i].PP1GensetPW))
+      setPP1Kompressor  (Number(response.data[i].PP1Kompressor))
+      setPP1HWP ( Number(response.data[i].PP1HWP))
+      setPP1PUMPS  (Number(response.data[i].PP1PUMPS))
+      setPP1Lift  (Number(response.data[i].PP1Lift))
+      setPP1AC11  (Number(response.data[i].PP1AC11))
+      setPP1AC12  (Number(response.data[i].PP1AC12))
+      setPP1AC13  (Number(response.data[i].PP1AC13))
+      setPP1AC23 ( Number(response.data[i].PP1AC23))
+      setSDP1Produksi  (Number(response.data[i].SDP1Produksi))
+      setSDP2Produksi ( Number(response.data[i].SDP2Produksi))
+      setPP2Hydrant ( Number(response.data[i].PP2Hydrant))
+      setPP2Puyer  (Number(response.data[i].PP2Puyer))
+      setPP2Fatigon  (Number(response.data[i].PP2Fatigon))
+      setPP2Mixagrib  (Number(response.data[i].PP2Mixagrib))
+      setPP2LabLt2  (Number(response.data[i].PP2LabLt2))
+      setPP2Fasilitas  (Number(response.data[i].PP2Fasilitas))
+      setPP2PackWH  (Number(response.data[i].PP2PackWH))
+      setLP2PRO11  (Number(response.data[i].LP2PRO11))
+      setLP2PRO12  (Number(response.data[i].LP2PRO12))
+      setLP2PRO13  (Number(response.data[i].LP2PRO13))
+      setLP2PRO23  (Number(response.data[i].LP2PRO23))
+      setLP2PRO31  (Number(response.data[i].LP2PRO31))
+      setLP2PRO41  (Number(response.data[i].LP2PRO41))
+      setLWP2H11  (Number(response.data[i].LWP2H11))
+      setPPLP2Mezz11  (Number(response.data[i].PPLP2Mezz11))
+      setPPLP1PosJaga1  (Number(response.data[i].PPLP1PosJaga1))
+      setPPLP1PosJaga2  (Number(response.data[i].PPLP1PosJaga2))
+      setPPLP1Workshop ( Number(response.data[i].PPLP1Workshop))
+      setGCPGenset  (Number(response.data[i].GCPGenset))
+      setSDPGenset  (Number(response.data[i].SDPGenset))
+      setPP1WWTP  (Number(response.data[i].PP1WWTP))
+      setPP1DumbWaiter  (Number(response.data[i].PP1DumbWaiter))
+      setPP1OfficeLt1  (Number(response.data[i].PP1OfficeLt1))
+      setPP1PumpitUtama  (Number(response.data[i].PP1PumpitUtama))
+      setPPChiller1  (Number(response.data[i].PPChiller1))
+      setPPChiller2  (Number(response.data[i].PPChiller2))
+      setPPChiller3  (Number(response.data[i].PPChiller3))
+      }   
+    }
+      
+    const data = [
+      ["From", "To", "Consumption (kWh)"],
+      ["a","b",0],
+    ];
+
+      if (LVMDP1 > 0 && LVMDP1 != null){
+        var nilai = ['LVMDP1','Supply Listrik']
+        nilai.push(LVMDP1)
+        data.push(nilai)
+      }
+      if (LVMDP2 > 0 && LVMDP2 != null){
+        var nilai = ['LVMDP2','Supply Listrik']
+        nilai.push(LVMDP2)
+        data.push(nilai)
+      }
+      if (GCPGenset > 0 && GCPGenset != null){
+        var nilai = ['GCP Genset','SDP Genset']
+        nilai.push(GCPGenset)
+        data.push(nilai)
+      }
+      if (SDPGenset > 0 && SDPGenset != null){
+        var nilai = ['SPDP Genset','Supply Listrik']
+        nilai.push(SDPGenset)
+        data.push(nilai)
+      }
+      if (SolarPanel16 > 0 && SolarPanel16 != null){
+        var nilai = ['Solar Panel1-6 ','Supply Listrik']
+        nilai.push(SolarPanel16)
+        data.push(nilai)
+      }
+      if (SolarPanel712 > 0 && SolarPanel712 != null){
+        var nilai = ['Solar Panel7-12 ','Supply Listrik']
+        nilai.push(SolarPanel712)
+        data.push(nilai)
+      }
+      if (SDP1Utility > 0 && SDP1Utility != null){
+        var nilai = ['Supply Listrik','SDP.1 Utility']
+        nilai.push(SDP1Utility)
+        data.push(nilai)
+      }
+      if (SDP1Produksi > 0 && SDP1Produksi != null){
+        var nilai = ['Supply Listrik','SDP.1 Produksi']
+        nilai.push(SDP1Produksi)
+        data.push(nilai)
+      }
+      if (SDP2Produksi > 0 && SDP2Produksi != null){
+        var nilai = ['Supply Listrik','SDP.2 Produksi']
+        nilai.push(SDP2Produksi)
+        data.push(nilai)
+      }
+      if (PP1Chiller > 0 && PP1Chiller != null){
+        var nilai = ['Supply Listrik','PP1. Chiller']
+        nilai.push(PP1Chiller)
+        data.push(nilai)
+      }
+      if (PP2Hydrant > 0 && PP2Hydrant != null){
+        var nilai = ['Supply Listrik','PP.2 Hydrant']
+        nilai.push(PP2Hydrant)
+        data.push(nilai)
+      }
 
   const fetchDataDayly = async () => {
     let response = await axios.get(
@@ -85,7 +265,7 @@ export default function PowerManagement() {
         label: data.label,
         y: data.y,
         x: data.x,
-      }));
+      })); 
     } else if (
       powerArea === "cMT-Gedung-UTY_LVMDP1_data" ||
       powerArea === "cMT-Gedung-UTY_LVMDP2_data" ||
@@ -129,6 +309,7 @@ export default function PowerManagement() {
       var multipliedData1 = response.data.map((data) => ({
         label: data.label,
         y: data.y,
+        x: data.x,
       }));
     } else if (
       areaMonth === "cMT-Gedung-UTY_LVMDP1_data" ||
@@ -138,11 +319,13 @@ export default function PowerManagement() {
       var multipliedData1 = response.data.map((data) => ({
         label: data.label,
         y: data.y,
+        x: data.x,
       }));
     } else {
       var multipliedData1 = response.data.map((data) => ({
         label: data.label,
         y: data.y,
+        x: data.x,
       }));
     }
 
@@ -379,6 +562,15 @@ export default function PowerManagement() {
     setSecFinish(unixStart);
   };
 
+  let sankeyStart = (e) =>{
+    var dataInput = e.target.value;
+    setStartSankey(dataInput);
+  };
+  let sankeyFinish = (e) =>{
+    var dataInput = e.target.value;
+    setFinishSankey(dataInput);
+  };
+
   const options = {
     theme: "light1",
     title: {
@@ -606,6 +798,24 @@ export default function PowerManagement() {
         ],
       },
     ],
+  };
+
+  const colors = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f',
+  '#cab2d6', '#ffff99', '#1f78b4', '#33a02c'];
+
+  const options8 = {
+      sankey: {
+        node: { nodePadding: 60,
+                label: { fontSize: 16 },
+              },
+
+        link: {
+          colorMode: 'gradient',
+          colors: colors
+        },
+        
+        
+      }
   };
 
   return (
@@ -992,6 +1202,51 @@ export default function PowerManagement() {
           <p> avg Freq : {dataavgFreq} Hz</p>
         </div>
       </div>
+      <Stack
+          className="flex flex-row justify-center mb-4  "
+          direction="row"
+          spacing={4}
+          align="center">
+          
+          <div>
+          <h2>Start Time</h2>
+          <Input
+              onChange={sankeyStart}
+              placeholder="Select Date and Time"
+              size="md"
+              type="date"
+          />
+          </div>
+          <div>Finish Time
+          <Input
+              onChange={sankeyFinish}
+              placeholder="Select Date and Time"
+              size="md"
+              type="date"
+          />
+          </div>
+          <div>
+              <br />
+              <Button
+                  className="m1-4"
+                  colorScheme="gray"
+                  onClick={() => fetchPowerSankey()}
+              >
+                  Submit
+              </Button>
+          </div>
+        </Stack>
+        <div align="center"><h1 style={{ fontSize: "2rem"}}><b>Power Sankey Diagram </b></h1></div>
+        <div align="center"><h3 style={{ fontSize: "1rem"}}><b>kWh</b></h3></div>
+        <div className="flex flex-row justify-center mx-12 pb-10">
+        <Chart
+          chartType= "Sankey"
+          width= "1500px"
+          height="1000px"
+          data={data}
+          options={options8}>
+        </Chart>
+        </div>
     </div>
   );
 }
