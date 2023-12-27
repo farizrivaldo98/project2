@@ -996,9 +996,9 @@ console.log(queryData);
     nilai as y from (SELECT
     data_index as nom, 
     DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl,
-    data_format_0-lag(data_format_0,1) over (order by data_index) as nilai 
+    data_format_0-lag(data_format_0,1) over (order by tgl) as nilai 
     from parammachine_saka.\`${area}\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as c
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}') as c
     `;
 
     db.query(queryGet,(err, result) => {
@@ -1015,9 +1015,9 @@ console.log(queryData);
     SELECT
         data_index as nom, 
         DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl,
-        data_format_0-lag(data_format_0,1) over (order by data_index) as nilai
+        data_format_0-lag(data_format_0,1) over (order by tgl) as nilai
         from parammachine_saka.\`${area}\` WHERE
-        month(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as c`;
+        month(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as c`;
 
     db.query(queryGet,(err, result) => {
       return response.status(200).send(result);
@@ -1078,296 +1078,296 @@ console.log(queryData);
     from
     (SELECT
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl1,
-        data_format_0-lag(data_format_0,1) over (order by data_index) as kwh1 
+        data_format_0-lag(data_format_0,1) over (order by tgl1) as kwh1 
         from parammachine_saka.\`cMT-Gedung-UTY_MVMDP_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table1
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}') as table1
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl2,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh2
+      data_format_0-lag(data_format_0,1) over (order by tgl2) as kwh2
       from parammachine_saka.\`cMT-Gedung-UTY_LVMDP1_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table2
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table2
     on tgl1 = tgl2
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl3,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh3
+      data_format_0-lag(data_format_0,1) over (order by tgl3) as kwh3
       from parammachine_saka.\`cMT-Gedung-UTY_LVMDP2_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table3
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table3
     on tgl1 = tgl3
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl4,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh4
+      data_format_0-lag(data_format_0,1) over (order by tgl4) as kwh4
       from parammachine_saka.\`cMT-Gedung-UTY_Inverter1-6_SP_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table4
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table4
     on tgl1 = tgl4
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl5,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh5
+      data_format_0-lag(data_format_0,1) over (order by tgl5) as kwh5
       from parammachine_saka.\`cMT-Gedung-UTY_Inverter7-12_SP_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table5
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table5
     on tgl1 = tgl5
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl6,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh6
+      data_format_0-lag(data_format_0,1) over (order by tgl6) as kwh6
       from parammachine_saka.\`cMT-Gedung-UTY_SDP.1-Utility_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table6
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table6
     on tgl1 = tgl6
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl7,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh7
+      data_format_0-lag(data_format_0,1) over (order by tgl7) as kwh7
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.1-UTY_Lt.2_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table7
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table7
     on tgl1 = tgl7
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl8,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh8
+      data_format_0-lag(data_format_0,1) over (order by tgl8) as kwh8
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-Chiller_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table8
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table8
     on tgl1 = tgl8
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl9,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh9
+      data_format_0-lag(data_format_0,1) over (order by tgl9) as kwh9
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.1-UTY_Lt.1_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table9
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table9
     on tgl1 = tgl9
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl10,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh10
+      data_format_0-lag(data_format_0,1) over (order by tgl10) as kwh10
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-Genset_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table10
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table10
     on tgl1 = tgl10
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl11,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh11
+      data_format_0-lag(data_format_0,1) over (order by tgl11) as kwh11
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-Boiler&PW_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table11
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table11
     on tgl1 = tgl11
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl12,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh12
+      data_format_0-lag(data_format_0,1) over (order by tgl12) as kwh12
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-Kompressor_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table12
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table12
     on tgl1 = tgl12
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl13,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh13
+      data_format_0-lag(data_format_0,1) over (order by tgl13) as kwh13
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-HWP_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table13
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table13
     on tgl1 = tgl13
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl14,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh14
+      data_format_0-lag(data_format_0,1) over (order by tgl14) as kwh14
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-PUMPS_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table14
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table14
     on tgl1 = tgl14
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl15,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh15
+      data_format_0-lag(data_format_0,1) over (order by tgl15) as kwh15
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-Lift_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table15
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table15
     on tgl1 = tgl15
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl16,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh16
+      data_format_0-lag(data_format_0,1) over (order by tgl16) as kwh16
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-AC1.1_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table16
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table16
     on tgl1 = tgl16
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl17,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh17
+      data_format_0-lag(data_format_0,1) over (order by tgl17) as kwh17
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-AC1.2_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table17
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table17
     on tgl1 = tgl17
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl18,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh18
+      data_format_0-lag(data_format_0,1) over (order by tgl18) as kwh18
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-AC1.3_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table18
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table18
     on tgl1 = tgl18
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl19,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh19
+      data_format_0-lag(data_format_0,1) over (order by tgl19) as kwh19
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-AC2.3_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table19
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table19
     on tgl1 = tgl19
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl20,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh20
+      data_format_0-lag(data_format_0,1) over (order by tgl20) as kwh20
       from parammachine_saka.\`cMT-Gedung-UTY_SDP.1-Produksi_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table20
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table20
     on tgl1 = tgl20
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl21,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh21
+      data_format_0-lag(data_format_0,1) over (order by tgl21) as kwh21
       from parammachine_saka.\`cMT-Gedung-UTY_SDP.2-Produksi_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table21
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table21
     on tgl1 = tgl21
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl22,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh22
+      data_format_0-lag(data_format_0,1) over (order by tgl22) as kwh22
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-Hydrant_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table22
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table22
     on tgl1 = tgl22
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl23,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh23
+      data_format_0-lag(data_format_0,1) over (order by tgl23) as kwh23
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-Fatigon_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table23
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table23
     on tgl1 = tgl23
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl24,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh24
+      data_format_0-lag(data_format_0,1) over (order by tgl24) as kwh24
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-Puyer_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table24
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table24
     on tgl1 = tgl24
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl25,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh25
+      data_format_0-lag(data_format_0,1) over (order by tgl25) as kwh25
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-Mixagrib_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table25
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table25
     on tgl1 = tgl25
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl26,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh26
+      data_format_0-lag(data_format_0,1) over (order by tgl26) as kwh26
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-LabLt.2_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table26
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table26
     on tgl1 = tgl26
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl27,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh27
+      data_format_0-lag(data_format_0,1) over (order by tgl27) as kwh27
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-Fasilitas_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table27
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table27
     on tgl1 = tgl27
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl28,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh28
+      data_format_0-lag(data_format_0,1) over (order by tgl28) as kwh28
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-PackWH_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table28
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table28
     on tgl1 = tgl28
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl29,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh29
+      data_format_0-lag(data_format_0,1) over (order by tgl29) as kwh29
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2-PRO1.1_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table29
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table29
     on tgl1 = tgl29
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl30,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh30
+      data_format_0-lag(data_format_0,1) over (order by tgl30) as kwh30
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2-PRO1.2_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table30
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table30
     on tgl1 = tgl30
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl31,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh31
+      data_format_0-lag(data_format_0,1) over (order by tgl31) as kwh31
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2-PRO1.3_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table31
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table31
     on tgl1 = tgl31
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl32,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh32
+      data_format_0-lag(data_format_0,1) over (order by tgl32) as kwh32
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2-PRO2.3_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table32
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table32
     on tgl1 = tgl32
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl33,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh33
+      data_format_0-lag(data_format_0,1) over (order by tgl33) as kwh33
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2-PRO3.1_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table33
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table33
     on tgl1 = tgl33
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl34,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh34
+      data_format_0-lag(data_format_0,1) over (order by tgl34) as kwh34
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2-PRO4.1_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table34
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table34
     on tgl1 = tgl34
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl35,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh35
+      data_format_0-lag(data_format_0,1) over (order by tgl35) as kwh35
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2WH1.1_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table35
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table35
     on tgl1 = tgl35
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl36,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh36
+      data_format_0-lag(data_format_0,1) over (order by tgl36) as kwh36
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2MEZZ1.1_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table36
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table36
     on tgl1 = tgl36
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl37,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh37
+      data_format_0-lag(data_format_0,1) over (order by tgl37) as kwh37
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.2-PosJaga1_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table37
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table37
     on tgl1 = tgl37
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl38,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh38
+      data_format_0-lag(data_format_0,1) over (order by tgl38) as kwh38
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.2-PosJaga2_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table38
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table38
     on tgl1 = tgl38
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl39,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh39
+      data_format_0-lag(data_format_0,1) over (order by tgl39) as kwh39
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.2-Workshop_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table39
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table39
     on tgl1 = tgl39
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl40,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh40
+      data_format_0-lag(data_format_0,1) over (order by tgl40) as kwh40
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.2-Koperasi_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table40
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table40
     on tgl1 = tgl40
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl41,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh41
+      data_format_0-lag(data_format_0,1) over (order by tgl41) as kwh41
       from parammachine_saka.\`cMT-Gedung-UTY_GCP_Genset_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table41
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table41
     on tgl1 = tgl41
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl42,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh42
+      data_format_0-lag(data_format_0,1) over (order by tgl42) as kwh42
       from parammachine_saka.\`cMT-Gedung-UTY_SDP_Genset_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table42
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table42
     on tgl1 = tgl42
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl43,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh43
+      data_format_0-lag(data_format_0,1) over (order by tgl43) as kwh43
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1WWTP_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table43
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table43
     on tgl1 = tgl43
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl44,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh44
+      data_format_0-lag(data_format_0,1) over (order by tgl44) as kwh44
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2DumbWaiter_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table44
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table44
     on tgl1 = tgl44
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl45,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh45
+      data_format_0-lag(data_format_0,1) over (order by tgl45) as kwh45
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.2OfficeLt1_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table45
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table45
     on tgl1 = tgl45
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl46,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh46
+      data_format_0-lag(data_format_0,1) over (order by tgl46) as kwh46
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2Pumpit_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table46
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table46
     on tgl1 = tgl46
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl47,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh47
+      data_format_0-lag(data_format_0,1) over (order by tgl47) as kwh47
       from parammachine_saka.\`cMT-Gedung-UTY_Chiller1_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table47
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table47
     on tgl1 = tgl47
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl48,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh48
+      data_format_0-lag(data_format_0,1) over (order by tgl48 ) as kwh48
       from parammachine_saka.\`cMT-Gedung-UTY_Chiller2_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table48
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table48
     on tgl1 = tgl48
     left join (select
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl49,
-      data_format_0-lag(data_format_0,1) over (order by data_index) as kwh49
+      data_format_0-lag(data_format_0,1) over (order by tgl49) as kwh49
       from parammachine_saka.\`cMT-Gedung-UTY_Chiller3_data\` WHERE
-        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and not (data_format_0 =0)) as table49
+        date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as table49
     on tgl1 = tgl49`;
 
     db.query(queryGet,(err, result) => {
