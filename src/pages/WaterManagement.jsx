@@ -847,7 +847,7 @@ export default function WaterManagement() {
           </div>
       </Stack>
       <div align="center" className="flex flex-row justify-center mx-12 pb-10">
-          <CanvasJSChart className="" options={options} />
+          <CanvasJSChart align="center" className="" options={options} />
       </div>
       <Stack
           className="flex flex-row justify-center mb-4  "
@@ -887,7 +887,7 @@ export default function WaterManagement() {
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>PDAM : {SumberPDAM} Meter Cubic</b></h3></div>
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>Reject Osmotron : {OsmoPDAM} Meter Cubic</b></h3></div>
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>Total Supply Air (PDAM+RO) : {SupplyAir} Meter Cubic</b></h3></div>
-        <div className="flex flex-row justify-center mx-12 pb-10">
+        <div align="center" className="flex flex-row justify-center mx-12 pb-10">
         <Chart
           chartType="Sankey"
           width= "1500px"

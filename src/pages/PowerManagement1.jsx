@@ -78,7 +78,7 @@ export default function PowerManagement() {
   const [PP1Chiller, setPP1Chiller] = useState([])
   const [PPLP1UtilityLt1, setPPLP1UtilityLt1] = useState([])
   const [PP1Genset, setPP1Genset] = useState([])
-  const [PP1GensetPW, setPP1GensetPW] = useState([])
+  const [PP1BoilerPW, setPP1BoilerPW] = useState([])
   const [PP1Kompressor, setPP1Kompressor] = useState([])
   const [PP1HWP, setPP1HWP] = useState([])
   const [PP1PUMPS, setPP1PUMPS] = useState([])
@@ -111,7 +111,7 @@ export default function PowerManagement() {
   const [GCPGenset, setGCPGenset] = useState([])
   const [SDPGenset, setSDPGenset] = useState([])
   const [PP1WWTP, setPP1WWTP] = useState([])
-  const [PP1DumbWaiter, setPP1DumbWaiter] = useState([])
+  const [PP1DumpWater, setPP1DumpWater] = useState([])
   const [PP1OfficeLt1, setPP1OfficeLt1] = useState([])
   const [PP1PumpitUtama, setPP1PumpitUtama] = useState([])
   const [PPChiller1, setPPChiller1] = useState([])
@@ -134,7 +134,7 @@ export default function PowerManagement() {
           finish: finishSankey,
         }
       }
-    ); console.log(response.data);
+    ); 
     const data = [];
     for (var i = 0; i < response.data.length; i++){
       setMVMDP (Number(response.data[i].MVMDP))
@@ -147,7 +147,7 @@ export default function PowerManagement() {
       setPP1Chiller  (Number(response.data[i].PP1Chiller))
       setPPLP1UtilityLt1 ( Number(response.data[i].PPLP1UtilityLt1))
       setPP1Genset  (Number(response.data[i].PP1Genset))
-      setPP1GensetPW  (Number(response.data[i].PP1GensetPW))
+      setPP1BoilerPW  (Number(response.data[i].PP1BoilerPW))
       setPP1Kompressor  (Number(response.data[i].PP1Kompressor))
       setPP1HWP ( Number(response.data[i].PP1HWP))
       setPP1PUMPS  (Number(response.data[i].PP1PUMPS))
@@ -176,10 +176,11 @@ export default function PowerManagement() {
       setPPLP1PosJaga1  (Number(response.data[i].PPLP1PosJaga1))
       setPPLP1PosJaga2  (Number(response.data[i].PPLP1PosJaga2))
       setPPLP1Workshop ( Number(response.data[i].PPLP1Workshop))
+      setPPLP1Koperasi ( Number(response.data[i].PPLP1Koperasi))
       setGCPGenset  (Number(response.data[i].GCPGenset))
       setSDPGenset  (Number(response.data[i].SDPGenset))
       setPP1WWTP  (Number(response.data[i].PP1WWTP))
-      setPP1DumbWaiter  (Number(response.data[i].PP1DumbWaiter))
+      setPP1DumpWater  (Number(response.data[i].PP1DumpWater))
       setPP1OfficeLt1  (Number(response.data[i].PP1OfficeLt1))
       setPP1PumpitUtama  (Number(response.data[i].PP1PumpitUtama))
       setPPChiller1  (Number(response.data[i].PPChiller1))
@@ -187,9 +188,15 @@ export default function PowerManagement() {
       setPPChiller3  (Number(response.data[i].PPChiller3))
       }   
     }
-      
+    
+    const supplylistrik = LVMDP1 + LVMDP2 + SolarPanel16 + SolarPanel712 + SDPGenset;
+    
     const data = [
       ["From", "To", "Consumption (kWh)"],
+      ["a","b",0],
+    ];
+    const data1 = [
+      ["From", "To", "Consumption (%)"],
       ["a","b",0],
     ];
 
@@ -197,58 +204,482 @@ export default function PowerManagement() {
         var nilai = ['LVMDP1','Supply Listrik']
         nilai.push(LVMDP1)
         data.push(nilai)
+
+        var list = ['LVMDP1','Supply Listrik']
+        var persen = LVMDP1 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
       }
       if (LVMDP2 > 0 && LVMDP2 != null){
         var nilai = ['LVMDP2','Supply Listrik']
         nilai.push(LVMDP2)
         data.push(nilai)
+
+        var list = ['LVMDP2','Supply Listrik']
+        var persen = LVMDP2 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
       }
       if (GCPGenset > 0 && GCPGenset != null){
         var nilai = ['GCP Genset','SDP Genset']
         nilai.push(GCPGenset)
         data.push(nilai)
+
+        var list = ['GCP Genset','SDP Genset']
+        var persen = GCPGenset / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
       }
       if (SDPGenset > 0 && SDPGenset != null){
         var nilai = ['SPDP Genset','Supply Listrik']
         nilai.push(SDPGenset)
         data.push(nilai)
+
+        var list = ['SPDP Genset','Supply Listrik']
+        var persen = SDPGenset / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
       }
       if (SolarPanel16 > 0 && SolarPanel16 != null){
         var nilai = ['Solar Panel1-6 ','Supply Listrik']
         nilai.push(SolarPanel16)
         data.push(nilai)
+
+        var list = ['Solar Panel1-6 ','Supply Listrik']
+        var persen = SolarPanel16 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
       }
       if (SolarPanel712 > 0 && SolarPanel712 != null){
         var nilai = ['Solar Panel7-12 ','Supply Listrik']
         nilai.push(SolarPanel712)
         data.push(nilai)
-      }
-      if (SDP1Utility > 0 && SDP1Utility != null){
-        var nilai = ['Supply Listrik','SDP.1 Utility']
-        nilai.push(SDP1Utility)
-        data.push(nilai)
-      }
-      if (SDP1Produksi > 0 && SDP1Produksi != null){
-        var nilai = ['Supply Listrik','SDP.1 Produksi']
-        nilai.push(SDP1Produksi)
-        data.push(nilai)
-      }
-      if (SDP2Produksi > 0 && SDP2Produksi != null){
-        var nilai = ['Supply Listrik','SDP.2 Produksi']
-        nilai.push(SDP2Produksi)
-        data.push(nilai)
+
+        var list = ['Solar Panel7-12 ','Supply Listrik']
+        var persen = SolarPanel712 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
       }
       if (PP1Chiller > 0 && PP1Chiller != null){
         var nilai = ['Supply Listrik','PP1. Chiller']
         nilai.push(PP1Chiller)
         data.push(nilai)
+
+        var list = ['Supply Listrik','PP1. Chiller']
+        var persen = PP1Chiller / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
       }
+      if (SDP1Utility > 0 && SDP1Utility != null){
+        var nilai = ['Supply Listrik','SDP.1 Utility']
+        nilai.push(SDP1Utility)
+        data.push(nilai)
+
+        var list = ['Supply Listrik','SDP.1 Utility']
+        var persen = SDP1Utility / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (SDP1Produksi > 0 && SDP1Produksi != null){
+        var nilai = ['Supply Listrik','SDP.1 Produksi']
+        nilai.push(SDP1Produksi)
+        data.push(nilai)
+
+        var list = ['Supply Listrik','SDP.1 Produksi']
+        var persen = SDP1Produksi / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (SDP2Produksi > 0 && SDP2Produksi != null){
+        var nilai = ['Supply Listrik','SDP.2 Produksi']
+        nilai.push(SDP2Produksi)
+        data.push(nilai)
+
+        var list = ['Supply Listrik','SDP.2 Produksi']
+        var persen = SDP2Produksi / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      } 
       if (PP2Hydrant > 0 && PP2Hydrant != null){
         var nilai = ['Supply Listrik','PP.2 Hydrant']
         nilai.push(PP2Hydrant)
         data.push(nilai)
-      }
 
+        var list = ['Supply Listrik','PP.2 Hydrant']
+        var persen = PP2Hydrant / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PPChiller1 > 0 && PPChiller1 != null){
+        var nilai = ['PP1. Chiller','PP.1 Chiller 1']
+        nilai.push(PPChiller1)
+        data.push(nilai)
+
+        var list = ['PP1. Chiller','PP.1 Chiller 1']
+        var persen = PPChiller1 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PPChiller2 > 0 && PPChiller2 != null){
+        var nilai = ['PP1. Chiller','PP.1 Chiller 2']
+        nilai.push(PPChiller2)
+        data.push(nilai)
+
+        var list = ['PP1. Chiller','PP.1 Chiller 2']
+        var persen = PPChiller2 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PPChiller3 > 0 && PPChiller3 != null){
+        var nilai = ['PP1. Chiller','PP.1 Chiller 3']
+        nilai.push(PPChiller3)
+        data.push(nilai)
+
+        var list = ['PP1. Chiller','PP.1 Chiller 3']
+        var persen = PPChiller3 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1AC11 > 0 && PP1AC11 != null){
+        var nilai = ['SDP.1 Produksi','PP.1 AC 1.1']
+        nilai.push(PP1AC11)
+        data.push(nilai)
+
+        var list = ['SDP.1 Produksi','PP.1 AC 1.1']
+        var persen = PP1AC11 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1AC12 > 0 && PP1AC12 != null){
+        var nilai = ['SDP.1 Produksi','PP.1 AC 1.2']
+        nilai.push(PP1AC12)
+        data.push(nilai)
+
+        var list = ['SDP.1 Produksi','PP.1 AC 1.2']
+        var persen = PP1AC12 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1AC13 > 0 && PP1AC13 != null){
+        var nilai = ['SDP.1 Produksi','PP.1 AC 1.3']
+        nilai.push(PP1AC13)
+        data.push(nilai)
+
+        var list = ['SDP.1 Produksi','PP.1 AC 1.3']
+        var persen = PP1AC13 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1AC23 > 0 && PP1AC23 != null){
+        var nilai = ['SDP.1 Produksi','PP.1 AC 2.3']
+        nilai.push(PP1AC23)
+        data.push(nilai)
+
+        var list = ['SDP.1 Produksi','PP.1 AC 2.3']
+        var persen = PP1AC23 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1Lift > 0 && PP1Lift != null){
+        var nilai = ['SDP.1 Produksi','PP.1 Lift']
+        nilai.push(PP1Lift)
+        data.push(nilai)
+
+        var list = ['SDP.1 Produksi','PP.1 Lift']
+        var persen = PP1Lift / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1HWP > 0 && PP1HWP != null){
+        var nilai = ['SDP.1 Produksi','PP.1 HWP']
+        nilai.push(PP1HWP)
+        data.push(nilai)
+
+        var list = ['SDP.1 Produksi','PP.1 HWP']
+        var persen = PP1HWP / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1Kompressor > 0 && PP1Kompressor != null){
+        var nilai = ['SDP.1 Utility','PP.1 Kompressor']
+        nilai.push(PP1Kompressor)
+        data.push(nilai)
+
+        var list = ['SDP.1 Utility','PP.1 Kompressor']
+        var persen = PP1Kompressor / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1BoilerPW > 0 && PP1BoilerPW != null){
+        var nilai = ['SDP.1 Utility','PP.1 Boiler & PW']
+        nilai.push(PP1BoilerPW)
+        data.push(nilai)
+
+        var list = ['SDP.1 Utility','PP.1 Boiler & PW']
+        var persen = PP1BoilerPW / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PPLP1UtilityLt1 > 0 && PPLP1UtilityLt1 != null){
+        var nilai = ['SDP.1 Utility','PPLP.1 Utility Lt.1']
+        nilai.push(PPLP1UtilityLt1)
+        data.push(nilai)
+
+        var list = ['SDP.1 Utility','PPLP.1 Utility Lt.1']
+        var persen = PPLP1UtilityLt1 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PPLP1UtilityLt2 > 0 && PPLP1UtilityLt2 != null){
+        var nilai = ['SDP.1 Utility','PPLP.1 Utility Lt.2']
+        nilai.push(PPLP1UtilityLt2)
+        data.push(nilai)
+
+        var list = ['SDP.1 Utility','PPLP.1 Utility Lt.2']
+        var persen = PPLP1UtilityLt2 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1PUMPS > 0 && PP1PUMPS != null){
+        var nilai = ['SDP.1 Utility','PP.1 PUMPS']
+        nilai.push(PP1PUMPS)
+        data.push(nilai)
+
+        var list = ['SDP.1 Utility','PP.1 PUMPS']
+        var persen = PP1PUMPS / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1Genset > 0 && PP1Genset != null){
+        var nilai = ['SDP.1 Utility','PP.1 Genset']
+        nilai.push(PP1Genset)
+        data.push(nilai)
+
+        var list = ['SDP.1 Utility','PP.1 Genset']
+        var persen = PP1Genset / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1PumpitUtama > 0 && PP1PumpitUtama != null){
+        var nilai = ['SDP.2 Produksi','PP.1 Pumpit Utama']
+        nilai.push(PP1PumpitUtama)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PP.1 Pumpit Utama']
+        var persen = PP1PumpitUtama / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1OfficeLt1 > 0 && PP1OfficeLt1 != null){
+        var nilai = ['SDP.2 Produksi','PP.1 Office Lt.1']
+        nilai.push(PP1OfficeLt1)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PP.1 Office Lt.1']
+        var persen = PP1OfficeLt1 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1DumpWater > 0 && PP1DumpWater != null){
+        var nilai = ['SDP.2 Produksi','PP.1 Dumb Water']
+        nilai.push(PP1DumpWater)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PP.1 Dumb Water']
+        var persen = PP1DumpWater / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP2Fasilitas > 0 && PP2Fasilitas != null){
+        var nilai = ['SDP.2 Produksi','PP.2 Fasilitas']
+        nilai.push(PP2Fasilitas)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PP.2 Fasilitas']
+        var persen = PP2Fasilitas / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PPLP1PosJaga1 > 0 && PPLP1PosJaga1 != null){
+        var nilai = ['SDP.2 Produksi','PPLP.1 Pos Jaga 1']
+        nilai.push(PPLP1PosJaga1)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PPLP.1 Pos Jaga 1']
+        var persen = PPLP1PosJaga1 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PPLP1PosJaga2 > 0 && PPLP1PosJaga2 != null){
+        var nilai = ['SDP.2 Produksi','PPLP.1 Pos Jaga 2']
+        nilai.push(PPLP1PosJaga2)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PPLP.1 Pos Jaga 2']
+        var persen = PPLP1PosJaga2 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PPLP1Workshop > 0 && PPLP1Workshop != null){
+        var nilai = ['SDP.2 Produksi','PPLP.1 Workshop']
+        nilai.push(PPLP1Workshop)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PPLP.1 Workshop']
+        var persen = PPLP1Workshop / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PPLP1Koperasi > 0 && PPLP1Koperasi != null){
+        var nilai = ['SDP.2 Produksi','PPLP.1 Koperasi']
+        nilai.push(PPLP1Koperasi)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PPLP.1 Koperasi']
+        var persen = PPLP1Koperasi / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (LP2PRO11 > 0 && LP2PRO11 != null){
+        var nilai = ['SDP.2 Produksi','LP.2 PRO 1.1']
+        nilai.push(LP2PRO11)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','LP.2 PRO 1.1']
+        var persen = LP2PRO11 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (LP2PRO12 > 0 && LP2PRO12 != null){
+        var nilai = ['SDP.2 Produksi','LP.2 PRO 1.2']
+        nilai.push(LP2PRO12)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','LP.2 PRO 1.2']
+        var persen = LP2PRO12 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (LP2PRO13 > 0 && LP2PRO13 != null){
+        var nilai = ['SDP.2 Produksi','LP.2 PRO 1.3']
+        nilai.push(LP2PRO13)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','LP.2 PRO 1.3']
+        var persen = LP2PRO13 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (LP2PRO23 > 0 && LP2PRO23 != null){
+        var nilai = ['SDP.2 Produksi','LP.2 PRO 2.3']
+        nilai.push(LP2PRO23)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','LP.2 PRO 2.3']
+        var persen = LP2PRO23 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (LP2PRO31 > 0 && LP2PRO31 != null){
+        var nilai = ['SDP.2 Produksi','LP.2 PRO 3.1']
+        nilai.push(LP2PRO31)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','LP.2 PRO 3.1']
+        var persen = LP2PRO31 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (LP2PRO41 > 0 && LP2PRO41 != null){
+        var nilai = ['SDP.2 Produksi','LP.2 PRO 4.1']
+        nilai.push(LP2PRO41)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','LP.2 PRO 4.1']
+        var persen = LP2PRO41 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP2PackWH > 0 && PP2PackWH != null){
+        var nilai = ['SDP.2 Produksi','PP.2 Pack WH']
+        nilai.push(PP2PackWH)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PP.2 Pack WH']
+        var persen = PP2PackWH / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP2Mixagrib > 0 && PP2Mixagrib != null){
+        var nilai = ['SDP.2 Produksi','PP.2 Mixagrib']
+        nilai.push(PP2Mixagrib)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PP.2 Mixagrib']
+        var persen = PP2Mixagrib / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP2Fatigon > 0 && PP2Fatigon != null){
+        var nilai = ['SDP.2 Produksi','PP.2 Fatigon']
+        nilai.push(PP2Fatigon)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PP.2 Fatigon']
+        var persen = PP2Fatigon / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP2Puyer > 0 && PP2Puyer != null){
+        var nilai = ['SDP.2 Produksi','PP.2 Puyer']
+        nilai.push(PP2Puyer)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PP.2 Puyer']
+        var persen = PP2Puyer / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (LWP2H11 > 0 && LWP2H11 != null){
+        var nilai = ['SDP.2 Produksi','PP.2 WH 1.1']
+        nilai.push(LWP2H11)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PP.2 WH 1.1']
+        var persen = LWP2H11 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP2LabLt2 > 0 && PP2LabLt2 != null){
+        var nilai = ['SDP.2 Produksi','PP.2 Lab Lt.2']
+        nilai.push(PP2LabLt2)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PP.2 Lab Lt.2']
+        var persen = PP2LabLt2 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PP1WWTP > 0 && PP1WWTP != null){
+        var nilai = ['SDP.2 Produksi','PP.1 WWTP']
+        nilai.push(PP1WWTP)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PP.1 WWTP']
+        var persen = PP1WWTP / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }
+      if (PPLP2Mezz11 > 0 && PPLP2Mezz11 != null){
+        var nilai = ['SDP.2 Produksi','PPLP.2 Mezz 1.1']
+        nilai.push(PPLP2Mezz11)
+        data.push(nilai)
+
+        var list = ['SDP.2 Produksi','PPLP.2 Mezz 1.1']
+        var persen = PPLP2Mezz11 / supplylistrik*100
+        list.push(persen.toFixed(2))
+        data1.push(list)
+      }  ;
   const fetchDataDayly = async () => {
     let response = await axios.get(
       "http://10.126.15.124:8002/part/PowerDaily",
@@ -805,7 +1236,7 @@ export default function PowerManagement() {
 
   const options8 = {
       sankey: {
-        node: { nodePadding: 60,
+        node: { nodePadding: 20,
                 label: { fontSize: 16 },
               },
 
@@ -1124,7 +1555,7 @@ export default function PowerManagement() {
           </div>
         </div>
       </Stack>
-      <CanvasJSChart className="" options={options2} />
+      <CanvasJSChart align="center" className="" options={options2} />
 
       <Stack
         className="flex flex-row justify-center mb-4 mt-4 "
@@ -1238,12 +1669,23 @@ export default function PowerManagement() {
         </Stack>
         <div align="center"><h1 style={{ fontSize: "2rem"}}><b>Power Sankey Diagram </b></h1></div>
         <div align="center"><h3 style={{ fontSize: "1rem"}}><b>kWh</b></h3></div>
-        <div className="flex flex-row justify-center mx-12 pb-10">
+        <div align="center" className="flex flex-row justify-center mx-12 pb-10">
         <Chart
           chartType= "Sankey"
-          width= "1500px"
+          width= "100%"
           height="1000px"
           data={data}
+          options={options8}>
+        </Chart>
+        </div>
+        <div align="center"><h1 style={{ fontSize: "2rem"}}><b>Power Sankey Diagram (%)</b></h1></div>
+        <div align="center"><h3 style={{ fontSize: "1rem"}}><b>Total Supply Listrik : {supplylistrik} Kwh</b></h3></div>
+        <div align="center" className="flex flex-row justify-center mx-12 pb-10">
+        <Chart
+          chartType="Sankey"
+          width= "1500px"
+          height="1000px"
+          data={data1}
           options={options8}>
         </Chart>
         </div>
