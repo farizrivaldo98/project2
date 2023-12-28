@@ -905,82 +905,83 @@ console.log(queryData);
     const {start, finish} = request.query;
     const queryGet = 
     `SELECT 
-    SUM(a.data_format_0) AS "Pdam",
-    SUM(b.data_format_0) AS "Domestik",
-    SUM(c.data_format_0) AS "Softwater",
-    SUM(d.data_format_0) AS "Boiler",
-    SUM(e.data_format_0) AS "InletPretreatment",
-    SUM(f.data_format_0) AS "OutletPretreatment",
-    SUM(g.data_format_0) AS "RejectOsmotron",
-    SUM(h.data_format_0) AS "Chiller",
-    SUM(i.data_format_0) AS "Taman",
-    SUM(j.data_format_0) AS "WWTPBiologi",
-    SUM(k.data_format_0) AS "WWTPKimia",
-    SUM(l.data_format_0) AS "WWTPOutlet",
-    SUM(m.data_format_0) AS "Cip",
-    SUM(n.data_format_0) AS "Hotwater",
-    SUM(o.data_format_0) AS "Lab",
-    SUM(p.data_format_0) AS "AtasLabQC",
-    SUM(q.data_format_0) AS "AtasToiletLt2",
-    SUM(r.data_format_0) AS "Workshop",
-    SUM(s.data_format_0) AS "AirMancur"
-    FROM parammachine_saka.\`cMT-BWT_PDAM_Sehari_data\` AS a
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_Dom_sehari_data\` AS b on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(b.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_Softwater_sehari_data\` AS c on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_Boiler_sehari_data\` AS d on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_Inlet_Sehari_data\` AS e on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(e.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_Outlet_sehari_data\` AS f on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(f.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_RO_sehari_data\` AS g on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(g.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_Chiller_sehari_data\` AS h on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(h.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_Taman_sehari_data\` AS i on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(i.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_WWTP_Biologi_1d_data\` AS j on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(j.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_WWTP_Kimia_1d_data\` AS k on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(k.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_WWTP_Outlet_1d_data\` AS l on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_CIP_Sehari_data\` AS m on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(m.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_Hotwater_Sehari_data\` AS n on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(n.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_Lab_Sehari_data\` AS o on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(o.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_Atas QC_Sehari_data\` AS p on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(p.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_AtsToilet_Sehari_data\` AS q on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(q.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_Workshop_Sehari_data\` AS r on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(r.\`time@timestamp\`), '%Y-%m-%d')      
-    LEFT JOIN
-    parammachine_saka.\`cMT-BWT_AirMancur_Sehari_data\` AS s on
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d')
-    WHERE 
-    DATE(FROM_UNIXTIME(a.\`time@timestamp\`)- INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}'`;
+    a AS "Pdam",
+    b AS "Domestik",
+    c AS "Softwater",
+    d AS "Boiler",
+    e AS "InletPretreatment",
+    f AS "OutletPretreatment",
+    g AS "RejectOsmotron",
+    h AS "Chiller",
+    i AS "Taman",
+    j AS "WWTPBiologi",
+    k AS "WWTPKimia",
+    l AS "WWTPOutlet",
+    m AS "Cip",
+    n AS "Hotwater",
+    o AS "Lab",
+    p AS "AtasLabQC",
+    q AS "AtasToiletLt2",
+    r AS "Workshop",
+    s AS "AirMancur"
+    FROM 
+    (SELECT SUM(data_format_0) as a 
+    from parammachine_saka.\`cMT-BWT_PDAM_Sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum1,
+    (SELECT SUM(data_format_0) as b 
+    from parammachine_saka.\`cMT-BWT_Dom_sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum2,
+    (SELECT SUM(data_format_0) as c 
+    from parammachine_saka.\`cMT-BWT_Softwater_sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum3,
+    (SELECT SUM(data_format_0) as d 
+    from parammachine_saka.\`cMT-BWT_Boiler_sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum4,
+    (SELECT SUM(data_format_0) as e 
+    from parammachine_saka.\`cMT-BWT_Inlet_Sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum5,
+    (SELECT SUM(data_format_0) as f 
+    from parammachine_saka.\`cMT-BWT_Outlet_sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum6,
+    (SELECT SUM(data_format_0) as g 
+    from parammachine_saka.\`cMT-BWT_RO_sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum7,
+    (SELECT SUM(data_format_0) as h 
+    from parammachine_saka.\`cMT-BWT_Chiller_sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum8,
+    (SELECT SUM(data_format_0) as i 
+    from parammachine_saka.\`cMT-BWT_Taman_sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum9,
+    (SELECT SUM(data_format_0) as j 
+    from parammachine_saka.\`cMT-BWT_WWTP_Biologi_1d_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum10,
+    (SELECT SUM(data_format_0) as k 
+    from parammachine_saka.\`cMT-BWT_WWTP_Kimia_1d_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum11,
+    (SELECT SUM(data_format_0) as l 
+    from parammachine_saka.\`cMT-BWT_WWTP_Outlet_1d_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum12,
+    (SELECT SUM(data_format_0) as m 
+    from parammachine_saka.\`cMT-BWT_CIP_Sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum13,
+    (SELECT SUM(data_format_0) as n 
+    from parammachine_saka.\`cMT-BWT_Hotwater_Sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum14,
+    (SELECT SUM(data_format_0) as o 
+    from parammachine_saka.\`cMT-BWT_Lab_Sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum15,
+    (SELECT SUM(data_format_0) as p 
+    from parammachine_saka.\`cMT-BWT_Atas QC_Sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum16,
+    (SELECT SUM(data_format_0) as q 
+    from parammachine_saka.\`cMT-BWT_AtsToilet_Sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum17,
+    (SELECT SUM(data_format_0) as r 
+    from parammachine_saka.\`cMT-BWT_Workshop_Sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum18,
+    (SELECT SUM(data_format_0) as s 
+    from parammachine_saka.\`cMT-BWT_AirMancur_Sehari_data\` WHERE
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum19`;
       
     db.query(queryGet,(err, result) => {
     return response.status(200).send(result);

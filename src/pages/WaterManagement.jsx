@@ -510,7 +510,7 @@ export default function WaterManagement() {
 
   const options1 = {
       sankey: {
-        node: { nodePadding: 60,
+        node: { nodePadding: 40,
                 label: { fontSize: 16 },
               },
 
