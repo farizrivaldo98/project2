@@ -134,7 +134,7 @@ export default function PowerManagement() {
           finish: finishSankey,
         }
       }
-    ); 
+    );  
     const data = [];
     for (var i = 0; i < response.data.length; i++){
       setMVMDP (Math.floor(response.data[i].MVMDP))
@@ -199,7 +199,7 @@ export default function PowerManagement() {
       ["From", "To", "Consumption (%)"],
       ["a","b",0],
     ];
-
+    
       if (LVMDP1 > 0 && LVMDP1 != null){
         var nilai = ['LVMDP1','Supply Listrik']
         nilai.push(LVMDP1)
