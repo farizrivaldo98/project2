@@ -66,14 +66,14 @@ export default function WaterManagement() {
 
   const fetchWaterSankey = async () => {
       let response1 = await axios.get(
-        "http://10.126.15.124:8002/part/waterSankey",
+        "http://10.126.15.124:8002/part/waterSankey", 
         {
           params: {
             start: startSankey,
             finish: finishSankey,
           }
         }
-      ); 
+      ); console.log(response1.data);
 
       var OsmotoLoopo = 0;
       var OsmotoLoopom3 = 0;
