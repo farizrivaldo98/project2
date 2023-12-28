@@ -199,7 +199,7 @@ export default function PowerManagement() {
       ["From", "To", "Consumption (%)"],
       ["a","b",0],
     ];
-    
+
       if (LVMDP1 > 0 && LVMDP1 != null){
         var nilai = ['LVMDP1','Supply Listrik']
         nilai.push(LVMDP1)
@@ -1683,7 +1683,7 @@ export default function PowerManagement() {
         <div align="center" className="flex flex-row justify-center mx-12 pb-10">
         <Chart
           chartType="Sankey"
-          width= "1500px"
+          width= "100%"
           height="1000px"
           data={data1}
           options={options8}>
