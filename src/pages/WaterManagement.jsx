@@ -73,7 +73,7 @@ export default function WaterManagement() {
             finish: finishSankey,
           }
         }
-      ); console.log(response1.data);
+      ); 
 
       var OsmotoLoopo = 0;
       var OsmotoLoopom3 = 0;
