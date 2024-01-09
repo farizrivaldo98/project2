@@ -501,6 +501,8 @@ module.exports = {
       ${db.escape(status)}, ${db.escape(detail)} ,${db.escape(breakdown)}
       )`;
 
+      console.log(queryData);
+
     db.query(queryData, (err, result) => {
       if (err) {
         return response.status(400).send(err.message);
@@ -558,7 +560,7 @@ module.exports = {
       if (err) {
         return response.status(400).send(err.message);
       } else {
-        let fatchquerry = "SELECT * FROM parammachine_saka.mtc_report";
+        let fatchquerry = "SELECT * FROM parammachine_saka.prod_report";
         db.query(fatchquerry, (err, result) => {
           return response
             .status(200)
