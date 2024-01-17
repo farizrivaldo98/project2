@@ -283,11 +283,13 @@ function HandoverMaintenance() {
       detail: newJobDetail,
       breakdown: breakdownType,
     };
+    console.log(tempData);
 
     let response = await axios.post(
       "http://10.126.15.124:8002/part/reportmtc",
       tempData
     );
+
     alert(response.data.message);
 
     // navigate("/maintenance", { replace: true });
