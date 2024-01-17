@@ -221,11 +221,11 @@ export default function PowerManagement() {
         data1.push(list)
       }
       if (GCPGenset > 0 && GCPGenset != null){
-        var nilai = ['GCP Genset','SDP Genset']
+        var nilai = ['GCP Genset','SPDP Genset']
         nilai.push(GCPGenset)
         data.push(nilai)
 
-        var list = ['GCP Genset','SDP Genset']
+        var list = ['GCP Genset','SPDP Genset']
         var persen = GCPGenset / supplylistrik*100
         list.push(persen.toFixed(2))
         data1.push(list)

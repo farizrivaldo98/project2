@@ -846,9 +846,9 @@ export default function WaterManagement() {
           <div className="ml-16">Min = {lowair.toLocaleString()} Meter Cubic</div>
           </div>
       </Stack>
-      <div align="center" className="flex flex-row justify-center mx-12 pb-10">
-          <CanvasJSChart align="center" className="" options={options} />
-      </div>
+          <div className="flex flex-row justify-center mx-12 pb-10">
+          <CanvasJSChart className="" options={options} />
+          </div>
       <Stack
           className="flex flex-row justify-center mb-4  "
           direction="row"
