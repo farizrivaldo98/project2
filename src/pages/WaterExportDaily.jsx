@@ -6,10 +6,9 @@ import { ExportToExcel } from "../ExportToExcel";
 
 function WaterExportDaily() {
     const [data, setData] = useState([])
-    const fileName = "WaterConsumptionDaily";
     const [startDate, setStartDate] = useState();
     const [finishDate, setFinishDate] = useState();
-    const [datatype, setdatatype] = useState();
+    const [fileName, setfilename] = useState();
 
     const fetchWaterConsumption = async () => {
         let response = await axios.get(
@@ -22,6 +21,20 @@ function WaterExportDaily() {
             }
           );
           setData(response.data); console.log(response.data);
+          setfilename("Water Consumption Data Daily") 
+    };
+    const fetchWaterTotalizer = async () => {
+        let response1 = await axios.get(
+            "http://10.126.15.124:8002/part/ExportWaterTotalizerDaily",
+            {
+              params: {
+                start: startDate,
+                finish: finishDate,
+              }
+            }
+          );
+          setData(response1.data); console.log(response1.data);
+          setfilename("Water Totalizer Data Daily")
     };
     
     let dateStart = (e) =>{
@@ -63,7 +76,7 @@ function WaterExportDaily() {
                 <RadioGroup>
                 <Stack direction='row'>
                     <Radio value='1' onClick={() => fetchWaterConsumption()}>Consumption</Radio>
-                    <Radio value='2' >Totalizer</Radio>
+                    <Radio value='2' onClick={() => fetchWaterTotalizer()}>Totalizer</Radio>
                 </Stack>
                 </RadioGroup>
                 </div>

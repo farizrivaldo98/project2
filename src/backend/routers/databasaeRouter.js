@@ -65,6 +65,7 @@ routers.get("/getAllDataEMS", databaseControllers.getAllDataEMS);
 routers.get("/waterSystem", databaseControllers.waterSystem);
 routers.get("/waterSankey", databaseControllers.waterSankey);
 routers.get("/ExportWaterConsumptionDaily", databaseControllers.ExportWaterConsumptionDaily);
+routers.get("/ExportWaterTotalizerDaily", databaseControllers.ExportWaterTotalizerDaily);
 
 routers.get("/PowerDaily", databaseControllers.PowerDaily);
 routers.get("/PowerMonthly", databaseControllers.PowerMonthly);
