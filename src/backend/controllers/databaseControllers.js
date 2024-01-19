@@ -889,12 +889,12 @@ console.log(queryData);
   waterSystem : async (request, response) => {
     const {area, start, finish} = request.query;
     const queryGet = `SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS label,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`), '%Y-%m-%d') AS label,
       data_index AS x,
       data_format_0 AS y
       FROM \`${area}\`
       WHERE
-        DATE(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}'
+        DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
       ORDER BY
       \`time@timestamp\``;
 
@@ -929,66 +929,131 @@ console.log(queryData);
     FROM 
     (SELECT SUM(data_format_0) as a 
     from parammachine_saka.\`cMT-BWT_PDAM_Sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum1,
+    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' ) as sum1,
     (SELECT SUM(data_format_0) as b 
     from parammachine_saka.\`cMT-BWT_Dom_sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum2,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum2,
     (SELECT SUM(data_format_0) as c 
     from parammachine_saka.\`cMT-BWT_Softwater_sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum3,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum3,
     (SELECT SUM(data_format_0) as d 
     from parammachine_saka.\`cMT-BWT_Boiler_sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum4,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum4,
     (SELECT SUM(data_format_0) as e 
     from parammachine_saka.\`cMT-BWT_Inlet_Sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum5,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum5,
     (SELECT SUM(data_format_0) as f 
     from parammachine_saka.\`cMT-BWT_Outlet_sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum6,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum6,
     (SELECT SUM(data_format_0) as g 
     from parammachine_saka.\`cMT-BWT_RO_sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum7,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum7,
     (SELECT SUM(data_format_0) as h 
     from parammachine_saka.\`cMT-BWT_Chiller_sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum8,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum8,
     (SELECT SUM(data_format_0) as i 
     from parammachine_saka.\`cMT-BWT_Taman_sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum9,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum9,
     (SELECT SUM(data_format_0) as j 
     from parammachine_saka.\`cMT-BWT_WWTP_Biologi_1d_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum10,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum10,
     (SELECT SUM(data_format_0) as k 
     from parammachine_saka.\`cMT-BWT_WWTP_Kimia_1d_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum11,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum11,
     (SELECT SUM(data_format_0) as l 
     from parammachine_saka.\`cMT-BWT_WWTP_Outlet_1d_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum12,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum12,
     (SELECT SUM(data_format_0) as m 
     from parammachine_saka.\`cMT-BWT_CIP_Sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum13,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum13,
     (SELECT SUM(data_format_0) as n 
     from parammachine_saka.\`cMT-BWT_Hotwater_Sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum14,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum14,
     (SELECT SUM(data_format_0) as o 
     from parammachine_saka.\`cMT-BWT_Lab_Sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum15,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum15,
     (SELECT SUM(data_format_0) as p 
     from parammachine_saka.\`cMT-BWT_Atas QC_Sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum16,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum16,
     (SELECT SUM(data_format_0) as q 
     from parammachine_saka.\`cMT-BWT_AtsToilet_Sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum17,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum17,
     (SELECT SUM(data_format_0) as r 
     from parammachine_saka.\`cMT-BWT_Workshop_Sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum18,
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum18,
     (SELECT SUM(data_format_0) as s 
     from parammachine_saka.\`cMT-BWT_AirMancur_Sehari_data\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR) BETWEEN '${start}' AND '${finish}' ) as sum19`;
+    date(FROM_UNIXTIME(\`time@timestamp\`) ) BETWEEN '${start}' AND '${finish}' ) as sum19`;
       
     db.query(queryGet,(err, result) => {
     return response.status(200).send(result);
     });
       
+  },
+
+  // Export Data Water Daily Backend
+  ExportWaterConsumptionDaily : async (request, response) => {
+    const {start, finish} = request.query;
+    const queryGet = `SELECT 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%d-%m-%Y') AS Tanggal,
+    d.data_format_0 as domestik,
+    c.data_format_0 as chiller,
+    s.data_format_0 as Softwater,
+    b.data_format_0 as Boiler,
+    ip.data_format_0 as Inlet_Pretreatment,
+    op.data_format_0 as Outlet_Pretreatment,
+    ro.data_format_0 as Reject_Osmotron,
+    t.data_format_0 as Taman,
+    iwk.data_format_0 as Inlet_WWTP_Kimia,
+    iwb.data_format_0 as Inlet_WWTP_Biologi,
+    ow.data_format_0 as Outlet_WWTP,
+    cip.data_format_0 as CIP,
+    h.data_format_0 as Hotwater,
+    l.data_format_0 as Lab,
+    atl.data_format_0 as Atas_Toilet_Lt2,
+    atlq.data_format_0 as Atas_Lab_QC,
+    w.data_format_0 as Workshop,
+    am.data_format_0 as Air_Mancur
+    FROM parammachine_saka.\`cMT-BWT_Dom_sehari_data\` as d
+    left join parammachine_saka.\`cMT-BWT_Chiller_sehari_data\` as c on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Softwater_sehari_data\` as s on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Boiler_sehari_data\` as b on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(b.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Inlet_Sehari_data\` as ip on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ip.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Outlet_sehari_data\` as op on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(op.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_RO_sehari_data\` as ro on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ro.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Taman_sehari_data\` as t on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(t.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_WWTP_Kimia_1d_data\` as iwk on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(iwk.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_WWTP_Biologi_1d_data\` as iwb on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(iwb.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_WWTP_Outlet_1d_data\` as ow on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ow.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_CIP_Sehari_data\` as cip on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(cip.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Hotwater_Sehari_data\` as h on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(h.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Lab_Sehari_data\` as l on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_AtsToilet_Sehari_data\` as atl on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(atl.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Atas QC_Sehari_data\` as atlq on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(atlq.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Workshop_Sehari_data\` as w on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(w.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_AirMancur_Sehari_data\` as am on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(am.\`time@timestamp\`), '%Y-%m-%d')
+    where  date(FROM_UNIXTIME(d.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'`;
+
+    db.query(queryGet,(err, result) => {
+      return response.status(200).send(result);
+    });
   },
 
   // Power Management 2 Backend
@@ -998,7 +1063,7 @@ console.log(queryData);
     tgl as label,
     nilai as y from (SELECT
     data_index as nom, 
-    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl,
+    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl,
     data_format_0-lag(data_format_0,1) over (order by tgl) as nilai 
     from parammachine_saka.\`${area}\` WHERE
     date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0) as c WHERE NOT (nilai <=0)
@@ -1017,7 +1082,7 @@ console.log(queryData);
     from(
     SELECT
         data_index as nom, 
-        DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl,
+        DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl,
         data_format_0-lag(data_format_0,1) over (order by tgl) as nilai
         from parammachine_saka.\`${area}\` WHERE
         month(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0) as c WHERE NOT (nilai <=0)`;
@@ -1080,343 +1145,343 @@ console.log(queryData);
     chiller3 as  "PPChiller3"
     from
       (SELECT sum(kwh1) as MVMDP from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl1,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl1,
       data_format_0-lag(data_format_0,1) over (order by tgl1) as kwh1 
       from parammachine_saka.\`cMT-Gedung-UTY_MVMDP_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'AND data_format_0>0)  as table1
       where kwh1>0) as total1, 
 
       (SELECT sum(kwh2) as lvmdp1 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl2,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl2,
       data_format_0-lag(data_format_0,1) over (order by tgl2) as kwh2
       from parammachine_saka.\`cMT-Gedung-UTY_LVMDP1_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table2
       where kwh2>0) as total2, 
 
       (SELECT sum(kwh3) as lvmdp2 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl3,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl3,
       data_format_0-lag(data_format_0,1) over (order by tgl3) as kwh3
       from parammachine_saka.\`cMT-Gedung-UTY_LVMDP2_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table3
       where kwh3>0) as total3,
 
       (SELECT sum(kwh4) as SP16 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl4,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl4,
       data_format_0-lag(data_format_0,1) over (order by tgl4) as kwh4
       from parammachine_saka.\`cMT-Gedung-UTY_Inverter1-6_SP_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table4
       where kwh4>0) as total4, 
       
       (SELECT sum(kwh5) as SP712 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl5,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl5,
       data_format_0-lag(data_format_0,1) over (order by tgl5) as kwh5
       from parammachine_saka.\`cMT-Gedung-UTY_Inverter7-12_SP_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table5
       where kwh5>0) as total5, 
 
       (SELECT sum(kwh6) as utility from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl6,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl6,
       data_format_0-lag(data_format_0,1) over (order by tgl6) as kwh6
       from parammachine_saka.\`cMT-Gedung-UTY_SDP.1-Utility_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table6
       where kwh6>0) as total6, 
 
       (SELECT sum(kwh7) as utilitylt2 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl7,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl7,
       data_format_0-lag(data_format_0,1) over (order by tgl7) as kwh7
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.1-UTY_Lt.2_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table7
       where kwh7>0) as total7, 
 
       (SELECT sum(kwh8) as chiller from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl8,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl8,
       data_format_0-lag(data_format_0,1) over (order by tgl8) as kwh8
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-Chiller_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table8
       where kwh8>0) as total8, 
 
       (SELECT sum(kwh9) as utilitylt1 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl9,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl9,
       data_format_0-lag(data_format_0,1) over (order by tgl9) as kwh9
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.1-UTY_Lt.1_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table9
       where kwh9>0) as total9, 
 
       (SELECT sum(kwh10) as genset from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl10,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl10,
       data_format_0-lag(data_format_0,1) over (order by tgl10) as kwh10
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-Genset_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table10
       where kwh10>0) as total10, 
 
       (SELECT sum(kwh11) as boilerPW from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl11,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl11,
       data_format_0-lag(data_format_0,1) over (order by tgl11) as kwh11
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-Boiler&PW_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table11
       where kwh11>0) as total11, 
 
       (SELECT sum(kwh12) as kompressor from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl12,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl12,
       data_format_0-lag(data_format_0,1) over (order by tgl12) as kwh12
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-Kompressor_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table12
       where kwh12>0) as total12, 
 
       (SELECT sum(kwh13) as HWP from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl13,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl13,
       data_format_0-lag(data_format_0,1) over (order by tgl13) as kwh13
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-HWP_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table13
       where kwh13>0) as total13, 
 
       (SELECT sum(kwh14) as pump from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl14,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl14,
       data_format_0-lag(data_format_0,1) over (order by tgl14) as kwh14
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-PUMPS_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table14
       where kwh14>0) as total14, 
 
       (SELECT sum(kwh15) as lift from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl15,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl15,
       data_format_0-lag(data_format_0,1) over (order by tgl15) as kwh15
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-Lift_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table15
       where kwh15>0) as total15, 
 
       (SELECT sum(kwh16) as ac11 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl16,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl16,
       data_format_0-lag(data_format_0,1) over (order by tgl16) as kwh16
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-AC1.1_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table16
       where kwh16>0) as total16, 
 
       (SELECT sum(kwh17) as ac12 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl17,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl17,
       data_format_0-lag(data_format_0,1) over (order by tgl17) as kwh17
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-AC1.2_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table17
       where kwh17>0) as total17, 
 
       (SELECT sum(kwh18) as ac13 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl18,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl18,
       data_format_0-lag(data_format_0,1) over (order by tgl18) as kwh18
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-AC1.3_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table18
       where kwh18>0) as total18, 
 
       (SELECT sum(kwh19) as ac23 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl19,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl19,
       data_format_0-lag(data_format_0,1) over (order by tgl19) as kwh19
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1-AC2.3_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table19
       where kwh19>0) as total19, 
 
       (SELECT sum(kwh20) as produksi1 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl20,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl20,
       data_format_0-lag(data_format_0,1) over (order by tgl20) as kwh20
       from parammachine_saka.\`cMT-Gedung-UTY_SDP.1-Produksi_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table20
       where kwh20>0) as total20, 
 
       (SELECT sum(kwh21) as produksi2 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl21,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl21,
       data_format_0-lag(data_format_0,1) over (order by tgl21) as kwh21
       from parammachine_saka.\`cMT-Gedung-UTY_SDP.2-Produksi_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table21
       where kwh21>0) as total21, 
 
       (SELECT sum(kwh22) as hydrant from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl22,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl22,
       data_format_0-lag(data_format_0,1) over (order by tgl22) as kwh22
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-Hydrant_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table22
       where kwh22>0) as total22, 
 
       (SELECT sum(kwh23) as fatigon from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl23,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl23,
       data_format_0-lag(data_format_0,1) over (order by tgl23) as kwh23
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-Fatigon_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table23
       where kwh23>0) as total23, 
 
       (SELECT sum(kwh24) as puyer from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl24,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl24,
       data_format_0-lag(data_format_0,1) over (order by tgl24) as kwh24
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-Puyer_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table24
       where kwh24>0) as total24, 
 
       (SELECT sum(kwh25) as mixagrib from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl25,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl25,
       data_format_0-lag(data_format_0,1) over (order by tgl25) as kwh25
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-Mixagrib_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table25
       where kwh25>0) as total25, 
 
       (SELECT sum(kwh26) as lablt2 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl26,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl26,
       data_format_0-lag(data_format_0,1) over (order by tgl26) as kwh26
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-LabLt.2_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table26
       where kwh26>0) as total26, 
 
       (SELECT sum(kwh27) as fasilitas from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl27,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl27,
       data_format_0-lag(data_format_0,1) over (order by tgl27) as kwh27
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-Fasilitas_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table27
       where kwh27>0) as total27, 
 
       (SELECT sum(kwh28) as packwh from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl28,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl28,
       data_format_0-lag(data_format_0,1) over (order by tgl28) as kwh28
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2-PackWH_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table28
       where kwh28>0) as total28, 
 
       (SELECT sum(kwh29) as pro11 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl29,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl29,
       data_format_0-lag(data_format_0,1) over (order by tgl29) as kwh29
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2-PRO1.1_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table29
       where kwh29>0) as total29, 
 
       (SELECT sum(kwh30) as pro12 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl30,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl30,
       data_format_0-lag(data_format_0,1) over (order by tgl30) as kwh30
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2-PRO1.2_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table30
       where kwh30>0) as total30, 
 
       (SELECT sum(kwh31) as pro13 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl31,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl31,
       data_format_0-lag(data_format_0,1) over (order by tgl31) as kwh31
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2-PRO1.3_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table31
       where kwh31>0) as total31, 
 
       (SELECT sum(kwh32) as pro23 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl32,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl32,
       data_format_0-lag(data_format_0,1) over (order by tgl32) as kwh32
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2-PRO2.3_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table32
       where kwh32>0) as total32, 
 
       (SELECT sum(kwh33) as pro31 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl33,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl33,
       data_format_0-lag(data_format_0,1) over (order by tgl33) as kwh33
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2-PRO3.1_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table33
       where kwh33>0) as total33, 
 
       (SELECT sum(kwh34) as pro41 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl34,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl34,
       data_format_0-lag(data_format_0,1) over (order by tgl34) as kwh34
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2-PRO4.1_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table34
       where kwh34>0) as total34, 
 
       (SELECT sum(kwh35) as wh11 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl35,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl35,
       data_format_0-lag(data_format_0,1) over (order by tgl35) as kwh35
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2WH1.1_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table35
       where kwh35>0) as total35, 
 
       (SELECT sum(kwh36) as mezz11 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl36,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl36,
       data_format_0-lag(data_format_0,1) over (order by tgl36) as kwh36
       from parammachine_saka.\`cMT-Gedung-UTY_LP.2MEZZ1.1_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table36
       where kwh36>0) as total36, 
 
       (SELECT sum(kwh37) as posjaga1 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl37,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl37,
       data_format_0-lag(data_format_0,1) over (order by tgl37) as kwh37
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.2-PosJaga1_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table37
       where kwh37>0) as total37, 
 
       (SELECT sum(kwh38) as PosJaga2 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl38,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl38,
       data_format_0-lag(data_format_0,1) over (order by tgl38) as kwh38
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.2-PosJaga2_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table38
       where kwh38>0) as total38, 
 
       (SELECT sum(kwh39) as workshop from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl39,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl39,
       data_format_0-lag(data_format_0,1) over (order by tgl39) as kwh39
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.2-Workshop_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table39
       where kwh39>0) as total39, 
 
       (SELECT sum(kwh40) as koperasi from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl40,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl40,
       data_format_0-lag(data_format_0,1) over (order by tgl40) as kwh40
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.2-Koperasi_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table40
       where kwh40>0) as total40, 
 
       (SELECT sum(kwh41) as gcpgenset from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl41,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl41,
       data_format_0-lag(data_format_0,1) over (order by tgl41) as kwh41
       from parammachine_saka.\`cMT-Gedung-UTY_GCP_Genset_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table41
       where kwh41>0) as total41, 
 
       (SELECT sum(kwh42) as sdpgenset from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl42,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl42,
       data_format_0-lag(data_format_0,1) over (order by tgl42) as kwh42
       from parammachine_saka.\`cMT-Gedung-UTY_SDP_Genset_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table42
       where kwh42>0) as total42, 
 
       (SELECT sum(kwh43) as wwtp from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl43,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl43,
       data_format_0-lag(data_format_0,1) over (order by tgl43) as kwh43
       from parammachine_saka.\`cMT-Gedung-UTY_PP.1WWTP_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table43
       where kwh43>0) as total43, 
 
       (SELECT sum(kwh44) as dumpwater from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl44,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl44,
       data_format_0-lag(data_format_0,1) over (order by tgl44) as kwh44
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2DumbWaiter_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table44
       where kwh44>0) as total44, 
 
       (SELECT sum(kwh45) as officelt1 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl45,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl45,
       data_format_0-lag(data_format_0,1) over (order by tgl45) as kwh45
       from parammachine_saka.\`cMT-Gedung-UTY_PPLP.2OfficeLt1_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table45
       where kwh45>0) as total45, 
 
       (SELECT sum(kwh46) as pumpitutama from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl46,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl46,
       data_format_0-lag(data_format_0,1) over (order by tgl46) as kwh46
       from parammachine_saka.\`cMT-Gedung-UTY_PP.2Pumpit_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table46
       where kwh46>0) as total46, 
 
       (SELECT sum(kwh47) as chiller1 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl47,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl47,
       data_format_0-lag(data_format_0,1) over (order by tgl47) as kwh47
       from parammachine_saka.\`cMT-Gedung-UTY_Chiller1_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table47
       where kwh47>0) as total47, 
 
       (SELECT sum(kwh48) as chiller2 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl48,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl48,
       data_format_0-lag(data_format_0,1) over (order by tgl48 ) as kwh48
       from parammachine_saka.\`cMT-Gedung-UTY_Chiller2_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table48
       where kwh48>0) as total48, 
 
       (SELECT sum(kwh49) as chiller3 from (SELECT
-      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) - INTERVAL 24 HOUR, '%Y-%m-%d') AS tgl49,
+      DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl49,
       data_format_0-lag(data_format_0,1) over (order by tgl49) as kwh49
       from parammachine_saka.\`cMT-Gedung-UTY_Chiller3_data\` WHERE
       date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0)  as table49

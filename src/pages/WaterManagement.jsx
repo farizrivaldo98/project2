@@ -7,6 +7,7 @@ import { Chart } from "react-google-charts";
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
+
 export default function WaterManagement() {
   const [WaterDaily, setWaterDaily] = useState([]);
   const [startDate, setStartDate] = useState();

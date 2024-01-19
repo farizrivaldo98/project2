@@ -11,7 +11,7 @@ import {
 import PowerManagement from "./PowerManagement";
 import PowerManagement2 from "./PowerManagement1";
 import HVAC from "./HVAC";
-import WaterManagement from "./WaterManagement";
+import Water from "./Water";
 
 function Utility() {
   return (
@@ -38,7 +38,7 @@ function Utility() {
                 <PowerManagement2 />
               </TabPanel>
               <TabPanel>
-                <WaterManagement />
+                <Water />
               </TabPanel>
               <TabPanel>
                 <p>Waste Water Management</p>
