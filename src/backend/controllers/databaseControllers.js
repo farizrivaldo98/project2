@@ -996,24 +996,24 @@ console.log(queryData);
     const {start, finish} = request.query;
     const queryGet = `SELECT 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%d-%m-%Y') AS Tanggal,
-    d.data_format_0 as domestik,
-    c.data_format_0 as chiller,
-    s.data_format_0 as Softwater,
-    b.data_format_0 as Boiler,
-    ip.data_format_0 as Inlet_Pretreatment,
-    op.data_format_0 as Outlet_Pretreatment,
-    ro.data_format_0 as Reject_Osmotron,
-    t.data_format_0 as Taman,
-    iwk.data_format_0 as Inlet_WWTP_Kimia,
-    iwb.data_format_0 as Inlet_WWTP_Biologi,
-    ow.data_format_0 as Outlet_WWTP,
-    cip.data_format_0 as CIP,
-    h.data_format_0 as Hotwater,
-    l.data_format_0 as Lab,
-    atl.data_format_0 as Atas_Toilet_Lt2,
-    atlq.data_format_0 as Atas_Lab_QC,
-    w.data_format_0 as Workshop,
-    am.data_format_0 as Air_Mancur
+    round(d.data_format_0,2) as Domestik,
+    round(c.data_format_0,2) as Chiller,
+    round(s.data_format_0,2) as Softwater,
+    round(b.data_format_0,2) as Boiler,
+    round(ip.data_format_0,2) as Inlet_Pretreatment,
+    round(op.data_format_0,2) as Outlet_Pretreatment,
+    round(ro.data_format_0,2) as Reject_Osmotron,
+    round(t.data_format_0,2) as Taman,
+    round(iwk.data_format_0,2) as Inlet_WWTP_Kimia,
+    round(iwb.data_format_0,2) as Inlet_WWTP_Biologi,
+    round(ow.data_format_0,2) as Outlet_WWTP,
+    round(cip.data_format_0,2) as CIP,
+    round(h.data_format_0,2) as Hotwater,
+    round(l.data_format_0,2) as Lab,
+    round(atl.data_format_0,2) as Atas_Toilet_Lt2,
+    round(atlq.data_format_0,2) as Atas_Lab_QC,
+    round(w.data_format_0,2) as Workshop,
+    round(am.data_format_0,2) as Air_Mancur
     FROM parammachine_saka.\`cMT-BWT_Dom_sehari_data\` as d
     left join parammachine_saka.\`cMT-BWT_Chiller_sehari_data\` as c on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d')
@@ -1049,7 +1049,8 @@ console.log(queryData);
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(w.\`time@timestamp\`), '%Y-%m-%d')
     left join parammachine_saka.\`cMT-BWT_AirMancur_Sehari_data\` as am on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(am.\`time@timestamp\`), '%Y-%m-%d')
-    where  date(FROM_UNIXTIME(d.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'`;
+    where  date(FROM_UNIXTIME(d.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' 
+    order by date(FROM_UNIXTIME(d.\`time@timestamp\`));`;
 
     db.query(queryGet,(err, result) => {
       return response.status(200).send(result);
@@ -1084,7 +1085,7 @@ console.log(queryData);
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d')
     left join parammachine_saka.\`cMT-BWT_Met_Softwater_data\` as s on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d')
-    left join parammachine_saka.\`cMT-BWT_Boiler_sehari_data\` as b on 
+    left join parammachine_saka.\`cMT-BWT_Met_Boiler_data\` as b on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(b.\`time@timestamp\`), '%Y-%m-%d')
     left join parammachine_saka.\`cMT-BWT_Met_Inlet_Pt_data\` as ip on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ip.\`time@timestamp\`), '%Y-%m-%d')
@@ -1102,9 +1103,9 @@ console.log(queryData);
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ow.\`time@timestamp\`), '%Y-%m-%d')
     left join parammachine_saka.\`cMT-BWT_Met_CIP_data\` as cip on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(cip.\`time@timestamp\`), '%Y-%m-%d')
-    left join parammachine_saka.\`cMT-BWT_Hotwater_Sehari_data\` as h on 
+    left join parammachine_saka.\`cMT-BWT_Met_Hotwater_data\` as h on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(h.\`time@timestamp\`), '%Y-%m-%d')
-    left join parammachine_saka.\`cMT-BWT_Lab_Sehari_data\` as l on 
+    left join parammachine_saka.\`cMT-BWT_Met_Lab_data\` as l on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l.\`time@timestamp\`), '%Y-%m-%d')
     left join parammachine_saka.\`cMT-BWT_Met_Atas Toilet2_data\` as atl on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(atl.\`time@timestamp\`), '%Y-%m-%d')
@@ -1120,6 +1121,282 @@ console.log(queryData);
       return response.status(200).send(result);
     });
   },
+
+  // Export Data Water Consumption Daily Backend
+  ExportWaterConsumptionMonthly : async (request, response) => {
+    const {start, finish} = request.query;
+    const queryGet = `SELECT 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%m-%Y') AS Bulan,
+    sum(round(d.data_format_0,2)) as Domestik,
+    sum(round(c.data_format_0,2)) as Chiller,
+    sum(round(s.data_format_0,2)) as Softwater,
+    sum(round(b.data_format_0,2)) as Boiler,
+    sum(round(ip.data_format_0,2)) as Inlet_Pretreatment,
+    sum(round(op.data_format_0,2)) as Outlet_Pretreatment,
+    sum(round(ro.data_format_0,2)) as Reject_Osmotron,
+    sum(round(t.data_format_0,2)) as Taman,
+    sum(round(iwk.data_format_0,2)) as Inlet_WWTP_Kimia,
+    sum(round(iwb.data_format_0,2)) as Inlet_WWTP_Biologi,
+    sum(round(ow.data_format_0,2)) as Outlet_WWTP,
+    sum(round(cip.data_format_0,2)) as CIP,
+    sum(round(h.data_format_0,2)) as Hotwater,
+    sum(round(l.data_format_0,2)) as Lab,
+    sum(round(atl.data_format_0,2)) as Atas_Toilet_Lt2,
+    sum(round(atlq.data_format_0,2)) as Atas_Lab_QC,
+    sum(round(w.data_format_0,2)) as Workshop,
+    sum(round(am.data_format_0,2)) as Air_Mancur
+    FROM parammachine_saka.\`cMT-BWT_Dom_sehari_data\` as d
+    left join parammachine_saka.\`cMT-BWT_Chiller_sehari_data\` as c on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Softwater_sehari_data\` as s on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Boiler_sehari_data\` as b on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(b.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Inlet_Sehari_data\` as ip on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ip.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Outlet_sehari_data\` as op on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(op.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_RO_sehari_data\` as ro on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ro.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Taman_sehari_data\` as t on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(t.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_WWTP_Kimia_1d_data\` as iwk on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(iwk.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_WWTP_Biologi_1d_data\` as iwb on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(iwb.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_WWTP_Outlet_1d_data\` as ow on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ow.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_CIP_Sehari_data\` as cip on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(cip.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Hotwater_Sehari_data\` as h on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(h.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Lab_Sehari_data\` as l on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_AtsToilet_Sehari_data\` as atl on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(atl.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Atas QC_Sehari_data\` as atlq on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(atlq.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Workshop_Sehari_data\` as w on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(w.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_AirMancur_Sehari_data\` as am on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(am.\`time@timestamp\`), '%Y-%m-%d')
+    where  DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m') BETWEEN '${start}' AND '${finish}' 
+    GROUP BY YEAR(date(FROM_UNIXTIME(d.\`time@timestamp\`))), 
+    MONTH(date(FROM_UNIXTIME(d.\`time@timestamp\`)))`;
+
+    db.query(queryGet,(err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+
+   // Export Data Water Totalizer Monthly Backend
+   ExportWaterTotalizerMonthly : async (request, response) => {
+    const {start, finish} = request.query;
+    const queryGet = `SELECT 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%m-%Y') AS Bulan,
+    round(d.data_format_0,2) as Domestik,
+    round(c.data_format_0,2) as Chiller,
+    round(s.data_format_0,2) as Softwater,
+    round(b.data_format_0,2) as Boiler,
+    round(ip.data_format_0,2) as Inlet_Pretreatment,
+    round(op.data_format_0,2) as Outlet_Pretreatment,
+    round(ro.data_format_0,2) as Reject_Osmotron,
+    round(t.data_format_0,2) as Taman,
+    round(iwk.data_format_0,2) as Inlet_WWTP_Kimia,
+    round(iwb.data_format_0,2) as Inlet_WWTP_Biologi,
+    round(ow.data_format_0,2) as Outlet_WWTP,
+    round(cip.data_format_0,2) as CIP,
+    round(h.data_format_0,2) as Hotwater,
+    round(l.data_format_0,2) as Lab,
+    round(atl.data_format_0,2) as Atas_Toilet_Lt2,
+    round(atlq.data_format_0,2) as Atas_Lab_QC,
+    round(w.data_format_0,2) as Workshop,
+    round(am.data_format_0,2) as Air_Mancur
+    FROM (Select
+      max(DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%d-%m-%Y')) as Tgld,
+      d.data_index as id
+      FROM parammachine_saka.\`cMT-BWT_Met_Domestik_data\` as d 
+      GROUP BY YEAR(date(FROM_UNIXTIME(d.\`time@timestamp\`))), 
+      MONTH(date(FROM_UNIXTIME(d.\`time@timestamp\`)))) as tgl,
+    parammachine_saka.\`cMT-BWT_Met_Domestik_data\` as d
+    left join parammachine_saka.\`cMT-BWT_Met_Chiller_data\` as c on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Softwater_data\` as s on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Boiler_data\` as b on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(b.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Inlet_Pt_data\` as ip on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ip.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Outlet_Pt_data\` as op on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(op.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_RO_data\` as ro on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ro.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Taman_data\` as t on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(t.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_WWTP_Kimia_data\` as iwk on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(iwk.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_WWTP_Biologi_data\` as iwb on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(iwb.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_WWTP_Outlet_data\` as ow on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ow.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_CIP_data\` as cip on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(cip.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Hotwater_data\` as h on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(h.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Lab_data\` as l on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Atas Toilet2_data\` as atl on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(atl.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Atas Lab QC_data\` as atlq on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(atlq.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Workshop_data\` as w on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(w.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Air Mancur_data\` as am on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(am.\`time@timestamp\`), '%Y-%m-%d')
+    where DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%d-%m-%Y') = Tgld and
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m') BETWEEN '${start}' AND '${finish}'`;
+
+    db.query(queryGet,(err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+
+    // Export Data Water Consumption Yearly Backend
+    ExportWaterConsumptionYearly : async (request, response) => {
+      const {start, finish} = request.query;
+      const queryGet = `SELECT 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y') AS Tahun,
+      sum(round(d.data_format_0,2)) as Domestik,
+      sum(round(c.data_format_0,2)) as Chiller,
+      sum(round(s.data_format_0,2)) as Softwater,
+      sum(round(b.data_format_0,2)) as Boiler,
+      sum(round(ip.data_format_0,2)) as Inlet_Pretreatment,
+      sum(round(op.data_format_0,2)) as Outlet_Pretreatment,
+      sum(round(ro.data_format_0,2)) as Reject_Osmotron,
+      sum(round(t.data_format_0,2)) as Taman,
+      sum(round(iwk.data_format_0,2)) as Inlet_WWTP_Kimia,
+      sum(round(iwb.data_format_0,2)) as Inlet_WWTP_Biologi,
+      sum(round(ow.data_format_0,2)) as Outlet_WWTP,
+      sum(round(cip.data_format_0,2)) as CIP,
+      sum(round(h.data_format_0,2)) as Hotwater,
+      sum(round(l.data_format_0,2)) as Lab,
+      sum(round(atl.data_format_0,2)) as Atas_Toilet_Lt2,
+      sum(round(atlq.data_format_0,2)) as Atas_Lab_QC,
+      sum(round(w.data_format_0,2)) as Workshop,
+      sum(round(am.data_format_0,2)) as Air_Mancur
+      FROM parammachine_saka.\`cMT-BWT_Dom_sehari_data\` as d
+      left join parammachine_saka.\`cMT-BWT_Chiller_sehari_data\` as c on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Softwater_sehari_data\` as s on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Boiler_sehari_data\` as b on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(b.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Inlet_Sehari_data\` as ip on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ip.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Outlet_sehari_data\` as op on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(op.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_RO_sehari_data\` as ro on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ro.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Taman_sehari_data\` as t on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(t.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_WWTP_Kimia_1d_data\` as iwk on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(iwk.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_WWTP_Biologi_1d_data\` as iwb on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(iwb.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_WWTP_Outlet_1d_data\` as ow on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ow.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_CIP_Sehari_data\` as cip on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(cip.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Hotwater_Sehari_data\` as h on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(h.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Lab_Sehari_data\` as l on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_AtsToilet_Sehari_data\` as atl on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(atl.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Atas QC_Sehari_data\` as atlq on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(atlq.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Workshop_Sehari_data\` as w on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(w.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_AirMancur_Sehari_data\` as am on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(am.\`time@timestamp\`), '%Y-%m-%d')
+      where  DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y') BETWEEN '${start}' AND '${finish}' 
+      GROUP BY YEAR(date(FROM_UNIXTIME(d.\`time@timestamp\`)))`;
+  
+      db.query(queryGet,(err, result) => {
+        return response.status(200).send(result);
+      });
+    },
+  
+     // Export Data Water Totalizer Yearly Backend
+     ExportWaterTotalizerYearly : async (request, response) => {
+      const {start, finish} = request.query;
+      const queryGet = `SELECT 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y') AS Tahun,
+      round(d.data_format_0,2) as Domestik,
+      round(c.data_format_0,2) as Chiller,
+      round(s.data_format_0,2) as Softwater,
+      round(b.data_format_0,2) as Boiler,
+      round(ip.data_format_0,2) as Inlet_Pretreatment,
+      round(op.data_format_0,2) as Outlet_Pretreatment,
+      round(ro.data_format_0,2) as Reject_Osmotron,
+      round(t.data_format_0,2) as Taman,
+      round(iwk.data_format_0,2) as Inlet_WWTP_Kimia,
+      round(iwb.data_format_0,2) as Inlet_WWTP_Biologi,
+      round(ow.data_format_0,2) as Outlet_WWTP,
+      round(cip.data_format_0,2) as CIP,
+      round(h.data_format_0,2) as Hotwater,
+      round(l.data_format_0,2) as Lab,
+      round(atl.data_format_0,2) as Atas_Toilet_Lt2,
+      round(atlq.data_format_0,2) as Atas_Lab_QC,
+      round(w.data_format_0,2) as Workshop,
+      round(am.data_format_0,2) as Air_Mancur
+      FROM (Select
+        max(DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%d-%m-%Y')) as Tgld,
+        d.data_index as id
+        FROM parammachine_saka.\`cMT-BWT_Met_Domestik_data\` as d 
+        GROUP BY YEAR(date(FROM_UNIXTIME(d.\`time@timestamp\`)))) as tgl,
+      parammachine_saka.\`cMT-BWT_Met_Domestik_data\` as d
+      left join parammachine_saka.\`cMT-BWT_Met_Chiller_data\` as c on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Softwater_data\` as s on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Boiler_data\` as b on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(b.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Inlet_Pt_data\` as ip on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ip.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Outlet_Pt_data\` as op on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(op.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_RO_data\` as ro on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ro.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Taman_data\` as t on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(t.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_WWTP_Kimia_data\` as iwk on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(iwk.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_WWTP_Biologi_data\` as iwb on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(iwb.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_WWTP_Outlet_data\` as ow on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(ow.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_CIP_data\` as cip on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(cip.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Hotwater_data\` as h on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(h.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Lab_data\` as l on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Atas Toilet2_data\` as atl on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(atl.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Atas Lab QC_data\` as atlq on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(atlq.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Workshop_data\` as w on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(w.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Air Mancur_data\` as am on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(am.\`time@timestamp\`), '%Y-%m-%d')
+      where DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%d-%m-%Y') = Tgld and
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y') BETWEEN '${start}' AND '${finish}'`;
+  
+      db.query(queryGet,(err, result) => {
+        return response.status(200).send(result);
+      });
+    },
 
   // Power Management 2 Backend
   PowerDaily : async (request, response) => {

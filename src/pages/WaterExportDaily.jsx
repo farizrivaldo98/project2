@@ -20,7 +20,7 @@ function WaterExportDaily() {
               }
             }
           );
-          setData(response.data); console.log(response.data);
+          setData(response.data); 
           setfilename("Water Consumption Data Daily") 
     };
     const fetchWaterTotalizer = async () => {
@@ -33,19 +33,21 @@ function WaterExportDaily() {
               }
             }
           );
-          setData(response1.data); console.log(response1.data);
+          setData(response1.data); 
           setfilename("Water Totalizer Data Daily")
     };
     
     let dateStart = (e) =>{
         var dataInput = e.target.value;
         setStartDate(dataInput);
+        
     };
     let dateFinish = (e) =>{
         var dataInput = e.target.value;
         setFinishDate(dataInput);
-    };
-  
+        
+    }; 
+
     return (
         <div>
             <div align="center"><h1 style={{ fontSize: "2rem"}}><b>Export Daily Water Data </b></h1></div>
@@ -58,8 +60,8 @@ function WaterExportDaily() {
             <div>
                 <h2>Start Time</h2>
                 <Input
-                    onChange={dateStart}
-                    placeholder="Select Date and Time"
+                    onChange={dateStart} 
+                    placeholder="Select Date"
                     size="md"
                     type="date"
                 />
@@ -67,7 +69,7 @@ function WaterExportDaily() {
                 <div>Finish Time
                 <Input
                     onChange={dateFinish}
-                    placeholder="Select Date and Time"
+                    placeholder="Select Date"
                     size="md"
                     type="date"
                 />
