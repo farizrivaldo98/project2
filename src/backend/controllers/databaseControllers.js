@@ -609,7 +609,7 @@ module.exports = {
       "'      AND label <= '" +
       finish +
       "'";
-
+    console.log(queryData);
 
 
     db.query(queryData, (err, result) => {

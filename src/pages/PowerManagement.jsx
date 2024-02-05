@@ -81,6 +81,7 @@ export default function PowerManagement() {
       }
 
     );
+    console.log(response.data);
     
     if (powerArea === "cMT-Gedung-UTY_MVMDP_data") {
       var multipliedData = response.data.map((data) => ({
