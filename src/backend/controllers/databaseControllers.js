@@ -1834,4 +1834,21 @@ console.log(queryData);
       return response.status(200).send(result);
     });
   },
+    // Purified Water Backend
+    PurifiedWater : async (request, response) => {
+      const {area, start, finish} = request.query;
+      const queryGet = `SELECT
+        DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`), '%Y-%m-%d %H:%i') AS label,
+        data_index AS x,
+        data_format_0 AS y
+        FROM \`${area}\`
+        WHERE
+          DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+        ORDER BY
+        \`time@timestamp\``;
+  
+      db.query(queryGet,(err, result) => {
+        return response.status(200).send(result);
+      });
+    },
 };

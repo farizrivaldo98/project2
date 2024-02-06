@@ -75,4 +75,6 @@ routers.get("/PowerDaily", databaseControllers.PowerDaily);
 routers.get("/PowerMonthly", databaseControllers.PowerMonthly);
 routers.get("/PowerSankey", databaseControllers.PowerSankey);
 
+routers.get("/PurifiedWater", databaseControllers.PurifiedWater);
+
 module.exports = routers;

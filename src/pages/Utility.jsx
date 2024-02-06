@@ -12,6 +12,7 @@ import PowerManagement from "./PowerManagement";
 import PowerManagement2 from "./PowerManagement1";
 import HVAC from "./HVAC";
 import Water from "./Water";
+import PurifiedControl from "./PurifiedControl";
 
 function Utility() {
   return (
@@ -50,7 +51,7 @@ function Utility() {
                 <p>Steam Control</p>
               </TabPanel>
               <TabPanel>
-                <p>Purified Control</p>
+                <PurifiedControl />
               </TabPanel>
               <TabPanel>
                 <p>Solar Management</p>
