@@ -1401,14 +1401,15 @@ console.log(queryData);
   // Power Management 2 Backend
   PowerDaily : async (request, response) => {
     const {area, start, finish} = request.query;
-    const queryGet = `SELECT nom as x,
-    tgl as label,
-    nilai as y from (SELECT
-    data_index as nom, 
-    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl,
-    data_format_0-lag(data_format_0,1) over (order by tgl) as nilai 
-    from parammachine_saka.\`${area}\` WHERE
-    date(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0) as c WHERE NOT (nilai <=0)
+    const queryGet = `SELECT
+    s1.data_index as x,
+    DATE_FORMAT(FROM_UNIXTIME(s1.\`time@timestamp\`) , '%Y-%m-%d') AS label,
+    s1.data_format_0 -
+      (select s2.data_format_0 as previous from
+      parammachine_saka.\`${area}\` as s2
+      where s2.data_index < s1.data_index order by s2.data_index  desc limit 1) as y
+    From parammachine_saka.\`${area}\` as s1 
+    WHERE date(FROM_UNIXTIME(s1.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
     `;
 
     db.query(queryGet,(err, result) => {
@@ -1418,16 +1419,15 @@ console.log(queryData);
 
   PowerMonthly : async (request, response) => {
     const {area, start, finish} = request.query;
-    const queryGet = `select nilai as y, 
-    tgl as label,
-    nom as x
-    from(
-    SELECT
-        data_index as nom, 
-        DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`) , '%Y-%m-%d') AS tgl,
-        data_format_0-lag(data_format_0,1) over (order by tgl) as nilai
-        from parammachine_saka.\`${area}\` WHERE
-        month(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' AND data_format_0>0) as c WHERE NOT (nilai <=0)`;
+    const queryGet = `SELECT
+    s1.data_index as x,
+    DATE_FORMAT(FROM_UNIXTIME(s1.\`time@timestamp\`) , '%Y-%m') AS label,
+    s1.data_format_0 -
+      (select s2.data_format_0 as previous from
+      parammachine_saka.\`${area}\` as s2
+      where s2.data_index < s1.data_index order by s2.data_index  desc limit 1) as y
+    From parammachine_saka.\`${area}\` as s1 
+    where  DATE_FORMAT(FROM_UNIXTIME(s1.\`time@timestamp\`), '%Y-%m') BETWEEN '${start}' AND '${finish}'`;
 
     db.query(queryGet,(err, result) => {
       return response.status(200).send(result);
