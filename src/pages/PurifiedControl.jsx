@@ -101,13 +101,14 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
             ],
             axisY: {
               prefix: "",
+              minimum: 0,
             },
             toolTip: {
               shared: true,
             },
             data: [
               {
-                type: "splineArea",
+                type: "spline",
                 name: title,
                 showInLegend: true,
                 xValueFormatString: "",
@@ -172,7 +173,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
                 <div className="mt-3">
                     <div className="ml-16">Standard value :</div>
                     <div className="ml-16">Conductivity = below/equal 1,3µS/cm (25°)</div>
-                    <div className="ml-16">Total Organic Carbon = below/equal 500ppb{lowPC.toLocaleString()} {unit}</div>
+                    <div className="ml-16">Total Organic Carbon = below/equal 500ppb</div>
                 </div>
             </div>
         )
