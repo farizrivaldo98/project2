@@ -127,7 +127,7 @@ export default function PowerManagement() {
 
   const fetchPowerSankey = async () => {
     let response = await axios.get(
-      "http://10.126.15.1:8002/part/PowerSankey",
+      "http://10.126.15.124:8002/part/PowerSankey",
       {
         params: {
           start: startSankey,
