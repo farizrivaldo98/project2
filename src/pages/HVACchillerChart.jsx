@@ -27,21 +27,16 @@ export default function HVACchillerChart() {
     const [deletestate, setdelete] = useState();
 
     const fetchDataChiller = async () => {
-      let arr = []
-      
+      let arr = []    
         for (let i in list){
             arr.push({
                 params: list[i]
             })
-        } 
-        setlabel1(arr.at(0).params.area); 
-        setlabel2(arr.at(1).params.area); 
-        setlabel3(arr.at(2).params.area); 
-        setlabel4(arr.at(3).params.area); 
+        }
         let response;
         let response1;
         let response2;
-        let response3;
+        let response3; 
         for (const id in arr) {
             response= await axios.get(
                 "http://10.126.15.124:8002/part/ChillerGraph",
@@ -164,7 +159,12 @@ export default function HVACchillerChart() {
               }
               setData3(multipliedData3); 
         };
-    
+        const fetchName = async () => {
+          setlabel1(list.at(0).area);
+          setlabel2(list.at(1).area);
+          setlabel3(list.at(2).area);
+          setlabel4(list.at(3).area);
+        };
     const handleAddlist = () => {  
         setList ([...list, {area: "", chiller: "",komp: "", start: "", finish: ""}])
     };
@@ -200,6 +200,7 @@ export default function HVACchillerChart() {
       timeZoneName: "short",
       hour12: false
     };
+
     const options = {
       
         theme: "light1",
@@ -219,7 +220,7 @@ export default function HVACchillerChart() {
         },
         toolTip: {
           shared: true,
-        },
+        }, 
         data: [
           {
             type: "spline",
@@ -398,7 +399,7 @@ export default function HVACchillerChart() {
                  <Button
                      className="m1-4"
                      colorScheme="gray"
-                     onClick={() => fetchDataChiller()}
+                     onClick={() => {fetchDataChiller();fetchName()}}
                  >
                      Submit
                  </Button>
