@@ -691,7 +691,7 @@ module.exports = {
     let queryData = `
     SELECT 
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)- INTERVAL 7 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
-    s.data_format_0 AS 'Status Chiller',
+     s.data_format_0 AS 'Status Chiller',
     COALESCE(a.data_format_0, 'No Alarm') AS 'Alarm Chiller',
     COALESCE(p.data_format_0, 'No Setpoint') AS 'Active Setpoint',
     e.data_format_0 AS 'EvapLWT',
@@ -712,93 +712,93 @@ module.exports = {
     r.data_format_0 AS "Run Hour Kompressor",
     t.data_format_0 AS "Ampere Kompressor",
     u.data_format_0 AS "No of Start"
-  FROM 
-    parammachine_saka.\`CMT-Chiller_Status_${chiller}_data\` AS s
+    FROM 
+    parammachine_saka.\`CMT-Chiller_R-Status${chiller}_data\` AS s
   LEFT JOIN 
-    parammachine_saka.\`CMT-Chiller_Alarm_${chiller}_data\` AS a
+    parammachine_saka.\`CMT-Chiller_R-Alarm${chiller}_data\` AS a
   ON 
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i')
-  LEFT JOIN 
-    parammachine_saka.\`CMT-Chiller_ActiSetpoint_${chiller}_data\` AS p
+LEFT JOIN 
+    parammachine_saka.\`CMT-Chiller_R-ActiSetpoi${chiller}_data\` AS p
   ON 
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(p.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN 
-    parammachine_saka.\`CMT-Chiller_EvapLWT_${chiller}_data\` AS e
+    parammachine_saka.\`CMT-Chiller_R-EvapLWT${chiller}_data\` AS e
   ON 
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(e.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN 
-    parammachine_saka.\`CMT-Chiller_EvapEWT_${chiller}_data\` AS ewt
+    parammachine_saka.\`CMT-Chiller_R-EvapEWT${chiller}_data\` AS ewt
   ON 
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(ewt.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN 
-    parammachine_saka.\`CMT-Chiller_UnitCapacity_${chiller}_data\` AS c
+    parammachine_saka.\`CMT-Chiller_R-UnitCap${chiller}_data\` AS c
   ON   
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_Status_${kompresor}_${chiller}_data\` AS d
+    parammachine_saka.\`CMT-Chiller_R-Status${kompresor}${chiller}_data\` AS d
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN 
-    parammachine_saka.\`CMT-Chiller_Capacity_${kompresor}_${chiller}_data\` AS f
+    parammachine_saka.\`CMT-Chiller_R-Capacity${kompresor}${chiller}_data\` AS f
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(f.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_EvapPress_${kompresor}_${chiller}_data\` AS g
+    parammachine_saka.\`CMT-Chiller_R-EvapPress${kompresor}${chiller}_data\` AS g
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(g.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_CondPress_${kompresor}_${chiller}_data\` AS h
+    parammachine_saka.\`CMT-Chiller_R-CondPress${kompresor}${chiller}_data\` AS h
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(h.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_EvapSatTe_${kompresor}_${chiller}_data\` AS i
+    parammachine_saka.\`CMT-Chiller_R-EvapSatTe${kompresor}${chiller}_data\` AS i
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(i.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_ConSatTem_${kompresor}_${chiller}_data\` AS j
+    parammachine_saka.\`CMT-Chiller_R-ConSatTem${kompresor}${chiller}_data\` AS j
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(j.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_SuctiTemp_${kompresor}_${chiller}_data\`AS k
+    parammachine_saka.\`CMT-Chiller_R-SuctiTemp${kompresor}${chiller}_data\`AS k
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(k.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_DischTemp_${kompresor}_${chiller}_data\`AS l
+    parammachine_saka.\`CMT-Chiller_R-DischTemp${kompresor}${chiller}_data\`AS l
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(l.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_EvapAppro_${kompresor}_${chiller}_data\`AS m
+    parammachine_saka.\`CMT-Chiller_R-EvapAppro${kompresor}${chiller}_data\`AS m
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(m.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_CondAppro_${kompresor}_${chiller}_data\`AS n
+    parammachine_saka.\`CMT-Chiller_R-CondAppro${kompresor}${chiller}_data\`AS n
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(n.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_OilPresDf_${kompresor}_${chiller}_data\`AS o
+    parammachine_saka.\`CMT-Chiller_R-OilPresDf${kompresor}${chiller}_data\`AS o
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(o.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_EXVPositi_${kompresor}_${chiller}_data\`AS q
+    parammachine_saka.\`CMT-Chiller_R-EXVPositi${kompresor}${chiller}_data\`AS q
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(q.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_RunHour_${kompresor}_${chiller}_data\`AS r
+    parammachine_saka.\`CMT-Chiller_R-RunHour${kompresor}${chiller}_data\`AS r
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(r.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_Ampere_${kompresor}_${chiller}_data\`AS t
+    parammachine_saka.\`CMT-Chiller_R-Ampere${kompresor}${chiller}_data\`AS t
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(t.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   LEFT JOIN
-    parammachine_saka.\`CMT-Chiller_No.Start_${kompresor}_${chiller}_data\`AS u
+    parammachine_saka.\`CMT-Chiller_R-No.Start${kompresor}${chiller}_data\`AS u
   ON
     DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(u.\`time@timestamp\`), '%Y-%m-%d %H:%i')
-  WHERE 
-    DATE(FROM_UNIXTIME(s.\`time@timestamp\`)- INTERVAL 7 HOUR) BETWEEN '${start}' AND '${finish}';
+     WHERE 
+    DATE(FROM_UNIXTIME(s.\`time@timestamp\`)- INTERVAL 7 HOUR) BETWEEN '${start}' AND '${finish}'
+    group by s.data_index
+    order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i');
 `;
-
-
 console.log(queryData);
     db.query(queryData, (err, result) => {
       return response.status(200).send(result);
@@ -1901,4 +1901,21 @@ console.log(queryData);
         return response.status(200).send(result);
       });
     },
+    // Chiller Chart Backend
+  ChillerGraph : async (request, response) => {
+    const {area, start, finish, chiller, komp} = request.query;
+    const queryGet = `SELECT
+    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i') AS label,
+    \`time@timestamp\`*1000 AS x,
+    data_format_0 AS y
+    FROM parammachine_saka.\`CMT-Chiller_${area}${komp}${chiller}_data\`
+    WHERE
+      DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+    ORDER BY
+    \`time@timestamp\``;
+
+    db.query(queryGet,(err, result) => {
+      return response.status(200).send(result);
+    });
+  },
 };

@@ -8,7 +8,7 @@ import {
   Card,
   CardBody,
 } from "@chakra-ui/react";
-import HVACchiller from "./HVACchiller";
+import HVACchillerChart from "./HVACchillerChart";
 import HVAChandeling from "./HVAChandeling";
 import HVACheating from "./HVACheating";
 function HVAC() {
@@ -24,7 +24,7 @@ function HVAC() {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <HVACchiller />
+                <HVACchillerChart />
               </TabPanel>
               <TabPanel>
                 <HVAChandeling />

@@ -77,4 +77,6 @@ routers.get("/PowerSankey", databaseControllers.PowerSankey);
 
 routers.get("/PurifiedWater", databaseControllers.PurifiedWater);
 
+routers.get("/ChillerGraph", databaseControllers.ChillerGraph);
+
 module.exports = routers;
