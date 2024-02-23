@@ -1918,4 +1918,156 @@ console.log(queryData);
       return response.status(200).send(result);
     });
   },
+
+  // Chiller Status Backend
+  ChillerStatus : async (request, response) => {
+    const {start, finish, chiller, komp} = request.query;
+    const queryGet = `SELECT
+    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+      case
+      when a.data_format_0 = 0 then "OFF"
+      when a.data_format_0 = 1 then "ON"
+      end AS 'Alarm Chiller',
+      case
+      when a1.data_format_0 = 0 then "OFF"
+      when a1.data_format_0 = 1 then "ON"
+      end as "Status Chiller",
+       case
+      when f.data_format_0 = 0 then "OFF"
+          when f.data_format_0 = 1 then "ON"
+    end as "Fan Kondensor",
+      case
+      when d.data_format_0 = 0 then "OFF"
+          when d.data_format_0 = 1 then "ON"
+    end AS 'Status Kompresor'
+  From
+      parammachine_saka.\`CMT-Chiller_R-Alarm${chiller}_data\` AS a
+  LEFT JOIN
+      parammachine_saka.\`CMT-Chiller_R-Status${chiller}_data\` AS a1
+    ON
+      DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a1.\`time@timestamp\`), '%Y-%m-%d %H:%i')
+  LEFT JOIN
+      parammachine_saka.\`CMT-Chiller_H-StatFanKond${chiller}_data\` AS f
+    ON
+      DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(f.\`time@timestamp\`), '%Y-%m-%d %H:%i')
+  LEFT JOIN
+      parammachine_saka.\`CMT-Chiller_R-Status${komp}${chiller}_data\` AS d
+    ON
+      DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d %H:%i')
+  WHERE 
+      DATE(FROM_UNIXTIME(a.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+      group by a.data_index
+      order by DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
+
+    db.query(queryGet,(err, result) => {
+      return response.status(200).send(result);
+    });
+  },
+
+    // Chiller Status Backend
+    ChillerKondisi : async (request, response) => {
+      const {start, finish, chiller, komp, oliats} = request.query;
+      const queryGet = `SELECT
+      DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+      case
+        when b.data_format_0 = 0 then "Kotor"
+        when b.data_format_0 = 1 then "Bersih"
+        end as "Bodi Chiller",
+        case
+        when c.data_format_0 = 0 then "Kotor"
+        when c.data_format_0 = 1 then "Bersih"
+      end as "Kisi-Kisi Kondensor",
+         case
+        when y.data_format_0 = 4 then "0%"
+            when y.data_format_0 = 0 then "25%"
+            when y.data_format_0 = 1 then "50%"
+            when y.data_format_0 = 2 then "75%"
+            when y.data_format_0 = 3 then "100%"
+      end AS "Lvl Oil Sight Glass Atas",
+        case
+        when z.data_format_0 = 4 then "0%"
+            when z.data_format_0 = 0 then "25%"
+            when z.data_format_0 = 1 then "50%"
+            when z.data_format_0 = 2 then "75%"
+            when z.data_format_0 = 3 then "100%"
+      end AS "Lvl Oil Sight Glass Bawah",
+        case
+         when aa.data_format_0 = 0 then "Clear"
+         when aa.data_format_0 = 1 then "Buble"
+      end AS "Jalur Sight Glass EXP Valve"
+    From
+      parammachine_saka.\`CMT-Chiller_R-Alarm${chiller}_data\` AS a
+    LEFT JOIN
+       parammachine_saka.\`CMT-Chiller_H-BodiChiller${chiller}_data\` AS b
+     ON 
+        DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(b.\`time@timestamp\`), '%Y-%m-%d %H:%i')
+    LEFT JOIN
+        parammachine_saka.\`CMT-Chiller_H-KisiKonden${chiller}_data\` AS c
+    ON
+        DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d %H:%i')
+    LEFT JOIN
+        parammachine_saka.\`CMT-Chiller_H-${oliats}Ats${komp}${chiller}_data\`AS y
+    ON
+        DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(y.\`time@timestamp\`), '%Y-%m-%d %H:%i')
+    LEFT JOIN
+        parammachine_saka.\`CMT-Chiller_H-OliGlsBwh${komp}${chiller}_data\`AS z
+    ON
+        DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(z.\`time@timestamp\`), '%Y-%m-%d %H:%i')
+    LEFT JOIN
+        parammachine_saka.\`CMT-Chiller_H-GlsExpVlv${komp}${chiller}_data\`AS aa
+    ON
+        DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(aa.\`time@timestamp\`), '%Y-%m-%d %H:%i')
+    WHERE 
+        DATE(FROM_UNIXTIME(a.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+        group by a.data_index
+        order by DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
+  
+      db.query(queryGet,(err, result) => {
+        return response.status(200).send(result);
+      });
+    },
+
+    // Chiller Nama Backend
+    ChillerNama : async (request, response) => {
+      const {start, finish, chiller, komp} = request.query;
+      const queryGet = `SELECT
+      DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+      case
+        when a.data_format_0 = 0 then "Andi"
+        when a.data_format_0 = 1 then "Toni"
+        when a.data_format_0 = 2 then "Nur Quraisin"
+        when a.data_format_0 = 3 then "Jimmy"
+        end AS "Operator",
+        case
+        when b13.data_format_0 = 0 then "Nur Ngaeni"
+        when b13.data_format_0 = 1 then "Syahrul"
+        when b13.data_format_0 = 2 then "Yudi"
+        end AS "Engineer",
+        case
+        when b14.data_format_0 = 0 then "Ujang"
+        when b14.data_format_0 = 1 then "Natan"
+        end AS "Utility SPV"
+      FROM 
+        parammachine_saka.\`CMT-Chiller_R-Alarm${chiller}_data\` AS a
+    LEFT JOIN 
+        parammachine_saka.\`CMT-Chiller_H-NamaOper${chiller}_data\` AS s
+      ON 
+        DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i')
+        LEFT JOIN
+        parammachine_saka.\`CMT-Chiller_H-NamaTek${chiller}_data\` AS b13
+      ON
+        DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(b13.\`time@timestamp\`), '%Y-%m-%d %H:%i')
+    LEFT JOIN
+        parammachine_saka.\`CMT-Chiller_H-NamaSpv${chiller}_data\` AS b14
+      ON
+        DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(b14.\`time@timestamp\`), '%Y-%m-%d %H:%i')
+        WHERE 
+        DATE(FROM_UNIXTIME(a.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+        group by a.data_index
+        order by DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
+  
+      db.query(queryGet,(err, result) => {
+        return response.status(200).send(result);
+      });
+    },
 };

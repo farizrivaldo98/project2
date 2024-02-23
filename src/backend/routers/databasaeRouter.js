@@ -78,5 +78,8 @@ routers.get("/PowerSankey", databaseControllers.PowerSankey);
 routers.get("/PurifiedWater", databaseControllers.PurifiedWater);
 
 routers.get("/ChillerGraph", databaseControllers.ChillerGraph);
+routers.get("/ChillerStatus", databaseControllers.ChillerStatus);
+routers.get("/ChillerKondisi", databaseControllers.ChillerKondisi);
+routers.get("/ChillerNama", databaseControllers.ChillerNama);
 
 module.exports = routers;
