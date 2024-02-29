@@ -13,6 +13,9 @@ export default function WaterManagement() {
   const [startDate, setStartDate] = useState();
   const [finishDate, setFinishDate] = useState();
   const [WaterArea, setWaterArea] = useState();
+  const [totalair, settotalair]= useState ([]);
+  const [highair, sethighair]= useState ([]);
+  const [lowair, setlowhair]= useState ([]);
   const [SumberPDAM, setSumberPDAM] = useState([]);
   const [PDAMDom, setPDAMDom] = useState([]);
   const [DomWorkshop, setDomWork] = useState([]);
@@ -61,17 +64,14 @@ export default function WaterManagement() {
   const [OsmoPDAM1, setOsmoPDAM1] = useState([]);
   const [SumberPDAM1, setSumberPDAM1] = useState([]);
   const [Lantai1m3, setlantai1m3]= useState ([]);
-  const [totalair, settotalair]= useState ([]);
-  const [highair, sethighair]= useState ([]);
-  const [lowair, setlowhair]= useState ([]);
-
+  
   const fetchWaterSankey = async () => {
       let response1 = await axios.get(
         "http://10.126.15.124:8002/part/waterSankey", 
         {
           params: {
             start: startSankey,
-            finish: finishSankey,
+            finish: finishSankey, 
           }
         }
       ); 
@@ -474,16 +474,17 @@ export default function WaterManagement() {
             const totalWater = multipliedData.reduce ((sum, data) => sum + data.y, 0);
             var total = 0
             total = Number(totalWater.toFixed(2))
-            settotalair(total);
+            settotalair(total); 
             
 
             const maxwater = multipliedData.reduce ((acc, data) => Math.max (acc, data.y), Number.NEGATIVE_INFINITY);
             var max = Number(maxwater.toFixed(2))
-            sethighair(max)
+            sethighair(max);
 
             const minwater = Math.min(...response.data.map((data) => data.y));
             var min = Number(minwater.toFixed(2))
-            setlowhair(min)
+            setlowhair(min);
+
   };
   let dateStart = (e) =>{
       var dataInput = e.target.value;
