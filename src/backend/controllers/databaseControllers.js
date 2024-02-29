@@ -1409,7 +1409,7 @@ console.log(queryData);
       parammachine_saka.\`${area}\` as s2
       where s2.data_index < s1.data_index and s2.data_format_0 > 0 order by s2.data_index  desc limit 1) as y
     From parammachine_saka.\`${area}\` as s1 
-    WHERE date(FROM_UNIXTIME(s1.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish} and s1.data_format_0 > 0'
+    WHERE date(FROM_UNIXTIME(s1.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' and s1.data_format_0 > 0
     `;
 
     db.query(queryGet,(err, result) => {
@@ -1427,7 +1427,7 @@ console.log(queryData);
       parammachine_saka.\`${area}\` as s2
       where s2.data_index < s1.data_index and s2.data_format_0 > 0 order by s2.data_index  desc limit 1) as y
     From parammachine_saka.\`${area}\` as s1 
-    where  DATE_FORMAT(FROM_UNIXTIME(s1.\`time@timestamp\`), '%Y-%m') BETWEEN '${start}' AND '${finish} and s1.data_format_0 > 0'`;
+    where  DATE_FORMAT(FROM_UNIXTIME(s1.\`time@timestamp\`), '%Y-%m') BETWEEN '${start}' AND '${finish}' and s1.data_format_0 > 0`;
 
     db.query(queryGet,(err, result) => {
       return response.status(200).send(result);
