@@ -734,12 +734,11 @@ export default function PowerManagement() {
           finish: finishMonth,
         },
       }
-    );
+    ); 
 
     if (areaMonth === "cMT-Gedung-UTY_MVMDP_data") {
       var multipliedData1 = response.data.map((data) => ({
-        label: data.label,
-        y: data.y,
+        y: Number(data.y),
         x: data.x,
       }));
     } else if (
@@ -748,19 +747,17 @@ export default function PowerManagement() {
       areaMonth === "cMT-Gedung-UTY_SDP.1-Produksi_data"
     ) {
       var multipliedData1 = response.data.map((data) => ({
-        label: data.label,
-        y: data.y,
+        y: Number(data.y),
         x: data.x,
       }));
     } else {
       var multipliedData1 = response.data.map((data) => ({
-        label: data.label,
-        y: data.y,
+        y: Number(data.y),
         x: data.x,
       }));
     }
 
-    setMonthlyPowe(multipliedData1);
+    setMonthlyPowe(multipliedData1); 
 
     const totalY = multipliedData1.reduce((sum, data) => sum + data.y, 0);
     const averageY = Math.ceil(totalY / multipliedData1.length);
@@ -1072,6 +1069,7 @@ export default function PowerManagement() {
         xValueFormatString: "",
         yValueFormatString: "",
         xValueType: "dateTime",
+        yValueType: "number",
         dataPoints: monthlyPower,
       },
     ],
