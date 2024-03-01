@@ -1029,7 +1029,17 @@ export default function PowerManagement() {
       },
     ],
   };
-
+  var localeOptions = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    timeZone: "UTC",
+    timeZoneName: "short",
+    hour12: false
+  };
+  
   const options2 = {
     theme: "light2",
     title: {
@@ -1043,6 +1053,14 @@ export default function PowerManagement() {
     axisY: {
       prefix: "",
     },
+    axisX: {
+      valueFormatString: "YYYY-MMM-DD",
+      labelFormatter: function(e) {
+        let date = new Date(e.value);
+        let content = date.toLocaleDateString("en-US", localeOptions);
+        return content;
+      }
+    },
     toolTip: {
       shared: true,
     },
@@ -1053,6 +1071,7 @@ export default function PowerManagement() {
         showInLegend: true,
         xValueFormatString: "",
         yValueFormatString: "",
+        xValueType: "dateTime",
         dataPoints: monthlyPower,
       },
     ],

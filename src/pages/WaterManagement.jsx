@@ -15,7 +15,7 @@ export default function WaterManagement() {
   const [WaterArea, setWaterArea] = useState();
   const [totalair, settotalair]= useState ([]);
   const [highair, sethighair]= useState ([]);
-  const [lowair, setlowhair]= useState ([]);
+  const [lowair, setlowhair]= useState ([]);  
   const [SumberPDAM, setSumberPDAM] = useState([]);
   const [PDAMDom, setPDAMDom] = useState([]);
   const [DomWorkshop, setDomWork] = useState([]);
