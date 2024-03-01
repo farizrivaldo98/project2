@@ -738,6 +738,7 @@ export default function PowerManagement() {
 
     if (areaMonth === "cMT-Gedung-UTY_MVMDP_data") {
       var multipliedData1 = response.data.map((data) => ({
+        label: data.label,
         y: Number(data.y),
         x: data.x,
       }));
@@ -747,11 +748,13 @@ export default function PowerManagement() {
       areaMonth === "cMT-Gedung-UTY_SDP.1-Produksi_data"
     ) {
       var multipliedData1 = response.data.map((data) => ({
+        label: data.label,
         y: Number(data.y),
         x: data.x,
       }));
     } else {
       var multipliedData1 = response.data.map((data) => ({
+        label: data.label,
         y: Number(data.y),
         x: data.x,
       }));
