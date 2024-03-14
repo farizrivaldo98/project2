@@ -18,8 +18,9 @@ function Building() {
         <CardBody>
           <Tabs isFitted size={"lg"} variant="enclosed" class=" p-3  ">
             <TabList>
-              <Tab>Enviroment Management System</Tab>
+              <Tab>Enviroment Monitoring Process</Tab>
               <Tab>Building Management System</Tab>
+              <Tab>RnD Laboratorium Montoring</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -27,6 +28,9 @@ function Building() {
               </TabPanel>
               <TabPanel>
                 <BuildingBAS />
+              </TabPanel>
+              <TabPanel>
+                RnD Laboratorium Monitoring
               </TabPanel>
             </TabPanels>
           </Tabs>
