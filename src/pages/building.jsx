@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import BuildingBAS from "./buildingBAS";
 import BuildingEMS from "./buildingEMS";
+import BuildingRnD from "./buildingRnD";
 
 function Building() {
   return (
@@ -30,7 +31,7 @@ function Building() {
                 <BuildingBAS />
               </TabPanel>
               <TabPanel>
-                RnD Laboratorium Monitoring
+                <BuildingRnD />
               </TabPanel>
             </TabPanels>
           </Tabs>

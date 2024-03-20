@@ -82,4 +82,9 @@ routers.get("/ChillerStatus", databaseControllers.ChillerStatus);
 routers.get("/ChillerKondisi", databaseControllers.ChillerKondisi);
 routers.get("/ChillerNama", databaseControllers.ChillerNama);
 
+routers.get("/BuildingRNDSuhu", databaseControllers.BuildingRNDSuhu);
+routers.get("/BuildingRNDRH", databaseControllers.BuildingRNDRH);
+routers.get("/BuildingRNDDP", databaseControllers.BuildingRNDDP);
+routers.get("/BuildingRNDAll", databaseControllers.BuildingRNDAll);
+
 module.exports = routers;

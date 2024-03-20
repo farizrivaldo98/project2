@@ -2072,4 +2072,77 @@ console.log(queryData);
         return response.status(200).send(result);
       });
     },
+
+        // Building RND Suhu Backend
+        BuildingRNDSuhu : async (request, response) => {
+          const {area, start, finish} = request.query;
+          const queryGet = `SELECT
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i') AS label,
+          \`time@timestamp\`*1000  AS x,
+          round(data_format_0,2) AS y
+          FROM parammachine_saka.\`${area}\`
+          WHERE
+            DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+          ORDER BY
+          \`time@timestamp\``;
+          
+          db.query(queryGet,(err, result) => {
+            return response.status(200).send(result);
+          });
+        },
+
+        // Building RND Suhu Backend
+        BuildingRNDDP : async (request, response) => {
+          const {area, start, finish} = request.query;
+          const queryGet = `SELECT
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i') AS label,
+          \`time@timestamp\`*1000  AS x,
+          round(data_format_2,2) AS y
+          FROM parammachine_saka.\`${area}\`
+          WHERE
+            DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+          ORDER BY
+          \`time@timestamp\``;
+          
+          db.query(queryGet,(err, result) => {
+            return response.status(200).send(result);
+          });
+        },
+
+        // Building RND Suhu Backend
+        BuildingRNDRH : async (request, response) => {
+          const {area, start, finish} = request.query;
+          const queryGet = `SELECT
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i') AS label,
+          \`time@timestamp\`*1000  AS x,
+          round(data_format_1,2) AS y
+          FROM parammachine_saka.\`${area}\`
+          WHERE
+            DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+          ORDER BY
+          \`time@timestamp\``;
+          
+          db.query(queryGet,(err, result) => {
+            return response.status(200).send(result);
+          });
+        },
+
+        // Building RND Suhu Backend
+        BuildingRNDAll : async (request, response) => {
+          const {area, start, finish} = request.query;
+          const queryGet = `SELECT
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i') AS tgl,
+          round(data_format_0,2) AS temp,
+          round(data_format_1,2) AS RH,
+          round(data_format_2,2) AS DP
+          FROM parammachine_saka.\`${area}\`
+          WHERE
+            DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+          ORDER BY
+          \`time@timestamp\``;
+          
+          db.query(queryGet,(err, result) => {
+            return response.status(200).send(result);
+          });
+        },
 };
