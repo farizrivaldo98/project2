@@ -2097,7 +2097,7 @@ console.log(queryData);
           const queryGet = `SELECT
           DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i') AS label,
           \`time@timestamp\`*1000  AS x,
-          round(data_format_2,2) AS y
+          round(data_format_2/10,2) AS y
           FROM parammachine_saka.\`${area}\`
           WHERE
             DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
@@ -2134,7 +2134,7 @@ console.log(queryData);
           DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i') AS tgl,
           round(data_format_0,2) AS temp,
           round(data_format_1,2) AS RH,
-          round(data_format_2,2) AS DP
+          round(data_format_2/10,2) AS DP
           FROM parammachine_saka.\`${area}\`
           WHERE
             DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'

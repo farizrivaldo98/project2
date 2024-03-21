@@ -17,7 +17,7 @@ export default function BuildingRnD() {
 
          const fetchRNDSuhu = async () => {
             let response = await axios.get(
-              "http://10.126.15.124:8002/part/BuildingRNDSuhu",
+              "http://10.126.15.1:8002/part/BuildingRNDSuhu",
               {
                 params: {
                   area: Area,
@@ -61,7 +61,7 @@ export default function BuildingRnD() {
                         finish: finishDate,
                       },
                     }
-                  ); console.log(response3.data);     
+                  );     
                     setAllDataRND(response3.data);
         };
 
@@ -124,7 +124,7 @@ export default function BuildingRnD() {
             data: [
                 {
                 type: "spline",
-                name: "Temperature",
+                name: "Temperature (°C)",
                 showInLegend: true,
                 xValueFormatString: "",
                 yValueFormatString: "",
@@ -132,7 +132,7 @@ export default function BuildingRnD() {
               },
               {
                 type: "spline",
-                name: "RH",
+                name: "RH (%)",
                 showInLegend: true,
                 xValueFormatString: "",
                 yValueFormatString: "",
@@ -140,7 +140,7 @@ export default function BuildingRnD() {
               },
               {
                 type: "spline",
-                name: "DP",
+                name: "DP (Pa)",
                 showInLegend: true,
                 xValueFormatString: "",
                 yValueFormatString: "",
