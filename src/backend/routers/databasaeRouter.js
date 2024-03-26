@@ -81,6 +81,15 @@ routers.get("/ChillerGraph", databaseControllers.ChillerGraph);
 routers.get("/ChillerStatus", databaseControllers.ChillerStatus);
 routers.get("/ChillerKondisi", databaseControllers.ChillerKondisi);
 routers.get("/ChillerNama", databaseControllers.ChillerNama);
+routers.get("/ChillerData1", databaseControllers.ChillerData1);
+routers.get("/ChillerData2", databaseControllers.ChillerData2);
+routers.get("/ChillerData3", databaseControllers.ChillerData3);
+routers.get("/ChillerData4", databaseControllers.ChillerData4);
+routers.get("/ChillerData5", databaseControllers.ChillerData5);
+routers.get("/ChillerData6", databaseControllers.ChillerData6);
+routers.get("/ChillerData7", databaseControllers.ChillerData7);
+routers.get("/ChillerData8", databaseControllers.ChillerData8);
+routers.get("/ChillerData9", databaseControllers.ChillerData9);
 
 routers.get("/BuildingRNDSuhu", databaseControllers.BuildingRNDSuhu);
 routers.get("/BuildingRNDRH", databaseControllers.BuildingRNDRH);
