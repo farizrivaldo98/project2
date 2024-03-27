@@ -1912,7 +1912,7 @@ console.log(queryData);
     data_format_0 AS y
     FROM parammachine_saka.\`CMT-Chiller_${area}${komp}${chiller}_data\`
     WHERE
-      DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
     ORDER BY
     \`time@timestamp\``;
 
@@ -1957,7 +1957,7 @@ console.log(queryData);
     ON
       DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   WHERE 
-      DATE(FROM_UNIXTIME(a.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+  DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
       group by a.data_index
       order by DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2020,7 +2020,7 @@ console.log(queryData);
     ON
         DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(aa.\`time@timestamp\`), '%Y-%m-%d %H:%i')
     WHERE 
-        DATE(FROM_UNIXTIME(a.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
         group by a.data_index
         order by DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
   
@@ -2064,7 +2064,7 @@ console.log(queryData);
       ON
         DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(b14.\`time@timestamp\`), '%Y-%m-%d %H:%i')
         WHERE 
-        DATE(FROM_UNIXTIME(a.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+        DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
         group by a.data_index
         order by DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
   
@@ -2106,7 +2106,7 @@ console.log(queryData);
                 ON 
                   DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a4.\`time@timestamp\`), '%Y-%m-%d %H:%i')
           WHERE 
-              DATE(FROM_UNIXTIME(s.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
               group by s.data_index
               order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
       
@@ -2148,7 +2148,7 @@ console.log(queryData);
                 ON 
                   DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
           WHERE 
-              DATE(FROM_UNIXTIME(s.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
               group by s.data_index
               order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
       
@@ -2186,7 +2186,7 @@ console.log(queryData);
                 ON 
                   DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a4.\`time@timestamp\`), '%Y-%m-%d %H:%i')
           WHERE 
-              DATE(FROM_UNIXTIME(s.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
               group by s.data_index
               order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
       
@@ -2228,7 +2228,7 @@ console.log(queryData);
                 ON 
                   DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
           WHERE 
-              DATE(FROM_UNIXTIME(s.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
               group by s.data_index
               order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2270,7 +2270,7 @@ console.log(queryData);
               ON 
                 DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
         WHERE 
-            DATE(FROM_UNIXTIME(s.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
             group by s.data_index
             order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2311,7 +2311,7 @@ console.log(queryData);
               ON 
                 DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
         WHERE 
-            DATE(FROM_UNIXTIME(s.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
             group by s.data_index
             order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2352,7 +2352,7 @@ console.log(queryData);
               ON 
                 DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
         WHERE 
-            DATE(FROM_UNIXTIME(s.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
             group by s.data_index
             order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2394,7 +2394,7 @@ console.log(queryData);
               ON 
                 DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
         WHERE 
-            DATE(FROM_UNIXTIME(s.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
             group by s.data_index
             order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2436,7 +2436,7 @@ console.log(queryData);
               ON 
                 DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
         WHERE 
-            DATE(FROM_UNIXTIME(s.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
             group by s.data_index
             order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2472,7 +2472,7 @@ console.log(queryData);
           round(data_format_2/10,2) AS y
           FROM parammachine_saka.\`${area}\`
           WHERE
-            DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
           ORDER BY
           \`time@timestamp\``;
           
@@ -2490,7 +2490,7 @@ console.log(queryData);
           round(data_format_1,2) AS y
           FROM parammachine_saka.\`${area}\`
           WHERE
-            DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
           ORDER BY
           \`time@timestamp\``;
           
@@ -2509,7 +2509,7 @@ console.log(queryData);
           round(data_format_2/10,2) AS DP
           FROM parammachine_saka.\`${area}\`
           WHERE
-            DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
           ORDER BY
           \`time@timestamp\``;
           
