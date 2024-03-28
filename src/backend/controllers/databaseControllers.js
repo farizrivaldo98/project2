@@ -2248,7 +2248,7 @@ console.log(queryData);
         a4.data_format_0  AS "No_Of_Start_Kompresor",
         a5.data_format_0  AS "Total_Fan_ON_Kompresor"  
         FROM 
-          parammachine_saka.\`CMT-Chiller_R-AlarmCH2_data\` AS s
+          parammachine_saka.\`CMT-Chiller_R-AlarmCH${chiller}_data\` AS s
         LEFT JOIN 
                 parammachine_saka.\`CMT-Chiller_R-EXVPositi${komp}2_data\` AS a1
               ON 
