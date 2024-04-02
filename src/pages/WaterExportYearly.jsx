@@ -63,7 +63,8 @@ function WaterExportYearly() {
         return dataExport.map((data) =>{
             return (
                 <Tr>
-                    <Td>{data.Tahun}</Td>
+                    <Td>{data.Tahun}</Td>   
+                    <Td>{data.Domestik}</Td>
                     <Td>{data.Chiller}</Td>
                     <Td>{data.Softwater}</Td>
                     <Td>{data.Boiler}</Td>

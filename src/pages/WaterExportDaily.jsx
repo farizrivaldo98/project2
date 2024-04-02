@@ -66,6 +66,7 @@ function WaterExportDaily() {
             return (
                 <Tr>
                     <Td>{data.Tanggal}</Td>
+                    <Td>{data.Domestik}</Td>
                     <Td>{data.Chiller}</Td>
                     <Td>{data.Softwater}</Td>
                     <Td>{data.Boiler}</Td>
