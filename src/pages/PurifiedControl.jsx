@@ -55,7 +55,16 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
               }));
               setunit("µS/cm");
               setTitle("Conductivity")
+            } else if (purifiedArea === "cMT-BWT_FT270A_6.1_data"){
+              var multipliedData = response.data.map((data) => ({
+                label: data.label,
+                y: data.y,
+                x: data.x,
+              }));
+              setunit("meter cubic");
+              setTitle("Output Osmotron")
             }
+            
         
             setPurifiedData(multipliedData);
 
@@ -131,6 +140,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
                         <option value="cMT-BWT_QE845A_6.1_data">QE845A 6.1</option>
                         <option value="cMT-BWT_QE845A_8.1_data">QE845A 8.1</option>
                         <option value="cMT-BWT_TE845A_8.1_data">TE845A 8.1</option>
+                        <option value="cMT-BWT_FT270A_6.1_data">FT270A 6.1</option>
                     </Select>
                 </div>
                 <div>
