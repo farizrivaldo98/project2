@@ -66,6 +66,7 @@ function WaterExportDaily() {
             return (
                 <Tr>
                     <Td>{data.Tanggal}</Td>
+                    <Td>{data.pdam}</Td>
                     <Td>{data.Domestik}</Td>
                     <Td>{data.Chiller}</Td>
                     <Td>{data.Softwater}</Td>
@@ -84,6 +85,11 @@ function WaterExportDaily() {
                     <Td>{data.Atas_Lab_QC}</Td>
                     <Td>{data.Workshop}</Td>
                     <Td>{data.Air_Mancur}</Td>
+                    <Td>{data.Osmotron}</Td>
+                    <Td>{data.Loopo}</Td>
+                    <Td>{data.Produksi}</Td>
+                    <Td>{data.washing}</Td>
+                    <Td>{data.lantai1}</Td>
                 </Tr>
             );
         });
@@ -140,6 +146,7 @@ function WaterExportDaily() {
             <Thead>
               <Tr backgroundColor="aliceblue">
                 <Th>Date Time</Th>
+                <Th>PDAM</Th>
                 <Th>Domestik</Th>
                 <Th>Chiller</Th>
                 <Th>Softwater</Th>
@@ -158,6 +165,11 @@ function WaterExportDaily() {
                 <Th>Atas Lab QC</Th>
                 <Th>Workshop</Th>
                 <Th>Air Mancur</Th>
+                <Th>Osmotron</Th>
+                <Th>Loopo</Th>
+                <Th>Produksi</Th>
+                <Th>Washing</Th>
+                <Th>Lantai 1</Th>
               </Tr>
             </Thead>
             <Tbody>{previewTable()}</Tbody>

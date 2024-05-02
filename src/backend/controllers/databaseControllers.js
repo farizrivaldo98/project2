@@ -891,7 +891,7 @@ console.log(queryData);
     const queryGet = `SELECT
       DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`), '%Y-%m-%d') AS label,
       data_index AS x,
-      data_format_0 AS y
+      round(data_format_0,2) AS y
       FROM \`${area}\`
       WHERE
         DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
@@ -1013,7 +1013,12 @@ console.log(queryData);
     round(atl.data_format_0,2) as Atas_Toilet_Lt2,
     round(atlq.data_format_0,2) as Atas_Lab_QC,
     round(w.data_format_0,2) as Workshop,
-    round(am.data_format_0,2) as Air_Mancur
+    round(os.data_format_0,2) as Osmotron,
+    round(lo.data_format_0,2) as Loopo,
+    round(p.data_format_0,2) as Produksi,
+    round(wa.data_format_0,2) as washing,
+    round(l1.data_format_0,2) as lantai1,
+    round(pd.data_format_0,2) as pdam
     FROM parammachine_saka.\`cMT-BWT_Dom_sehari_data\` as d
     left join parammachine_saka.\`cMT-BWT_Chiller_sehari_data\` as c on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d')
@@ -1049,6 +1054,18 @@ console.log(queryData);
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(w.\`time@timestamp\`), '%Y-%m-%d')
     left join parammachine_saka.\`cMT-BWT_AirMancur_Sehari_data\` as am on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(am.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Osmotron_Sehari_data\` as os on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(os.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Loopo_Sehari_data\` as lo on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(lo.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Produksi_Sehari_data\` as p on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(p.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Washing_Sehari_data\` as wa on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(wa.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Lantai1_Sehari_data\` as l1 on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l1.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_PDAM_Sehari_data\` as pd on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(pd.\`time@timestamp\`), '%Y-%m-%d')
     where  date(FROM_UNIXTIME(d.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}' 
     order by date(FROM_UNIXTIME(d.\`time@timestamp\`));`;
 
@@ -1079,7 +1096,13 @@ console.log(queryData);
     round(atl.data_format_0,2) as Atas_Toilet_Lt2,
     round(atlq.data_format_0,2) as Atas_Lab_QC,
     round(w.data_format_0,2) as Workshop,
-    round(am.data_format_0,2) as Air_Mancur
+    round(am.data_format_0,2) as Air_Mancur,
+    round(os.data_format_0,2) as Osmotron,
+    round(lo.data_format_0,2) as Loopo,
+    round(p.data_format_0,2) as Produksi,
+    round(wa.data_format_0,2) as washing,
+    round(l1.data_format_0,2) as lantai1,
+    round(pd.data_format_0,2) as pdam
     FROM parammachine_saka.\`cMT-BWT_Met_Domestik_data\` as d
     left join parammachine_saka.\`cMT-BWT_Met_Chiller_data\` as c on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d')
@@ -1115,6 +1138,18 @@ console.log(queryData);
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(w.\`time@timestamp\`), '%Y-%m-%d')
     left join parammachine_saka.\`cMT-BWT_Met_Air Mancur_data\` as am on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(am.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Osmotron_data\` as os on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(os.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Loopo_data\` as lo on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(lo.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Produksi_data\` as p on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(p.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Washing_data\` as wa on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(wa.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Lantai1_data\` as l1 on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l1.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_PDAM_data\` as pd on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(pd.\`time@timestamp\`), '%Y-%m-%d')
     where  date(FROM_UNIXTIME(d.\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'`;
 
     db.query(queryGet,(err, result) => {
@@ -1144,7 +1179,13 @@ console.log(queryData);
     sum(round(atl.data_format_0,2)) as Atas_Toilet_Lt2,
     sum(round(atlq.data_format_0,2)) as Atas_Lab_QC,
     sum(round(w.data_format_0,2)) as Workshop,
-    sum(round(am.data_format_0,2)) as Air_Mancur
+    sum(round(am.data_format_0,2)) as Air_Mancur,
+    sum(round(os.data_format_0,2))as Osmotron,
+    sum(round(lo.data_format_0,2)) as Loopo,
+    sum(round(p.data_format_0,2)) as Produksi,
+    sum(round(wa.data_format_0,2)) as washing,
+    sum(round(l1.data_format_0,2)) as lantai1,
+    sum(round(pd.data_format_0,2)) as pdam
     FROM parammachine_saka.\`cMT-BWT_Dom_sehari_data\` as d
     left join parammachine_saka.\`cMT-BWT_Chiller_sehari_data\` as c on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d')
@@ -1180,6 +1221,18 @@ console.log(queryData);
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(w.\`time@timestamp\`), '%Y-%m-%d')
     left join parammachine_saka.\`cMT-BWT_AirMancur_Sehari_data\` as am on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(am.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Osmotron_Sehari_data\` as os on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(os.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Loopo_Sehari_data\` as lo on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(lo.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Produksi_Sehari_data\` as p on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(p.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Washing_Sehari_data\` as wa on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(wa.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Lantai1_Sehari_data\` as l1 on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l1.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_PDAM_Sehari_data\` as pd on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(pd.\`time@timestamp\`), '%Y-%m-%d')
     where  DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m') BETWEEN '${start}' AND '${finish}' 
     GROUP BY YEAR(date(FROM_UNIXTIME(d.\`time@timestamp\`))), 
     MONTH(date(FROM_UNIXTIME(d.\`time@timestamp\`)))`;
@@ -1211,7 +1264,13 @@ console.log(queryData);
     round(atl.data_format_0,2) as Atas_Toilet_Lt2,
     round(atlq.data_format_0,2) as Atas_Lab_QC,
     round(w.data_format_0,2) as Workshop,
-    round(am.data_format_0,2) as Air_Mancur
+    round(am.data_format_0,2) as Air_Mancur,
+    round(os.data_format_0,2) as Osmotron,
+    round(lo.data_format_0,2) as Loopo,
+    round(p.data_format_0,2) as Produksi,
+    round(wa.data_format_0,2) as washing,
+    round(l1.data_format_0,2) as lantai1,
+    round(pd.data_format_0,2) as pdam
     FROM (Select
       max(DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%d-%m-%Y')) as Tgld,
       d.data_index as id
@@ -1253,6 +1312,18 @@ console.log(queryData);
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(w.\`time@timestamp\`), '%Y-%m-%d')
     left join parammachine_saka.\`cMT-BWT_Met_Air Mancur_data\` as am on 
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(am.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Osmotron_data\` as os on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(os.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Loopo_data\` as lo on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(lo.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Produksi_data\` as p on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(p.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Washing_data\` as wa on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(wa.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_Lantai1_data\` as l1 on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l1.\`time@timestamp\`), '%Y-%m-%d')
+    left join parammachine_saka.\`cMT-BWT_Met_PDAM_data\` as pd on 
+    DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(pd.\`time@timestamp\`), '%Y-%m-%d')
     where DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%d-%m-%Y') = Tgld and
     DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m') BETWEEN '${start}' AND '${finish}'`;
 
@@ -1283,7 +1354,13 @@ console.log(queryData);
       sum(round(atl.data_format_0,2)) as Atas_Toilet_Lt2,
       sum(round(atlq.data_format_0,2)) as Atas_Lab_QC,
       sum(round(w.data_format_0,2)) as Workshop,
-      sum(round(am.data_format_0,2)) as Air_Mancur
+      sum(round(am.data_format_0,2)) as Air_Mancur,
+      sum(round(os.data_format_0,2))as Osmotron,
+      sum(round(lo.data_format_0,2)) as Loopo,
+      sum(round(p.data_format_0,2)) as Produksi,
+      sum(round(wa.data_format_0,2)) as washing,
+      sum(round(l1.data_format_0,2)) as lantai1,
+      sum(round(pd.data_format_0,2)) as pdam
       FROM parammachine_saka.\`cMT-BWT_Dom_sehari_data\` as d
       left join parammachine_saka.\`cMT-BWT_Chiller_sehari_data\` as c on 
       DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(c.\`time@timestamp\`), '%Y-%m-%d')
@@ -1319,6 +1396,18 @@ console.log(queryData);
       DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(w.\`time@timestamp\`), '%Y-%m-%d')
       left join parammachine_saka.\`cMT-BWT_AirMancur_Sehari_data\` as am on 
       DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(am.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Osmotron_Sehari_data\` as os on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(os.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Loopo_Sehari_data\` as lo on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(lo.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Produksi_Sehari_data\` as p on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(p.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Washing_Sehari_data\` as wa on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(wa.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Lantai1_Sehari_data\` as l1 on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l1.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_PDAM_Sehari_data\` as pd on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(pd.\`time@timestamp\`), '%Y-%m-%d')
       where  DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y') BETWEEN '${start}' AND '${finish}' 
       GROUP BY YEAR(date(FROM_UNIXTIME(d.\`time@timestamp\`)))`;
   
@@ -1349,7 +1438,13 @@ console.log(queryData);
       round(atl.data_format_0,2) as Atas_Toilet_Lt2,
       round(atlq.data_format_0,2) as Atas_Lab_QC,
       round(w.data_format_0,2) as Workshop,
-      round(am.data_format_0,2) as Air_Mancur
+      round(am.data_format_0,2) as Air_Mancur,
+      round(os.data_format_0,2) as Osmotron,
+      round(lo.data_format_0,2) as Loopo,
+      round(p.data_format_0,2) as Produksi,
+      round(wa.data_format_0,2) as washing,
+      round(l1.data_format_0,2) as lantai1,
+      round(pd.data_format_0,2) as pdam
       FROM (Select
         max(DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%d-%m-%Y')) as Tgld,
         d.data_index as id
@@ -1390,6 +1485,18 @@ console.log(queryData);
       DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(w.\`time@timestamp\`), '%Y-%m-%d')
       left join parammachine_saka.\`cMT-BWT_Met_Air Mancur_data\` as am on 
       DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(am.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Osmotron_data\` as os on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(os.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Loopo_data\` as lo on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(lo.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Produksi_data\` as p on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(p.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Washing_data\` as wa on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(wa.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_Lantai1_data\` as l1 on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(l1.\`time@timestamp\`), '%Y-%m-%d')
+      left join parammachine_saka.\`cMT-BWT_Met_PDAM_data\` as pd on 
+      DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(pd.\`time@timestamp\`), '%Y-%m-%d')
       where DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%d-%m-%Y') = Tgld and
       DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y') BETWEEN '${start}' AND '${finish}'`;
   

@@ -813,6 +813,12 @@ export default function WaterManagement() {
                   <option value="cMT-BWT_Atas QC_Sehari_data">Atas Lab QC</option>
                   <option value="cMT-BWT_Workshop_Sehari_data">Workshop</option>
                   <option value="cMT-BWT_AirMancur_Sehari_data">Air Mancur</option>
+                  <option value="cMT-BWT_Osmotron_Sehari_data">Osmotron</option>
+                  <option value="cMT-BWT_Loopo_Sehari_data">Loopo</option>
+                  <option value="cMT-BWT_Produksi_Sehari_data">Produksi</option>
+                  <option value="cMT-BWT_Washing_Sehari_data">Washing</option>
+                  <option value="cMT-BWT_Lantai1_Sehari_data">Lantai 1</option>
+
               </Select>
           </div>
           <div>
