@@ -17,7 +17,7 @@ export default function BuildingRnD() {
 
          const fetchRNDSuhu = async () => {
             let response = await axios.get(
-              "http://10.126.15.1:8002/part/BuildingRNDSuhu",
+              "http://10.126.15.124:8002/part/BuildingRNDSuhu",
               {
                 params: {
                   area: Area,
