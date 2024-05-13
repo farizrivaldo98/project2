@@ -17,7 +17,7 @@ export default function BuildingRnD() {
 
          const fetchRNDSuhu = async () => {
             let response = await axios.get(
-              "http://10.126.15.124:8002/part/BuildingRNDSuhu",
+              "http://10.126.15.124:8002/part/BuildingRNDSuhu", 
               {
                 params: {
                   area: Area,
@@ -161,20 +161,20 @@ export default function BuildingRnD() {
                 <div>
                     <h2>Area</h2>
                     <Select placeholder="Select Area"  onChange={getArea}>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-01_data">R. ACCEDE</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-02_data">R. JMCO RND Lt.3</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-03_data">R. Primary Packaging RND Lt. 3</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-04_data">R. Coating RND Lt.3</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-05_data">R. Aging Gummy RND Lt.3</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-06_data">Koridor 1 RND Lt.3</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-07_data">Koridor 2 RND Lt.3</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-08_data">R. Tool RND Lt.3</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-09_data">R. Tumbler RND Lt.3</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-10_data">R. WIP RND Lt.3</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-11_data">R. Proses Gummy RND Lt.3</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-12_data">R. Granulation & FBD RND Lt.3</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-13_data">R. Washing RND Lt.3</option>
-                        <option value="CMT-HVAC-RND-Lt.3_EMS_RND3_HMI-14_data">Locker RND Lt.3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-01_data">R. ACCEDE</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-02_data">R. JMCO RND Lt.3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-03_data">R. Primary Packaging RND Lt. 3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-04_data">R. Coating RND Lt.3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-05_data">R. Aging Gummy RND Lt.3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-06_data">Koridor 1 RND Lt.3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-07_data">Koridor 2 RND Lt.3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-08_data">R. Tool RND Lt.3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-09_data">R. Tumbler RND Lt.3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-10_data">R. WIP RND Lt.3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-11_data">R. Proses Gummy RND Lt.3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-12_data">R. Granulation & FBD RND Lt.3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-13_data">R. Washing RND Lt.3</option>
+                        <option value="cMT-HVAC-RND-Lt.3_EMS_RND3_HMI-14_data">Locker RND Lt.3</option>
                     </Select>
                 </div>
                 <div>

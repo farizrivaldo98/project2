@@ -2552,6 +2552,8 @@ console.log(queryData);
         });
       },
 
+      
+
         // Building RND Suhu Backend
         BuildingRNDSuhu : async (request, response) => {
           const {area, start, finish} = request.query;
@@ -2563,7 +2565,7 @@ console.log(queryData);
           WHERE
             DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
           ORDER BY
-          \`time@timestamp\``;
+          \`time@timestamp\`;`
           
           db.query(queryGet,(err, result) => {
             return response.status(200).send(result);
@@ -2581,7 +2583,7 @@ console.log(queryData);
           WHERE
           DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
           ORDER BY
-          \`time@timestamp\``;
+          \`time@timestamp\`;`
           
           db.query(queryGet,(err, result) => {
             return response.status(200).send(result);
@@ -2599,7 +2601,7 @@ console.log(queryData);
           WHERE
           DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
           ORDER BY
-          \`time@timestamp\``;
+          \`time@timestamp\`;`
           
           db.query(queryGet,(err, result) => {
             return response.status(200).send(result);
@@ -2618,7 +2620,7 @@ console.log(queryData);
           WHERE
           DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
           ORDER BY
-          \`time@timestamp\``;
+          \`time@timestamp\`;`
           
           db.query(queryGet,(err, result) => {
             return response.status(200).send(result);
