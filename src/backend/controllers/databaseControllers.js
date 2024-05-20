@@ -1997,7 +1997,7 @@ console.log(queryData);
     PurifiedWater : async (request, response) => {
       const {area, start, finish} = request.query;
       const queryGet = `SELECT
-        DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`), '%Y-%m-%d %H:%i') AS label,
+        DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4  HOUR, '%Y-%m-%d %H:%i') AS label,
         data_index AS x,
         round(data_format_0,2) AS y
         FROM \`${area}\`
@@ -2014,12 +2014,12 @@ console.log(queryData);
   ChillerGraph : async (request, response) => {
     const {area, start, finish, chiller, komp} = request.query;
     const queryGet = `SELECT
-    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i') AS label,
+    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i') AS label,
     \`time@timestamp\`*1000 AS x,
     data_format_0 AS y
     FROM parammachine_saka.\`CMT-Chiller_${area}${komp}${chiller}_data\`
     WHERE
-    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+    DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
     ORDER BY
     \`time@timestamp\``;
 
@@ -2032,7 +2032,7 @@ console.log(queryData);
   ChillerStatus : async (request, response) => {
     const {start, finish, chiller, komp} = request.query;
     const queryGet = `SELECT
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
       case
       when a.data_format_0 = 0 then "OFF"
       when a.data_format_0 = 1 then "ON"
@@ -2064,7 +2064,7 @@ console.log(queryData);
     ON
       DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(d.\`time@timestamp\`), '%Y-%m-%d %H:%i')
   WHERE 
-  DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+  DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
       group by a.data_index
       order by DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2077,7 +2077,7 @@ console.log(queryData);
     ChillerKondisi : async (request, response) => {
       const {start, finish, chiller, komp, oliats} = request.query;
       const queryGet = `SELECT
-      DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+      DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
       case
         when b.data_format_0 = 0 then "Kotor"
         when b.data_format_0 = 1 then "Bersih"
@@ -2127,7 +2127,7 @@ console.log(queryData);
     ON
         DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(aa.\`time@timestamp\`), '%Y-%m-%d %H:%i')
     WHERE 
-    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+    DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
         group by a.data_index
         order by DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
   
@@ -2140,7 +2140,7 @@ console.log(queryData);
     ChillerNama : async (request, response) => {
       const {start, finish, chiller, komp} = request.query;
       const queryGet = `SELECT
-      DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+      DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
       case
         when s.data_format_0 = 0 then "Andi"
         when s.data_format_0 = 1 then "Toni"
@@ -2171,7 +2171,7 @@ console.log(queryData);
       ON
         DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(b14.\`time@timestamp\`), '%Y-%m-%d %H:%i')
         WHERE 
-        DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+        DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
         group by a.data_index
         order by DATE_FORMAT(FROM_UNIXTIME(a.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
   
@@ -2184,7 +2184,7 @@ console.log(queryData);
         ChillerData1 : async (request, response) => {
           const {start, finish, chiller, komp} = request.query;
           const queryGet = `select
-          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
           a1.data_format_0 AS "Active_Setpoint",
           a2.data_format_0  AS "Evap_LWT",
           a3.data_format_0  AS "Evap_EWT",
@@ -2213,7 +2213,7 @@ console.log(queryData);
                 ON 
                   DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a4.\`time@timestamp\`), '%Y-%m-%d %H:%i')
           WHERE 
-          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
               group by s.data_index
               order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
       
@@ -2226,7 +2226,7 @@ console.log(queryData);
         ChillerData2 : async (request, response) => {
           const {start, finish, chiller, komp} = request.query;
           const queryGet = `select
-          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
           a1.data_format_0 AS "Unit_Capacity_Kompresor",
           a2.data_format_0  AS "Evap_Pressure_Kompresor",
           a3.data_format_0  AS "Cond_Pressure_Kompresor",
@@ -2255,7 +2255,7 @@ console.log(queryData);
                 ON 
                   DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
           WHERE 
-          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
               group by s.data_index
               order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
       
@@ -2269,7 +2269,7 @@ console.log(queryData);
         ChillerData3 : async (request, response) => {
           const {start, finish, chiller, komp} = request.query;
           const queryGet = `select
-          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
           a1.data_format_0 AS "Suction_Temperature_Kompresor",
           a2.data_format_0  AS "Discharge_Temperature_Kompresor",
           a3.data_format_0  AS "Suction_SH_Kompresor",
@@ -2293,7 +2293,7 @@ console.log(queryData);
                 ON 
                   DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a4.\`time@timestamp\`), '%Y-%m-%d %H:%i')
           WHERE 
-          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
               group by s.data_index
               order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
       
@@ -2306,7 +2306,7 @@ console.log(queryData);
         ChillerData4 : async (request, response) => {
           const {start, finish, chiller, komp} = request.query;
           const queryGet = `select
-          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
           a1.data_format_0 AS "Evap_Approach_Kompresor",
           a2.data_format_0  AS "Evap_Design_Approach_Kompresor",
           a3.data_format_0  AS "Cond_Approach_Kompresor",
@@ -2335,7 +2335,7 @@ console.log(queryData);
                 ON 
                   DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
           WHERE 
-          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+          DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
               group by s.data_index
               order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2348,7 +2348,7 @@ console.log(queryData);
       ChillerData5 : async (request, response) => {
         const {start, finish, chiller, komp, fan} = request.query;
         const queryGet = `select
-        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
         a1.data_format_0 AS "EXV_Position_Kompresor",
         a2.data_format_0  AS "Run_Hour_Kompressor",
         a3.data_format_0  AS "Ampere_Kompressor",
@@ -2377,7 +2377,7 @@ console.log(queryData);
               ON 
                 DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
         WHERE 
-        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
             group by s.data_index
             order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2389,7 +2389,7 @@ console.log(queryData);
       ChillerData6 : async (request, response) => {
         const {start, finish, chiller, komp} = request.query;
         const queryGet = `select
-        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
         a1.data_format_0 AS "Tekanan_Return_Chiller",
         round(a2.data_format_0,2)  AS "Tekanan_Supply_Chiller",
         round(a3.data_format_0,2)  AS "Inlet_Softwater",
@@ -2418,7 +2418,7 @@ console.log(queryData);
               ON 
                 DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
         WHERE 
-        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
             group by s.data_index
             order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2430,7 +2430,7 @@ console.log(queryData);
       ChillerData7 : async (request, response) => {
         const {start, finish, chiller, komp} = request.query;
         const queryGet = `select
-        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
         round(a1.data_format_0,2) AS "Suhu_sesudah_Pompa_Supply",
         round(a2.data_format_0,2)  AS "Tekanan_Sebelum_Pompa_Supply",
         round(a3.data_format_0,2)  AS "Tekanan_Sesudah_Pompa_Supply",
@@ -2459,7 +2459,7 @@ console.log(queryData);
               ON 
                 DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
         WHERE 
-        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
             group by s.data_index
             order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2472,7 +2472,7 @@ console.log(queryData);
       ChillerData8 : async (request, response) => {
         const {start, finish, chiller, komp} = request.query;
         const queryGet = `select
-        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
         round(a1.data_format_0,2) AS "Suhu_sesudah_Pompa_Return",
         round(a2.data_format_0,2)  AS "Tekanan_Sebelum_Pompa_Return",
         round(a3.data_format_0,2)  AS "Tekanan_Sesudah_Pompa_Return",
@@ -2501,7 +2501,7 @@ console.log(queryData);
               ON 
                 DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
         WHERE 
-        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
             group by s.data_index
             order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2514,7 +2514,7 @@ console.log(queryData);
       ChillerData9 : async (request, response) => {
         const {start, finish, chiller, komp} = request.query;
         const queryGet = `select
-        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i:%s') AS time,
         round(a1.data_format_0,2) AS "Tegangan_TR",
         round(a2.data_format_0,2)  AS "Ampere_RS",
         round(a3.data_format_0,2)  AS "Ampere_ST",
@@ -2543,7 +2543,7 @@ console.log(queryData);
               ON 
                 DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i') = DATE_FORMAT(FROM_UNIXTIME(a5.\`time@timestamp\`), '%Y-%m-%d %H:%i')
         WHERE 
-        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 5 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+        DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
             group by s.data_index
             order by DATE_FORMAT(FROM_UNIXTIME(s.\`time@timestamp\`), '%Y-%m-%d %H:%i:%s');`
 
@@ -2622,6 +2622,42 @@ console.log(queryData);
           ORDER BY
           \`time@timestamp\`;`
           
+          db.query(queryGet,(err, result) => {
+            return response.status(200).send(result);
+          });
+        },
+
+        // Loopo Chart Backend
+        Loopo : async (request, response) => {
+          const {area, start, finish} = request.query;
+          const queryGet = `SELECT
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i') AS label,
+          \`time@timestamp\`*1000 AS x,
+          round(data_format_0,2) AS y
+          FROM parammachine_saka.\`cMT-BWT_lopo_${area}_data\`
+          WHERE
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+          ORDER BY
+          \`time@timestamp\``;
+
+          db.query(queryGet,(err, result) => {
+            return response.status(200).send(result);
+          });
+        },
+
+        // Osmotron Chart Backend
+        Osmotron : async (request, response) => {
+          const {area, start, finish} = request.query;
+          const queryGet = `SELECT
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i') AS label,
+          \`time@timestamp\`*1000 AS x,
+          round(data_format_0,2) AS y
+          FROM parammachine_saka.\`cMT-BWT_osmo_${area}_data\`
+          WHERE
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+          ORDER BY
+          \`time@timestamp\``;
+
           db.query(queryGet,(err, result) => {
             return response.status(200).send(result);
           });

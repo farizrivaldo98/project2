@@ -213,7 +213,6 @@ export default function HVACchillerChart() {
       hour: "numeric",
       minute: "numeric",
       timeZone: "UTC",
-      timeZoneName: "short",
       hour12: false
     };
 

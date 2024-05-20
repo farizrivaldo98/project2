@@ -96,4 +96,7 @@ routers.get("/BuildingRNDRH", databaseControllers.BuildingRNDRH);
 routers.get("/BuildingRNDDP", databaseControllers.BuildingRNDDP);
 routers.get("/BuildingRNDAll", databaseControllers.BuildingRNDAll);
 
+routers.get("/Loopo", databaseControllers.Loopo);
+routers.get("/Osmotron", databaseControllers.Osmotron);
+
 module.exports = routers;

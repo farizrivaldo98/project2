@@ -13,6 +13,8 @@ import PowerManagement2 from "./PowerManagement1";
 import HVAC from "./HVAC";
 import Water from "./Water";
 import PurifiedControl from "./PurifiedControl";
+import Loopo from "./Loopo";
+import Osmotron from "./Osmotron";
 
 function Utility() {
   return (
@@ -29,6 +31,8 @@ function Utility() {
               <Tab>Steam Control</Tab>
               <Tab>Purified Control</Tab>
               <Tab>Solar Management</Tab>
+              <Tab>Loopo</Tab>
+              <Tab>Osmotron</Tab>
             </TabList>
 
             <TabPanels>
@@ -55,6 +59,12 @@ function Utility() {
               </TabPanel>
               <TabPanel>
                 <p>Solar Management</p>
+              </TabPanel>
+              <TabPanel>
+                <Loopo />
+              </TabPanel>
+              <TabPanel>
+                <Osmotron/>
               </TabPanel>
             </TabPanels>
           </Tabs>
