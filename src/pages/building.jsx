@@ -11,6 +11,7 @@ import {
 import BuildingBAS from "./buildingBAS";
 import BuildingEMS from "./buildingEMS";
 import BuildingRnD from "./buildingRnD";
+import BuildingWH1 from "./buildingWH1";
 
 function Building() {
   return (
@@ -22,6 +23,7 @@ function Building() {
               <Tab>Enviroment Monitoring Process</Tab>
               <Tab>Building Management System</Tab>
               <Tab>RnD Laboratorium Montoring</Tab>
+              <Tab>Warehouse 1 Montoring</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -32,6 +34,9 @@ function Building() {
               </TabPanel>
               <TabPanel>
                 <BuildingRnD />
+              </TabPanel>
+              <TabPanel>
+                <BuildingWH1 />
               </TabPanel>
             </TabPanels>
           </Tabs>

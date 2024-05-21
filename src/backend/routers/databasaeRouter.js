@@ -99,4 +99,8 @@ routers.get("/BuildingRNDAll", databaseControllers.BuildingRNDAll);
 routers.get("/Loopo", databaseControllers.Loopo);
 routers.get("/Osmotron", databaseControllers.Osmotron);
 
+routers.get("/BuildingWH1Suhu", databaseControllers.BuildingWH1Suhu);
+routers.get("/BuildingWH1RH", databaseControllers.BuildingWH1RH);
+routers.get("/BuildingWH1All", databaseControllers.BuildingWH1All);
+
 module.exports = routers;

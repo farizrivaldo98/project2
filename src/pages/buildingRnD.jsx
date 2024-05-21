@@ -98,7 +98,6 @@ export default function BuildingRnD() {
             hour: "numeric",
             minute: "numeric",
             timeZone: "UTC",
-            timeZoneName: "short",
             hour12: false
           };
           const options = {

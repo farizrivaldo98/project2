@@ -2563,7 +2563,7 @@ console.log(queryData);
           round(data_format_0,2) AS y
           FROM parammachine_saka.\`${area}\`
           WHERE
-            DATE(FROM_UNIXTIME(\`time@timestamp\`)) BETWEEN '${start}' AND '${finish}'
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
           ORDER BY
           \`time@timestamp\`;`
           
@@ -2658,6 +2658,59 @@ console.log(queryData);
           ORDER BY
           \`time@timestamp\``;
 
+          db.query(queryGet,(err, result) => {
+            return response.status(200).send(result);
+          });
+        },
+
+        // Building RND Suhu Backend
+        BuildingWH1Suhu : async (request, response) => {
+        const {area, start, finish} = request.query;
+        const queryGet = `SELECT
+        DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i') AS label,
+        \`time@timestamp\`*1000  AS x,
+        round(data_format_0,2) AS y
+        FROM parammachine_saka.\`cMT-DehumRNDLt3danWH1_RakLayer3-${area}_data\`
+        WHERE
+        DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+        ORDER BY
+        \`time@timestamp\`;`
+                  
+        db.query(queryGet,(err, result) => {
+        return response.status(200).send(result);
+        });
+        },
+        // Building RND RH Backend
+        BuildingWH1RH : async (request, response) => {
+          const {area, start, finish} = request.query;
+          const queryGet = `SELECT
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i') AS label,
+          \`time@timestamp\`*1000  AS x,
+          round(data_format_1,2) AS y
+          FROM parammachine_saka.\`cMT-DehumRNDLt3danWH1_RakLayer3-${area}_data\`
+          WHERE
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+          ORDER BY
+          \`time@timestamp\`;`
+                    
+          db.query(queryGet,(err, result) => {
+          return response.status(200).send(result);
+          });
+          },
+
+          // Building RND Suhu Backend
+        BuildingWH1All : async (request, response) => {
+          const {area, start, finish} = request.query;
+          const queryGet = `SELECT
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d %H:%i') AS tgl,
+          round(data_format_0,2) AS temp,
+          round(data_format_1,2) AS RH
+          FROM parammachine_saka.\`cMT-DehumRNDLt3danWH1_RakLayer3-${area}_data\`
+          WHERE
+          DATE_FORMAT(FROM_UNIXTIME(\`time@timestamp\`)+ INTERVAL 4 HOUR, '%Y-%m-%d') BETWEEN '${start}' AND '${finish}'
+          ORDER BY
+          \`time@timestamp\`;`
+          
           db.query(queryGet,(err, result) => {
             return response.status(200).send(result);
           });
