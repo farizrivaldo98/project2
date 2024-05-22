@@ -137,9 +137,10 @@ export default function BuildingRnD() {
                 <div>
                     <h2>Area</h2>
                     <Select placeholder="Select Area"  onChange={getArea}>
-                        <option value="C56WH1">C56WH1</option>
-                        <option value="C64WH1">C64WH1</option>
-                        <option value="C72WH1">C72WH1</option>
+                        <option value="RakLayer3-C56WH1">C56 WH1</option>
+                        <option value="RakLayer3-C64WH1">C64 WH1</option>
+                        <option value="RakLayer3-C72WH1">C72 WH1</option>
+                        <option value="PrekursorWH1">Prekursor WH1</option>
                     </Select>
                 </div>
                 <div>
